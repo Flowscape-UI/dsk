@@ -100,7 +100,7 @@ export default function App() {
       <dsk-input
         aria-label="Width"
         min={0}
-        value={width}
+        value={160}
         onInput={(event) => setWidth(Number(event.currentTarget.value))}
       ></dsk-input>
       <output>{width}</output>
@@ -317,7 +317,7 @@ export default function DskWidth() {
       <dsk-input
         aria-label="Width"
         min={0}
-        value={width}
+        value={160}
         onInput={(event) => setWidth(Number(event.currentTarget.value))}
       ></dsk-input>
       <output>{width}</output>
@@ -602,7 +602,7 @@ If package loading fails, these examples show a message asking the user to reloa
 - Use properties for arrays, objects, and callbacks after element registration. Ruler highlight ranges are one example.
 - In ordinary HTML, include closing tags: `<dsk-input></dsk-input>`.
 
-The React example declares JSX types for the demonstrated tag; extend that declaration with the appropriate properties when adding other controls. Angular's `CUSTOM_ELEMENTS_SCHEMA` allows custom elements in the template. [React custom elements](https://react.dev/reference/react-dom/components#custom-html-elements), [Angular schemas](https://angular.dev/api/core/CUSTOM_ELEMENTS_SCHEMA).
+The React example declares JSX types for the demonstrated tag; extend that declaration with the appropriate properties when adding other controls. Its stable `value={160}` initializes the field, while React mirrors `input` events in the output. Let DSK own the editable draft: writing every draft back through the value property can normalize it before Enter or blur and leave the output out of sync. Angular's `CUSTOM_ELEMENTS_SCHEMA` allows custom elements in the template. [React custom elements](https://react.dev/reference/react-dom/components#custom-html-elements), [Angular schemas](https://angular.dev/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 ## Styling
 

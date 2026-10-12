@@ -100,7 +100,7 @@ export default function App() {
       <dsk-input
         aria-label="Width"
         min={0}
-        value={width}
+        value={160}
         onInput={(event) => setWidth(Number(event.currentTarget.value))}
       ></dsk-input>
       <output>{width}</output>
@@ -317,7 +317,7 @@ export default function DskWidth() {
       <dsk-input
         aria-label="Width"
         min={0}
-        value={width}
+        value={160}
         onInput={(event) => setWidth(Number(event.currentTarget.value))}
       ></dsk-input>
       <output>{width}</output>
@@ -602,7 +602,7 @@ export class App {}
 - Для массивов, объектов и функций используйте свойства после регистрации элемента. Например, так можно передать диапазоны выделения линейки.
 - В обычном HTML пишите закрывающие теги: `<dsk-input></dsk-input>`.
 
-В React-примере объявление JSX добавляет типы для показанного тега; при подключении других компонентов расширяйте его их свойствами. В Angular `CUSTOM_ELEMENTS_SCHEMA` разрешает пользовательские элементы в шаблоне. [React о custom elements](https://react.dev/reference/react-dom/components#custom-html-elements), [Angular о схемах](https://angular.dev/api/core/CUSTOM_ELEMENTS_SCHEMA).
+В React-примере объявление JSX добавляет типы для показанного тега; при подключении других компонентов расширяйте его их свойствами. Постоянное `value={160}` задаёт начальное значение поля, а React отображает события `input` в выводе. Редактируемым значением управляет DSK: обратная запись каждого промежуточного ввода через свойство value может нормализовать его до Enter или потери фокуса и рассинхронизировать вывод. В Angular `CUSTOM_ELEMENTS_SCHEMA` разрешает пользовательские элементы в шаблоне. [React о custom elements](https://react.dev/reference/react-dom/components#custom-html-elements), [Angular о схемах](https://angular.dev/api/core/CUSTOM_ELEMENTS_SCHEMA).
 
 ## Оформление
 
