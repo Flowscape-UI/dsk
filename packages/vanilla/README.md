@@ -10,6 +10,7 @@
 </p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@flowscape-ui/dsk"><img src="https://img.shields.io/npm/v/@flowscape-ui/dsk?style=flat-square&amp;color=ff007a&amp;logo=npm&amp;logoColor=white" alt="npm version" /></a>
   <a href="https://github.com/Flowscape-UI/dsk/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-ff007a?style=flat-square" alt="License: MIT" /></a>
   <img src="https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="Strict TypeScript" />
   <img src="https://img.shields.io/badge/Web_Components-native-a855f7?style=flat-square" alt="Native Web Components" />

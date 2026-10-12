@@ -9,6 +9,7 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 ### Added
 
 - Configurable `snap-angle` (5 degrees by default) for Shift-dragging angles.
+- Package discovery keywords and live npm version badges in both READMEs.
 - Local undo/redo for angles, color controls, curves, guides, cameras, linked fields, and tree edits.
 
 ### Changed
