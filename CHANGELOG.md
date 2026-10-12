@@ -5,7 +5,7 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 ## 1.0.0 - 2026-10-12
 
 - **Status:** Ready for release.
-- **Recorded at:** `2026-10-12T12:10:00+03:00` (Europe/Chisinau).
+- **Recorded at:** `2026-10-12T12:24:28+03:00` (Europe/Chisinau).
 
 ### Added
 
@@ -32,6 +32,8 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 - A pnpm/Turborepo workspace with the library, playground, and documentation, using Vite, ESLint, Prettier, and GitHub Actions.
 
 ### Changed
+
+- Replaced the npm package API manual with a visual introduction matching the repository README, including shared branding, demos, and links to the documentation.
 
 - Prepared 1.0.0 for publication, with release-readiness validation and an optional first-publish npm credential. Publication remains an explicit owner action.
 

@@ -21,7 +21,7 @@
   <a href="https://github.com/Flowscape-UI/dsk">GitHub</a> ·
   <a href="apps/docs/guide/introduction.md">Introduction</a> ·
   <a href="apps/docs/guide/installation.md">Quick start</a> ·
-  <a href="packages/vanilla/README.md">API reference</a> ·
+  <a href="https://flowscape-ui.github.io/dsk/components/inputs">API reference</a> ·
   <a href="apps/docs/ru/guide/introduction.md">Русская документация</a>
 </p>
 

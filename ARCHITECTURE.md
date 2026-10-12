@@ -1,6 +1,6 @@
 # Architecture
 
-This document explains ownership and design decisions. For installation and complete attributes, events, and styling APIs, use the [library reference](packages/vanilla/README.md) and [documentation guides](apps/docs/guide/introduction.md). For development commands, use [CONTRIBUTING.md](CONTRIBUTING.md).
+This document explains ownership and design decisions. For installation and complete attributes, events, and styling APIs, use the [component reference](apps/docs/components/inputs.md) and [documentation guides](apps/docs/guide/introduction.md). For development commands, use [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Workspaces
 
