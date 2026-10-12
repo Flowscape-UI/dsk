@@ -40,7 +40,7 @@ These instructions apply throughout the [repository](https://github.com/Flowscap
 - Start usage examples with imports and minimal markup. Add event handlers only when the example needs application behavior. Custom elements require explicit closing tags in HTML.
 - Reuse `ExamplePanel` for documentation demos; see [the example panel guide](apps/docs/.vitepress/theme/EXAMPLES.md). Keep runnable integration code in `apps/docs/snippets` and synchronize its walkthrough and downloadable project.
 - Update the playground, API documentation, public type checks, and relevant behavior tests when changing public APIs.
-- Add user-visible changes to the current unreleased version entry in `CHANGELOG.md`. Match the version in `packages/vanilla/package.json`, retain Added/Changed/Fixed sections, and update its ISO 8601 recording timestamp with an explicit timezone offset. A recording timestamp is not a release date. Keep published entries immutable; do not invent releases or change package versions without a release decision.
+- Add user-visible changes to the current unreleased version entry in `CHANGELOG.md`. Match the version in `packages/vanilla/package.json` and retain Added/Changed/Fixed sections and an explicit publication status. Do not add a separate recording timestamp. Keep published entries immutable; do not invent releases or change package versions without a release decision.
 
 ## Verification and delivery
 

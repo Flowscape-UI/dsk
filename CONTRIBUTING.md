@@ -50,7 +50,7 @@ Use `ExamplePanel` for live examples rather than inventing a new card style. Fol
 
 Load browser-dependent code after client mounting in SSR examples. Integration walkthroughs, running demos, and downloadable source projects should describe the same implementation. When an adapter or archive generator changes, extract the affected ZIP and verify its documented install/build steps as well as the embedded demo.
 
-Keep changelog entries factual: describe observable additions, changes, and fixes. Group them by the library version in `packages/vanilla/package.json`, newest first, with an explicit status and ISO 8601 recording timestamp including the timezone offset. Update the timestamp when revising an unreleased entry. Its recording date does not imply publication. Preserve published entries and add a new section for the next version after a release decision; do not bump versions solely to edit the changelog or mark planned features as implemented.
+Keep changelog entries factual: describe observable additions, changes, and fixes. Group them by the library version in `packages/vanilla/package.json`, newest first, with an explicit publication status. Do not add a separate recording timestamp. A date in an unreleased entry heading does not imply publication. Preserve published entries and add a new section for the next version after a release decision; do not bump versions solely to edit the changelog or mark planned features as implemented.
 
 ## Verify a change
 
@@ -74,7 +74,7 @@ Unit tests use Node.js's built-in test runner and TypeScript stripping. The pack
 
 ### Browser setup
 
-Windows uses installed Microsoft Edge by default. On Linux and macOS, install Chromium once:
+Windows uses installed Microsoft Edge by default. On Linux and macOS, library tests use the full Chromium browser (`channel: 'chromium'`) for Pointer Lock and real profile zoom. Headless shell does not provide equivalent behavior for these scenarios. Install Chromium once (do not use `--only-shell`):
 
 ```sh
 pnpm --filter @flowscape-ui/dsk exec playwright install chromium
@@ -144,7 +144,7 @@ The Pages build replaces local application outputs with their Pages variants. Ru
 
 `publish-npm.yml` runs when a non-prerelease GitHub release is published. It requires a tag exactly matching `v<version>` in `packages/vanilla/package.json`, for example `v1.0.0`. It verifies the release metadata, runs repository checks and both library browser suites, creates an archive with `pnpm pack`, validates every exported path, then publishes that exact archive with npm trusted publishing. Always pack with pnpm: it replaces local source exports with the distribution-only `publishConfig.exports`. Do not publish the workspace directory directly with npm.
 
-Before publishing, mark the matching changelog entry `Ready for release` with a valid recording timestamp. This is preparation, not evidence of publication. Only after npm confirms success should it be marked `Released` with a separate actual release timestamp. The workflow also accepts existing `Released` entries.
+Before publishing, mark the matching changelog entry `Ready for release`. This is preparation, not evidence of publication. Only after npm confirms success should it be marked `Released` with a separate actual release timestamp. The workflow also accepts existing `Released` entries.
 
 See [the release guide](.github/RELEASING.md) for first-publish credentials, exact npm Trusted Publisher settings, Pages setup, and the release sequence.
 

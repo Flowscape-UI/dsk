@@ -1,11 +1,10 @@
 # Changelog
 
-Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its status and an ISO 8601 recording timestamp. For unreleased versions, the timestamp records this changelog snapshot, not an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
+Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its publication status. A date in an unreleased entry heading does not indicate an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
 
 ## 1.0.0 - 2026-10-12
 
 - **Status:** Ready for release.
-- **Recorded at:** `2026-10-12T12:24:28+03:00` (Europe/Chisinau).
 
 ### Added
 
@@ -44,7 +43,7 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 - Added a `/dsk/` Pages build containing only documentation, with base-aware theme links and engine icons.
 
 - Consolidated npm ignore rules in `packages/vanilla/.npmignore`, removed obsolete root test artifacts and the empty local pnpm store, and removed the roadmap document.
-- Organized this changelog by library version and recording timestamp, keeping publication status explicit.
+- Organized this changelog by library version, keeping publication status explicit without a separate recording timestamp.
 
 - Linked the [DSK GitHub repository](https://github.com/Flowscape-UI/dsk) throughout project documentation, package metadata, and website navigation; replaced the homepage placeholder with a source link.
 
@@ -60,6 +59,8 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 
 ### Fixed
 
+- Removed the npm token fallback from the release workflow and documented first-package creation through local staged publishing before configuring OIDC.
+- Selected full Chromium for library browser checks on Linux and macOS so CI exercises browser-level Pointer Lock and profile zoom rather than headless shell.
 - Excluded the local playground from Pages and corrected installation CDN examples for version 1.0.0.
 - Applied distribution-only exports when packing with pnpm and validated the exact archive before publication.
 

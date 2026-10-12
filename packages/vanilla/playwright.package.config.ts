@@ -6,7 +6,7 @@ export default defineConfig({
   workers: 1,
   reporter: 'list',
   use: {
-    channel: process.platform === 'win32' ? 'msedge' : undefined,
+    channel: process.platform === 'win32' ? 'msedge' : 'chromium',
     launchOptions: process.env.DSK_TEST_EXECUTABLE
       ? { executablePath: process.env.DSK_TEST_EXECUTABLE }
       : undefined,

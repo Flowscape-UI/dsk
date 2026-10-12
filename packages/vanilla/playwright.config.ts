@@ -12,7 +12,12 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:5183',
     browserName: firefox ? 'firefox' : 'chromium',
-    channel: process.platform === 'win32' && !firefox ? 'msedge' : undefined,
+    // Exercise Pointer Lock and profile zoom with the full browser in CI.
+    channel: firefox
+      ? undefined
+      : process.platform === 'win32'
+        ? 'msedge'
+        : 'chromium',
     launchOptions: process.env.DSK_TEST_EXECUTABLE
       ? { executablePath: process.env.DSK_TEST_EXECUTABLE }
       : undefined,

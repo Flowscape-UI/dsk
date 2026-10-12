@@ -41,6 +41,3 @@ jobs:
       - name: Publish with npm trusted publishing
         working-directory: packages/vanilla
         run: npm publish ./dsk-release.tgz --access public --provenance
-        env:
-          # Optional bootstrap credential for the first package publication.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

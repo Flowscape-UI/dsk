@@ -21,15 +21,6 @@ if (!entry || !/\*\*Status:\*\* (?:Ready for release|Released)\./.test(entry))
   throw new Error(
     `Mark version ${manifest.version} as Ready for release in CHANGELOG.md before publishing.`,
   );
-const recordedAt = entry.match(/\*\*Recorded at:\*\* `([^`]+)`/)?.[1];
-if (
-  !recordedAt ||
-  !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/.test(recordedAt) ||
-  !Number.isFinite(Date.parse(recordedAt))
-)
-  throw new Error(
-    'The changelog requires an ISO 8601 recording timestamp with a timezone offset.',
-  );
 console.log(
   `Release metadata verified for ${manifest.name}@${manifest.version}.`,
 );
