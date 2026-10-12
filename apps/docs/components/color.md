@@ -1150,3 +1150,7 @@ Add this CSS globally, or use an unscoped Vue style block. In React use `classNa
   color: white;
 }
 ```
+
+## Edit history
+
+Area, hue, alpha and eyedropper controls support Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z while focused. A completed drag or successful pick is one entry. Cancelled actions add none. History is local to each control; external assignments to its edited channel reset it. Restoration emits input and change.

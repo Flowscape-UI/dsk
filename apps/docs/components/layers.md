@@ -391,3 +391,7 @@ declare module 'react' {
 ::: warning Model synchronization
 Reordering mutates the light DOM. If your framework renders a list from an array, update that array in reorder using stable IDs, including hierarchy and order. Otherwise the next render may restore the old structure. Synchronize names in rename. Use stable key/track values; indices are not permanent identities.
 :::
+
+## Edit history
+
+Focus a tree row for Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z to restore committed renames and reordering. Restoration preserves existing DOM nodes and emits a bubbling change event; read the tree to synchronize application state. Active rename fields retain native text editing. Navigation, selection and search do not create entries.

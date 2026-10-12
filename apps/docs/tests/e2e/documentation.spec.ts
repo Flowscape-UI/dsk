@@ -27,7 +27,10 @@ test('landing controls change position, dimensions and opacity; MIT is published
     .boundingBox())!;
   expect(controls.x).toBeGreaterThanOrEqual(box.x + box.width);
   expect(controls.y).toBeLessThan(100);
-  await page.locator('.dsk-docs-license-strip a').click();
+  await page
+    .locator('.dsk-docs-license-strip')
+    .getByRole('link', { name: /^MIT/ })
+    .click();
   await expect(page.locator('.vp-doc')).toContainText(
     'Permission is hereby granted',
   );
@@ -110,10 +113,13 @@ test('home examples update the object and survive route navigation', async ({
   await page.keyboard.press('ArrowRight');
   await expect(page.locator('.dsk-docs-color-output')).not.toHaveText(before);
   await page.screenshot({
-    path: testInfo.outputPath('home-light.png'),
+    path: testInfo.outputPath('home.png'),
     fullPage: true,
   });
-  await page.getByRole('link', { name: 'Start building →' }).click();
+  await page
+    .locator('.dsk-docs-hero-actions')
+    .getByRole('link', { name: 'Quick start', exact: true })
+    .click();
   await expect(
     page.getByRole('heading', { name: /^Installation/, level: 1 }),
   ).toBeVisible();
@@ -124,7 +130,7 @@ test('home examples update the object and survive route navigation', async ({
   expect(errors).toEqual([]);
 });
 
-test('both locales have searchable content and framework placeholders', async ({
+test('both locales have searchable content and framework installation examples', async ({
   page,
 }) => {
   for (const [base, query, heading] of [
@@ -135,18 +141,20 @@ test('both locales have searchable content and framework placeholders', async ({
     await page.locator('.VPNavBarSearch button').click();
     await page.locator('#localsearch-input').fill(query!);
     const result = page
-      .locator('.VPLocalSearchBox a')
+      .locator(`.VPLocalSearchBox a[href*="${base}/components/canvas"]`)
       .filter({ hasText: heading })
       .first();
     await expect(result).toBeVisible();
     await result.click();
     await expect(page).toHaveURL(new RegExp(`${base}/components/canvas`));
-    for (const framework of ['react', 'vue', 'svelte', 'angular']) {
-      const response = await page.goto(`${base}/frameworks/${framework}`);
-      expect(response?.status()).toBe(200);
-      await expect(page.locator('.custom-block.info')).toContainText(
-        base ? 'В разработке' : 'In development',
-      );
+    await page.goto(`${base}/guide/installation`);
+    const examples = page.locator('.dsk-framework-code').first();
+    for (const framework of ['Vanilla', 'React', 'Vue', 'Svelte', 'Angular']) {
+      await examples.locator(`label[data-title="${framework}"]`).click();
+      const code = examples.locator('.blocks > div.active');
+      await expect(code).toBeVisible();
+      await expect(code).toContainText("import '@flowscape-ui/dsk'");
+      await expect(code).toContainText('dsk-input');
     }
   }
 });

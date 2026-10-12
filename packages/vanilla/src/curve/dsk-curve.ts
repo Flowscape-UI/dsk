@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import {
   type CurveNumber,
   type CurvePoints,
@@ -50,6 +51,7 @@ const presetLabels: Record<CurvePreset | 'custom', string> = {
 
 /** A bounded cubic Bezier editor with precise coordinates and motion preview. */
 export class DskCurve extends HTMLElement {
+  private readonly _history = new DskControlHistory(() => this.value);
   static readonly observedAttributes = [
     'value',
     'step',
@@ -347,6 +349,7 @@ export class DskCurve extends HTMLElement {
     newValue: string | null,
   ): void {
     if (this._writing || oldValue === newValue) return;
+    if (['value'].includes(name)) this._history.reset();
     if (name === 'value') {
       this._revision += 1;
       this._releaseDrag();
@@ -735,6 +738,7 @@ export class DskCurve extends HTMLElement {
   };
 
   private _setUserPath(path: CurvePath): boolean {
+    this._history.begin();
     const value = formatCurvePath(path);
     if (value === this.value) return false;
     this._writing = true;
@@ -749,6 +753,7 @@ export class DskCurve extends HTMLElement {
   }
 
   private _emit(type: 'input' | 'change'): void {
+    if (type === 'change') this._history.commit();
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
 
@@ -939,6 +944,18 @@ export class DskCurve extends HTMLElement {
   }
 
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
+    if (
+      this._history.handle(
+        event,
+        this._editable && !this._drag && !this._draft,
+        (value) => {
+          this._setUserPath(parseCurvePath(value));
+          this._emit('input');
+          this._emit('change');
+        },
+      )
+    )
+      return;
     if (event.key === 'Escape' && (this._drag || this._draft)) {
       event.preventDefault();
       this._cancelDrag(true);

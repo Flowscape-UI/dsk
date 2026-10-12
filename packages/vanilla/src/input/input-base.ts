@@ -1,3 +1,4 @@
+import { DskHistory } from '../helpers/history.ts';
 import inputHandleSvg from '../../assets/icons/input-handle.svg?raw';
 import horizontalResizeSvg from '../../assets/cursor/horizontal-resize.svg?raw';
 import {
@@ -229,8 +230,7 @@ export abstract class DskInputBase extends HTMLElement {
   private readonly _internals: ElementInternals | undefined;
   private _value = '';
   private _committedValue = '';
-  private _history = [''];
-  private _historyIndex = 0;
+  private readonly _history = new DskHistory('');
   private _redoDraft: string | null = null;
   private _selectAfterClick = false;
   private _initialValue: string | undefined;
@@ -603,7 +603,7 @@ export abstract class DskInputBase extends HTMLElement {
   }
 
   protected updateUserValue(value: string): void {
-    this._history.splice(this._historyIndex + 1);
+    this._history.discardRedo();
     this._redoDraft = null;
     this._writeValue(value);
     this._emit('input');
@@ -721,8 +721,7 @@ export abstract class DskInputBase extends HTMLElement {
   private _setValue(value: NumericValue): void {
     this._writeValue(this.normalizeValue(value));
     this._committedValue = this.value;
-    this._history = [this.value];
-    this._historyIndex = 0;
+    this._history.reset(this.value);
     this._redoDraft = null;
   }
 
@@ -831,10 +830,7 @@ export abstract class DskInputBase extends HTMLElement {
   }
 
   private _recordHistory(value: string): void {
-    this._history.splice(this._historyIndex + 1);
-    this._history.push(value);
-    if (this._history.length > 100) this._history.shift();
-    this._historyIndex = this._history.length - 1;
+    this._history.record(value);
     this._redoDraft = null;
   }
 
@@ -847,21 +843,15 @@ export abstract class DskInputBase extends HTMLElement {
       this._emit('input');
       return;
     }
-    if (
-      redo &&
-      this._historyIndex === this._history.length - 1 &&
-      this._redoDraft !== null
-    ) {
+    if (redo && !this._history.canRedo && this._redoDraft !== null) {
       const draft = this._redoDraft;
       this._redoDraft = null;
       this._writeValue(draft);
       this._emit('input');
       return;
     }
-    const index = this._historyIndex + (redo ? 1 : -1);
-    const value = this._history[index];
+    const value = this._history.restore(redo);
     if (value === undefined) return;
-    this._historyIndex = index;
     this._writeValue(value);
     this._committedValue = value;
     this._emit('input');

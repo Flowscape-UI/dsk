@@ -108,20 +108,21 @@ update();
 
 ### Angle attributes and units
 
-| Attribute  | Property         | Default             | Behavior                                                                                         |
-| ---------- | ---------------- | ------------------- | ------------------------------------------------------------------------------------------------ |
-| `unit`     | `unit`           | `"deg"`             | Numeric unit: `deg`, `rad`, `pi`, `turn`, or `grad`. `PI` and `π` are accepted aliases for `pi`. |
-| `value`    | `value`          | Effective `min`     | Current number in the selected unit, clamped to the active range.                                |
-| `min`      | `min`            | `0`                 | Optional lower bound in the selected unit. Attribute presence enables bounded rotation.          |
-| `max`      | `max`            | One revolution      | Optional upper bound in the selected unit. Attribute presence enables bounded rotation.          |
-| `step`     | `step`           | One physical degree | Positive finite increment in the selected unit, used by pointer and keyboard adjustment.         |
-| `segments` | `segments`       | `24`                | Number of scale ticks, an integer from 4 to 180. Independent of the numeric step.                |
-| `size`     | `size`           | `208`               | Positive square size in pixels.                                                                  |
-| `color`    | `color`          | `"#557be8"`         | CSS color for the sector, needle, and marker. Invalid colors use the default.                    |
-| `disabled` | `disabled`       | `false`             | Prevents interaction and removes the control from keyboard navigation.                           |
-| `readonly` | `readOnly`       | `false`             | Prevents edits while preserving focus.                                                           |
-| –          | `degrees`        | –                   | Readonly numeric value in physical degrees, independent of the selected unit.                    |
-| –          | `formattedValue` | –                   | Readonly display text, including the unit, matching the center label.                            |
+| Attribute    | Property         | Default             | Behavior                                                                                         |
+| ------------ | ---------------- | ------------------- | ------------------------------------------------------------------------------------------------ |
+| `unit`       | `unit`           | `"deg"`             | Numeric unit: `deg`, `rad`, `pi`, `turn`, or `grad`. `PI` and `π` are accepted aliases for `pi`. |
+| `value`      | `value`          | Effective `min`     | Current number in the selected unit, clamped to the active range.                                |
+| `min`        | `min`            | `0`                 | Optional lower bound in the selected unit. Attribute presence enables bounded rotation.          |
+| `max`        | `max`            | One revolution      | Optional upper bound in the selected unit. Attribute presence enables bounded rotation.          |
+| `step`       | `step`           | One physical degree | Positive finite increment in the selected unit, used by pointer and keyboard adjustment.         |
+| `snap-angle` | `snapAngle`      | `5`                 | Shift-drag interval, always in degrees. Invalid or nonpositive values fall back to 5.            |
+| `segments`   | `segments`       | `24`                | Number of scale ticks, an integer from 4 to 180. Independent of the numeric step.                |
+| `size`       | `size`           | `208`               | Positive square size in pixels.                                                                  |
+| `color`      | `color`          | `"#557be8"`         | CSS color for the sector, needle, and marker. Invalid colors use the default.                    |
+| `disabled`   | `disabled`       | `false`             | Prevents interaction and removes the control from keyboard navigation.                           |
+| `readonly`   | `readOnly`       | `false`             | Prevents edits while preserving focus.                                                           |
+| –            | `degrees`        | –                   | Readonly numeric value in physical degrees, independent of the selected unit.                    |
+| –            | `formattedValue` | –                   | Readonly display text, including the unit, matching the center label.                            |
 
 | Unit   | One revolution | Quarter turn  | Example label |
 | ------ | -------------- | ------------- | ------------- |
@@ -156,6 +157,8 @@ Standard global HTML attributes and DOM event handlers remain available. Set an 
 ### Angle interaction and events
 
 Click or touch the ring to select an angle, then drag around its arc. Pointer capture keeps a gesture active outside the control. The marker stays 10px across without a scaling animation. Continuous rotation passes through the zero/full-turn seam in either direction. With either bound attribute present, dragging stops at the endpoints instead. Escape, pointer cancellation, or focus loss cancels an active drag and restores its starting value.
+
+Hold Shift while dragging the angle for 5° snapping. Set `snap-angle="15"` for 15° snapping regardless of `unit`. Arrows use `step`; Shift with arrows multiplies it by ten.
 
 Focus the control with Tab or `.focus()`. Right/Up increase by `step`; Left/Down decrease it. Shift multiplies arrow increments by ten. Page Up/Page Down use ten increments, and Home/End select `min`/`max`. A native range control provides assistive-technology access and an accessible description of the angle.
 
@@ -612,6 +615,7 @@ declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'dsk-angle': GeometryProps<DskAngle> & {
+        'snap-angle'?: string | number;
         unit?: string;
         min?: string | number;
         max?: string | number;
@@ -627,3 +631,7 @@ declare module 'react' {
   }
 }
 ```
+
+## Edit history
+
+Angle and curve controls support Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z while focused. One completed drag is one entry; Escape cancels without adding one. Focus a curve handle to undo the whole curve; coordinate fields retain their own draft editing. External value assignments reset local history. Disabled and readonly controls do not restore history.

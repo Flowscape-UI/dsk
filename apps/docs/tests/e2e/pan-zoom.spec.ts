@@ -70,6 +70,8 @@ test('demo pans, anchors wheel zoom and resets without decorative handles', asyn
   const surface = viewport.locator('[part=viewport]');
   await expect(surface).toBeVisible();
   await viewport.scrollIntoViewIfNeeded();
+  // The homepage canvas opts into gestures only after click or keyboard focus.
+  await surface.focus();
   await expect(page.locator('.dsk-docs-shape i')).toHaveCount(0);
   const camera = () => viewport.evaluate((el) => (el as DskPanZoom).camera);
   const initial = await camera();
@@ -137,6 +139,8 @@ test('touch pinch, one-finger continuation and cancellation stay continuous', as
   const surface = viewport.locator('[part=viewport]');
   await expect(surface).toBeVisible();
   await viewport.scrollIntoViewIfNeeded();
+  // The homepage canvas opts into gestures only after click or keyboard focus.
+  await surface.focus();
   const box = (await surface.boundingBox())!;
   const initialZoom = await viewport.evaluate(
     (el) => (el as DskPanZoom).camera.zoom,

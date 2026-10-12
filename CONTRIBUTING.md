@@ -107,7 +107,7 @@ Failure screenshots and traces are stored in the owning workspace's `test-result
 
 GitHub Actions installs dependencies with `--frozen-lockfile`, runs `pnpm check`, installs Chromium, and runs `pnpm test:browser` and `pnpm test:package`. It does not currently run `pnpm test:docs`.
 
-The local documentation run on 2026-10-12 passed 47 of 55 tests. Eight scenarios in `documentation.spec.ts`, `homepage.spec.ts`, and `pan-zoom.spec.ts` still need reconciliation with the current homepage navigation, layout, mobile controls, and focus-to-interact behavior. This is a dated observation, not an expected-pass baseline or permission to skip tests. Review each failure against the intended behavior, update this note after verification, and report unresolved failures separately from new regressions.
+Documentation verification on 2026-10-12 covered all 55 scenarios across the full suite and focused reruns. The initial run passed 49 tests; six homepage scenarios were reconciled with the current navigation, framework tabs, 1376px grid, mobile inspector, and focus-to-interact behavior. All corrected scenarios passed, including the final 11-test homepage and pan/zoom run. Ruler focus transfers now preserve canvas activation even when a top-layer guide does not match `:focus-within`. These results describe this checkout; rerun relevant scenarios after changes.
 
 ## Dependencies and builds
 

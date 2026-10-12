@@ -1,6 +1,6 @@
 {
   "name": "@flowscape-ui/dsk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Framework-free TypeScript UI primitives for Flowscape editors and whiteboards",
   "license": "MIT",
   "type": "module",
@@ -38,7 +38,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "test": "node --test tests/unit/input/numbers.test.ts tests/unit/input/expression.test.ts tests/unit/input/hex.test.ts tests/unit/input/hex-expression.test.ts tests/unit/input/hex-stepping.test.ts tests/unit/color/color-model.test.ts tests/unit/angle/angle-model.test.ts tests/unit/curve/curve-model.test.ts tests/unit/ruler/ruler-model.test.ts tests/unit/ruler/coordinates.test.ts",
+    "test": "node --test tests/unit/input/history.test.ts tests/unit/input/numbers.test.ts tests/unit/input/expression.test.ts tests/unit/input/hex.test.ts tests/unit/input/hex-expression.test.ts tests/unit/input/hex-stepping.test.ts tests/unit/color/color-model.test.ts tests/unit/angle/angle-model.test.ts tests/unit/curve/curve-model.test.ts tests/unit/ruler/ruler-model.test.ts tests/unit/ruler/coordinates.test.ts",
     "prepack": "pnpm build",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.tests.json",
     "test:browser": "playwright test",

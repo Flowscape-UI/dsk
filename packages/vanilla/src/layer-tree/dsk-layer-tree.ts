@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import { LayerTreeReorder } from './helpers/layer-tree-reorder.ts';
 
 export interface ListToggleDetail {
@@ -45,6 +46,9 @@ function interactivePath(event: Event, boundary: HTMLElement): boolean {
 
 /** A tree row whose direct list-value children form its collapsible branch. */
 export class DskListValue extends HTMLElement {
+  private readonly _history = new DskControlHistory(() => this.displayName);
+  private _writingHistory = false;
+
   static readonly observedAttributes = ['open', 'disabled', 'label'];
   private _generatedLabel: string | null = null;
   private readonly _row: HTMLElement;
@@ -154,7 +158,13 @@ export class DskListValue extends HTMLElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(): void {
+  attributeChangedCallback(
+    name: string,
+    previous: string | null,
+    current: string | null,
+  ): void {
+    if (name === 'label' && previous !== current && !this._writingHistory)
+      this._history.reset();
     this._sync();
   }
 
@@ -216,9 +226,16 @@ export class DskListValue extends HTMLElement {
     )!.hidden = false;
     this._row.draggable = true;
     if (commit && !this.disabled && label && label !== oldLabel) {
+      this._history.begin();
       const name = this._nameNode();
       if (name) name.textContent = label;
-      this.label = label;
+      this._writingHistory = true;
+      try {
+        this.label = label;
+      } finally {
+        this._writingHistory = false;
+      }
+      this._history.commit();
       this.dispatchEvent(
         new CustomEvent<ListRenameDetail>('rename', {
           detail: { oldLabel, label },
@@ -300,6 +317,30 @@ export class DskListValue extends HTMLElement {
   };
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
     if (
+      !this.closest('dsk-layer-tree') &&
+      !interactivePath(event, this) &&
+      this._history.handle(event, !this.disabled && !this._editing, (label) => {
+        const oldLabel = this.displayName;
+        const name = this._nameNode();
+        if (name) name.textContent = label;
+        this._writingHistory = true;
+        try {
+          this.label = label;
+        } finally {
+          this._writingHistory = false;
+        }
+        this.dispatchEvent(
+          new CustomEvent<ListRenameDetail>('rename', {
+            detail: { oldLabel, label },
+            bubbles: true,
+            composed: true,
+          }),
+        );
+      })
+    )
+      return;
+
+    if (
       this.closest('dsk-layer-tree') ||
       event.composedPath().find((node) => node instanceof DskListValue) !==
         this ||
@@ -316,6 +357,37 @@ export class DskListValue extends HTMLElement {
 
 /** Roving keyboard focus and nesting semantics for a declarative layer list. */
 export class DskLayerTree extends HTMLElement {
+  private readonly _history = new DskControlHistory(
+    () =>
+      this.items.map((item) => ({
+        item,
+        parent: item.parentElement!,
+        next: item.nextSibling,
+        label: item.label,
+        name: item.displayName,
+      })),
+    (a, b) =>
+      a.length === b.length &&
+      a.every((entry, index) => {
+        const other = b[index]!;
+        return (
+          entry.item === other.item &&
+          entry.parent === other.parent &&
+          entry.next === other.next &&
+          entry.label === other.label &&
+          entry.name === other.name
+        );
+      }),
+  );
+  private readonly _beginHistory = (): void => {
+    this._history.begin();
+  };
+  private readonly _commitHistory = (): void => {
+    this._history.commit();
+    this._observer.takeRecords();
+    this._sync();
+  };
+
   private readonly _searchState = new Map<
     DskListValue,
     { hidden: HTMLElement['hidden']; open: boolean }
@@ -329,7 +401,16 @@ export class DskLayerTree extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' }).innerHTML =
       `<style>:host{display:block;color:var(--dsk-tree-color,inherit);background:var(--dsk-tree-background,transparent);font:inherit}:host([hidden]){display:none!important}</style><slot name="search"></slot><div part="header"><slot name="header"></slot></div><div part="list"><slot></slot></div><div part="footer"><slot name="footer"></slot></div>`;
-    this._observer = new MutationObserver(() => this._sync());
+    this._observer = new MutationObserver((records) => {
+      if (
+        records.some(
+          (record) =>
+            record.type !== 'attributes' || record.attributeName === 'label',
+        )
+      )
+        this._history.reset();
+      this._sync();
+    });
     this._reorder = new LayerTreeReorder(this);
   }
   connectedCallback(): void {
@@ -337,6 +418,15 @@ export class DskLayerTree extends HTMLElement {
     this._reorder.connect();
     this._listeners?.abort();
     this._listeners = new AbortController();
+    for (const type of ['focusin', 'beforereorder'])
+      this.addEventListener(type, this._beginHistory, {
+        signal: this._listeners.signal,
+      });
+    for (const type of ['rename', 'reorder'])
+      this.addEventListener(type, this._commitHistory, {
+        signal: this._listeners.signal,
+        capture: true,
+      });
     this.addEventListener('keydown', this._onKeyDown, {
       signal: this._listeners.signal,
     });
@@ -476,6 +566,52 @@ export class DskLayerTree extends HTMLElement {
     this._sync();
   };
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
+    if (
+      !interactivePath(event, this) &&
+      this._history.handle(event, !this.hasAttribute('disabled'), (entries) => {
+        const focused = this.ownerDocument.activeElement;
+        for (const entry of [...entries].reverse()) {
+          const { item, parent, next, label, name } = entry;
+          parent.insertBefore(item, next?.parentNode === parent ? next : null);
+          item.label = label;
+          const header = Array.from(item.children).find(
+            (child) =>
+              child.getAttribute('slot') === 'header' ||
+              child.localName === 'dsk-list-header',
+          );
+          if (header) {
+            const marked = header.querySelector('[data-dsk-name]');
+            const walker = this.ownerDocument.createTreeWalker(
+              header,
+              NodeFilter.SHOW_TEXT,
+            );
+            let target: Node | null = marked;
+            if (!target)
+              for (
+                let node = walker.nextNode();
+                node;
+                node = walker.nextNode()
+              ) {
+                if (node.textContent?.trim()) {
+                  target = node;
+                  break;
+                }
+              }
+            if (target && target.textContent !== name)
+              target.textContent = name;
+          }
+        }
+        this._observer.takeRecords();
+        this._sync();
+        if (focused instanceof HTMLElement && this.contains(focused))
+          focused.focus({ preventScroll: true });
+        this.dispatchEvent(
+          new Event('change', { bubbles: true, composed: true }),
+        );
+      })
+    )
+      return;
+
     const item = event
       .composedPath()
       .find((node): node is DskListValue => node instanceof DskListValue);

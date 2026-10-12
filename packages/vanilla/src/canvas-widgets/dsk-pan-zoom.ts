@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import {
   resolveCanvasCamera,
   type CanvasCamera,
@@ -6,6 +7,19 @@ import {
 
 /** A small HTML viewport, without selection, rendering or document state. */
 export class DskPanZoom extends HTMLElement {
+  private readonly _history = new DskControlHistory(
+    () => this.camera,
+    (a, b) => a.panX === b.panX && a.panY === b.panY && a.zoom === b.zoom,
+  );
+  private _wheelTimer: ReturnType<typeof setTimeout> | undefined;
+  private _finishWheel(): void {
+    if (this._wheelTimer !== undefined) {
+      clearTimeout(this._wheelTimer);
+      this._wheelTimer = undefined;
+      this._history.commit();
+    }
+  }
+
   static readonly observedAttributes = ['aria-label'];
   private readonly _surface: HTMLDivElement;
   private readonly _world: HTMLDivElement;
@@ -84,6 +98,7 @@ export class DskPanZoom extends HTMLElement {
         this._camera.panX += (size.x - this._size.x) / 2;
         this._camera.panY += (size.y - this._size.y) / 2;
       }
+      this._history.reset();
       this._size = size;
       this._render(true);
     });
@@ -99,6 +114,7 @@ export class DskPanZoom extends HTMLElement {
   }
 
   disconnectedCallback(): void {
+    this._finishWheel();
     this._clear();
     this._listeners?.abort();
     this._observer?.disconnect();
@@ -109,12 +125,23 @@ export class DskPanZoom extends HTMLElement {
   }
   set camera(value: CanvasCamera) {
     const camera = resolveCanvasCamera(value);
+    this._initialized = true;
+    if (
+      camera.panX === this._camera.panX &&
+      camera.panY === this._camera.panY &&
+      camera.zoom === this._camera.zoom
+    )
+      return;
+    this._finishWheel();
+    this._history.reset();
     this._clear();
     this._initialized = true;
     this._camera = { ...camera, zoom: this._clamp(camera.zoom) };
     this._render(false);
   }
   reset(): void {
+    this._finishWheel();
+    this._history.begin();
     this._clear();
     this._initialized = true;
     this._camera = {
@@ -122,16 +149,20 @@ export class DskPanZoom extends HTMLElement {
       panY: this._surface.clientHeight / 2,
       zoom: 1,
     };
+    this._history.commit();
     this._render(true);
   }
   zoomBy(factor: number): void {
     if (!Number.isFinite(factor) || factor <= 0)
       throw new RangeError('Zoom factor must be positive and finite.');
+    this._finishWheel();
+    this._history.begin();
     const center = {
       x: this._surface.clientWidth / 2,
       y: this._surface.clientHeight / 2,
     };
     this._zoomAt(factor, center, center);
+    this._history.commit();
   }
   private _clamp(zoom: number): number {
     return Math.min(4, Math.max(0.25, zoom));
@@ -214,6 +245,8 @@ export class DskPanZoom extends HTMLElement {
     )
       return;
     event.preventDefault();
+    this._finishWheel();
+    this._history.begin();
     this._surface.focus({ preventScroll: true });
     this._pointers.set(event.pointerId, this._point(event));
     this._surface.setPointerCapture(event.pointerId);
@@ -249,11 +282,13 @@ export class DskPanZoom extends HTMLElement {
   };
   private readonly _up = (event: PointerEvent): void => {
     this._pointers.delete(event.pointerId);
+    if (!this._pointers.size) this._history.commit();
     if (this._surface.hasPointerCapture(event.pointerId))
       this._surface.releasePointerCapture(event.pointerId);
     this._surface.toggleAttribute('data-dragging', this._pointers.size > 0);
   };
   private readonly _clear = (): void => {
+    if (this._pointers.size) this._history.commit();
     const ids = [...this._pointers.keys()];
     this._pointers.clear();
     for (const id of ids)
@@ -264,6 +299,9 @@ export class DskPanZoom extends HTMLElement {
   private readonly _wheel = (event: WheelEvent): void => {
     if (this._interactive(event)) return;
     event.preventDefault();
+    this._history.begin();
+    clearTimeout(this._wheelTimer);
+    this._wheelTimer = setTimeout(() => this._finishWheel(), 180);
     const unit =
       event.deltaMode === 1
         ? 16
@@ -286,6 +324,16 @@ export class DskPanZoom extends HTMLElement {
     }
   };
   private readonly _key = (event: KeyboardEvent): void => {
+    if (this._interactive(event)) return;
+    this._finishWheel();
+    if (
+      this._history.handle(event, !this._pointers.size, (camera) => {
+        this._camera = { ...camera };
+        this._render(true);
+      })
+    )
+      return;
+
     if (
       this._interactive(event) ||
       event.ctrlKey ||
@@ -293,6 +341,7 @@ export class DskPanZoom extends HTMLElement {
       event.altKey
     )
       return;
+    this._history.begin();
     const step = event.shiftKey ? 80 : 20;
     if (event.key === '+' || event.key === '=') this.zoomBy(1.2);
     else if (event.key === '-') this.zoomBy(1 / 1.2);
@@ -308,6 +357,7 @@ export class DskPanZoom extends HTMLElement {
         event.key === 'ArrowUp' ? step : event.key === 'ArrowDown' ? -step : 0;
       this._render(true);
     } else return;
+    this._history.commit();
     event.preventDefault();
   };
 }

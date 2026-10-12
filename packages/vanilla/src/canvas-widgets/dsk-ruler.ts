@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import {
   rulerStep,
   rulerTicks,
@@ -22,6 +23,21 @@ interface PointerGuideDrag extends GuideDrag {
 
 /** Visible-range ruler with an affine world-coordinate mapping and draggable guides. */
 export class DskRuler extends HTMLElement {
+  private readonly _history = new DskControlHistory(() =>
+    JSON.stringify(this.guides),
+  );
+  private _writingHistory = false;
+  private _setUserGuides(guides: readonly number[]): void {
+    this._history.begin();
+    this._writingHistory = true;
+    try {
+      this.guides = guides;
+    } finally {
+      this._writingHistory = false;
+    }
+    this._history.commit();
+  }
+
   static readonly observedAttributes = [
     'orientation',
     'offset',
@@ -180,7 +196,13 @@ export class DskRuler extends HTMLElement {
     this._frame = 0;
     if (this._overlay.matches(':popover-open')) this._overlay.hidePopover();
   }
-  attributeChangedCallback(name: string): void {
+  attributeChangedCallback(
+    name: string,
+    previous: string | null,
+    current: string | null,
+  ): void {
+    if (previous === current) return;
+    if (name === 'guides' && !this._writingHistory) this._history.reset();
     if (['orientation', 'follow-pan', 'follow-zoom'].includes(name))
       this._applyCamera();
     if (this.hasAttribute('disabled')) this._cancel();
@@ -680,7 +702,7 @@ export class DskRuler extends HTMLElement {
     ) {
       const guides = [...drag.original];
       guides[drag.index] = drag.value;
-      this.guides = guides;
+      this._setUserGuides(guides);
       this._focusAfterRender = drag.index;
       this._emit('guidechange', drag);
     }
@@ -703,6 +725,26 @@ export class DskRuler extends HTMLElement {
     }
   };
   private readonly _key = (event: KeyboardEvent): void => {
+    if (
+      this._history.handle(
+        event,
+        !this.hasAttribute('disabled') && !this._drag,
+        (snapshot) => {
+          const guides: number[] = JSON.parse(snapshot);
+          this._setUserGuides(guides);
+          this.focus();
+          this.dispatchEvent(
+            new CustomEvent<RulerGuideDetail>('guidechange', {
+              detail: { guides, index: -1, value: 0 },
+              bubbles: true,
+              composed: true,
+            }),
+          );
+        },
+      )
+    )
+      return;
+
     if (this.hasAttribute('disabled')) return;
     const button = event
       .composedPath()
@@ -717,7 +759,7 @@ export class DskRuler extends HTMLElement {
           value =
             this.guideOffset +
             (this._vertical ? box.width : box.height) / (2 * this.guideZoom);
-        this.guides = [...original, value];
+        this._setUserGuides([...original, value]);
         this._focusAfterRender = original.length;
         this._emit('guidechange', {
           pointerId: 0,
@@ -735,7 +777,7 @@ export class DskRuler extends HTMLElement {
     if (event.key === 'Delete' || event.key === 'Backspace') {
       event.preventDefault();
       original.splice(index, 1);
-      this.guides = original;
+      this._setUserGuides(original);
       this.dispatchEvent(
         new CustomEvent<RulerGuideDetail>('guidechange', {
           detail: { guides: original, value, index },
@@ -755,7 +797,7 @@ export class DskRuler extends HTMLElement {
           (event.shiftKey ? 10 : 1);
       const guides = [...original];
       guides[index] = next;
-      this.guides = guides;
+      this._setUserGuides(guides);
       this._emit('guidechange', { pointerId: 0, index, value: next, original });
     }
   };

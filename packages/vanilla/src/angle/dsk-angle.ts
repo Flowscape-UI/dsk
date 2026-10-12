@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import {
   type AngleNumber,
   type AngleUnit,
@@ -25,11 +26,13 @@ interface AngleDrag {
 
 /** A compass angle control with a soft sector and a clear central readout. */
 export class DskAngle extends HTMLElement {
+  private readonly _history = new DskControlHistory(() => this.value);
   static readonly observedAttributes = [
     'value',
     'min',
     'max',
     'step',
+    'snap-angle',
     'unit',
     'segments',
     'size',
@@ -140,6 +143,7 @@ export class DskAngle extends HTMLElement {
       'min',
       'max',
       'step',
+      'snapAngle',
       'value',
       'segments',
       'size',
@@ -204,6 +208,8 @@ export class DskAngle extends HTMLElement {
     current: string | null,
   ): void {
     if (previous === current || this._updating) return;
+    if (['value', 'unit', 'min', 'max', 'step'].includes(name))
+      this._history.reset();
     if (name === 'unit' && this._initialized) {
       this._releaseDrag();
       const oldUnit = angleUnit(previous);
@@ -276,6 +282,14 @@ export class DskAngle extends HTMLElement {
   }
   set step(value: AngleNumber) {
     this._setAttribute('step', value);
+  }
+  /** Shift-drag snapping interval, always in degrees. */
+  get snapAngle(): number {
+    const value = angleNumber(this.getAttribute('snap-angle'), 5);
+    return value > 0 ? value : 5;
+  }
+  set snapAngle(value: AngleNumber) {
+    this._setAttribute('snap-angle', value);
   }
   get size(): number {
     const size = angleNumber(this.getAttribute('size'), 208);
@@ -455,6 +469,7 @@ export class DskAngle extends HTMLElement {
     return { angle: pointerDegrees(x, y), radius: Math.hypot(x, y) };
   }
   private _setUserValue(value: number): boolean {
+    this._history.begin();
     const previous = this.value;
     this._updating = true;
     this.setAttribute(
@@ -465,16 +480,17 @@ export class DskAngle extends HTMLElement {
     this._render();
     return previous !== this.value;
   }
-  private _setUserDegrees(degrees: number): void {
+  private _setUserDegrees(degrees: number, shift = false): void {
     const value = snapAngle(
       fromDegrees(degrees, this.unit),
       this.min,
       this.max,
-      this.step,
+      shift ? fromDegrees(this.snapAngle, this.unit) : this.step,
     );
     if (this._setUserValue(value)) this._emit('input');
   }
   private _emit(type: 'input' | 'change'): void {
+    if (type === 'change') this._history.commit();
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
   private readonly _onPointerDown = (event: PointerEvent): void => {
@@ -511,7 +527,8 @@ export class DskAngle extends HTMLElement {
     };
     this._nativeStart = undefined;
     this._container.setPointerCapture(event.pointerId);
-    if (!grabbedMarker) this._setUserDegrees(this._drag.accumulated);
+    if (!grabbedMarker)
+      this._setUserDegrees(this._drag.accumulated, event.shiftKey);
   };
   private _movePointer(event: PointerEvent): void {
     const drag = this._drag;
@@ -534,7 +551,7 @@ export class DskAngle extends HTMLElement {
         )
       : wrapAngle(next, 360);
     drag.previous = point.angle;
-    this._setUserDegrees(drag.accumulated);
+    this._setUserDegrees(drag.accumulated, event.shiftKey);
   }
   private readonly _onPointerMove = (event: PointerEvent): void => {
     this._movePointer(event);
@@ -569,6 +586,18 @@ export class DskAngle extends HTMLElement {
     });
   };
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
+    if (
+      this._history.handle(
+        event,
+        this._editable && !this._drag && this._nativeStart === undefined,
+        (value) => {
+          this._setUserValue(value);
+          this._emit('input');
+          this._emit('change');
+        },
+      )
+    )
+      return;
     if (event.key === 'Escape') {
       if (this._drag) {
         event.preventDefault();

@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 /** Bridge a control whose value or mixed presentation uses a different API. */
 export interface InputGroupAdapter {
   getValue(input: HTMLElement): string;
@@ -25,6 +26,85 @@ const valueAdapter: InputGroupAdapter = {
 
 /** Coordinate editable values without replacing controls or their keyboard behavior. */
 export class DskInputGroup extends HTMLElement {
+  private readonly _history = new DskControlHistory(
+    () => {
+      const values = this.storedValues;
+      return this.inputs.map((input, index) => ({
+        input,
+        value: values[index]!,
+        mixed: this._mixedInputs.has(input),
+      }));
+    },
+    (a, b) =>
+      a.length === b.length &&
+      a.every(
+        (entry, i) =>
+          entry.input === b[i]!.input &&
+          entry.value === b[i]!.value &&
+          entry.mixed === b[i]!.mixed,
+      ),
+  );
+  private _lastHistoryValues: string | undefined;
+  private readonly _beginHistory = (): void => {
+    if (!this.linked) return;
+    const values = JSON.stringify(this.storedValues);
+    if (
+      this._lastHistoryValues !== undefined &&
+      this._lastHistoryValues !== values
+    )
+      this._history.reset();
+    this._lastHistoryValues = values;
+    this._history.begin();
+  };
+  private readonly _historyKey = (event: KeyboardEvent): void => {
+    if (
+      !this.linked ||
+      (event.target instanceof Element &&
+        event.target.closest('dsk-input-group') !== this)
+    )
+      return;
+    this._beginHistory();
+    if (
+      this._history.handle(
+        event,
+        !this.inputs.some((input) => this._locked(input)),
+        (entries) => {
+          if (
+            entries.some((entry, i) => this.inputs[i] !== entry.input) ||
+            entries.length !== this.inputs.length
+          ) {
+            this._history.reset();
+            return;
+          }
+          this._updating = true;
+          try {
+            for (const { input, value, mixed } of entries) {
+              this._restore(input, false);
+              this._mixedInputs.delete(input);
+              this._adapter(input).setValue(input, value);
+              if (mixed) this._mixedInputs.add(input);
+            }
+            for (const { input } of entries) {
+              input.dispatchEvent(
+                new Event('input', { bubbles: true, composed: true }),
+              );
+              input.dispatchEvent(
+                new Event('change', { bubbles: true, composed: true }),
+              );
+            }
+          } finally {
+            this._updating = false;
+            this._refresh();
+            this._lastHistoryValues = JSON.stringify(this.storedValues);
+          }
+        },
+        true,
+      )
+    )
+      return;
+    this._history.begin();
+  };
+
   static readonly observedAttributes = ['mixed-label', 'has-mixed-values'];
   private readonly _automaticMixed = new Set<HTMLElement>();
   private readonly _adapters = new Map<HTMLElement, InputGroupAdapter>();
@@ -47,7 +127,10 @@ export class DskInputGroup extends HTMLElement {
       </style>
       <div part="container"><slot></slot></div>
     `;
-    this._observer = new MutationObserver(() => this._refresh());
+    this._observer = new MutationObserver(() => {
+      this._history.reset();
+      this._refresh();
+    });
   }
 
   connectedCallback(): void {
@@ -59,6 +142,15 @@ export class DskInputGroup extends HTMLElement {
     }
     this._listeners?.abort();
     this._listeners = new AbortController();
+    this.addEventListener('keydown', this._historyKey, {
+      signal: this._listeners.signal,
+      capture: true,
+    });
+    for (const type of ['pointerdown', 'beforeinput'])
+      this.addEventListener(type, this._beginHistory, {
+        signal: this._listeners.signal,
+        capture: true,
+      });
     for (const type of ['input', 'change'])
       this.addEventListener(type, this._onEdit, {
         signal: this._listeners.signal,
@@ -326,7 +418,11 @@ export class DskInputGroup extends HTMLElement {
       event.type === 'change' && this._lastEdits.get(source) === value;
     if (event.type === 'input') this._lastEdits.set(source, value);
     else this._lastEdits.delete(source);
-    if (duplicateCommit) return;
+    if (duplicateCommit) {
+      this._lastHistoryValues = JSON.stringify(this.storedValues);
+      if (this.linked) this._history.commit();
+      return;
+    }
     this._updating = true;
     try {
       this._mixedInputs.delete(source);
@@ -341,6 +437,8 @@ export class DskInputGroup extends HTMLElement {
     } finally {
       this._updating = false;
       this._refresh();
+      this._lastHistoryValues = JSON.stringify(this.storedValues);
+      if (event.type === 'change' && this.linked) this._history.commit();
     }
   };
 

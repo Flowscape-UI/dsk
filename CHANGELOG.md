@@ -2,6 +2,25 @@
 
 Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its publication status. A date in an unreleased entry heading does not indicate an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
 
+## 1.1.0 - 2026-10-12
+
+- **Status:** Ready for release.
+
+### Added
+
+- Configurable `snap-angle` (5 degrees by default) for Shift-dragging angles.
+- Local undo/redo for angles, color controls, curves, guides, cameras, linked fields, and tree edits.
+
+### Changed
+
+- Reuse one bounded history store across editable components. Uploads and non-editable wrappers do not keep history.
+- Document keyboard history and angle snapping in English and Russian, with a playground control for the snap interval.
+
+### Fixed
+
+- Linked field undo restores distinct original values as a group.
+- Homepage ruler guides preserve canvas activation during touch gestures and focus transfers.
+
 ## 1.0.0 - 2026-10-12
 
 - **Status:** Released.

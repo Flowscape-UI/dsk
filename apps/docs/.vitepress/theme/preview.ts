@@ -146,19 +146,35 @@ export const EditorPreview = defineComponent({
         },
         { signal: canvasEvents.signal },
       );
-      view.addEventListener(
-        'focusout',
-        () => {
-          queueMicrotask(() => {
-            if (!view.matches(':focus-within')) canvasActive.value = false;
-          });
-        },
-        { signal: canvasEvents.signal },
-      );
+      const canvasControls = [view, horizontal.value, vertical.value];
+      for (const control of canvasControls) {
+        control?.addEventListener(
+          'focusout',
+          () => {
+            queueMicrotask(() => {
+              if (
+                // A top-layer guide can own focus without matching :focus-within.
+                !canvasControls.some((node) =>
+                  node?.contains(document.activeElement),
+                )
+              )
+                canvasActive.value = false;
+            });
+          },
+          { signal: canvasEvents.signal },
+        );
+      }
       document.addEventListener(
         'pointerdown',
         (event) => {
-          if (!event.composedPath().includes(view)) canvasActive.value = false;
+          const path = event.composedPath();
+          // Ruler guides forward touch gestures into this canvas.
+          if (
+            ![view, horizontal.value, vertical.value].some(
+              (node) => node && path.includes(node),
+            )
+          )
+            canvasActive.value = false;
         },
         options,
       );

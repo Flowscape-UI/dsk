@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import { normalizePageOptions } from './helpers/normalize-page-options.ts';
 import {
   type ColorNumber,
@@ -58,6 +59,7 @@ function normalizeColor(value: string | null | undefined): string {
 
 /** A color picker with built-in and application-defined pixel sources. */
 export class DskColorEyedropper extends HTMLElement {
+  private readonly _history = new DskControlHistory(() => this.color);
   static readonly observedAttributes = [
     'color',
     'mode',
@@ -156,6 +158,9 @@ export class DskColorEyedropper extends HTMLElement {
     }
     this._listeners?.abort();
     this._listeners = new AbortController();
+    this.addEventListener('keydown', this._onHistoryKey, {
+      signal: this._listeners.signal,
+    });
     this._button.addEventListener('click', this._onClick, {
       signal: this._listeners.signal,
     });
@@ -175,6 +180,7 @@ export class DskColorEyedropper extends HTMLElement {
     newValue: string | null,
   ): void {
     if (this._writing || oldValue === newValue) return;
+    if (name === 'color') this._history.reset();
     if (name === 'source') this._source = null;
     if (
       name === 'color' ||
@@ -626,6 +632,7 @@ export class DskColorEyedropper extends HTMLElement {
       );
       return;
     }
+    this._history.begin();
     const color = normalizeColor(result);
     this._selection = undefined;
     this._writing = true;
@@ -634,6 +641,7 @@ export class DskColorEyedropper extends HTMLElement {
     } finally {
       this._writing = false;
     }
+    this._history.commit();
     this._message = `Selected ${color}.`;
     this._render();
     const revision = this._revision;
@@ -710,6 +718,21 @@ export class DskColorEyedropper extends HTMLElement {
       }),
     );
   }
+
+  private readonly _onHistoryKey = (event: KeyboardEvent): void => {
+    this._history.handle(event, !this.disabled && !this._selection, (value) => {
+      this._writing = true;
+      try {
+        this.setAttribute('color', value);
+      } finally {
+        this._writing = false;
+      }
+      this._message = `Selected ${value}.`;
+      this._render();
+      this._emit('input');
+      if (this.color === value) this._emit('change');
+    });
+  };
 
   private _emit(type: 'input' | 'change' | 'pickstart' | 'cancel'): void {
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));

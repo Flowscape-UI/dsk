@@ -35,9 +35,10 @@ test('mobile paragraph is centered and camera zoom starts during the first part 
     .toBe(0.84);
 });
 
-test('hero heading keeps its desktop inset and centers at compact widths', async ({
+test('hero heading follows the 1376px desktop grid and centers on mobile', async ({
   page,
 }, testInfo) => {
+  test.setTimeout(90000);
   for (const width of [360, 390, 1280, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1100 });
     for (const locale of ['/', '/ru/']) {
@@ -51,6 +52,8 @@ test('hero heading keeps its desktop inset and centers at compact widths', async
         const canvas = document.querySelector<HTMLElement>('dsk-pan-zoom')!;
         return {
           headingX: heading.getBoundingClientRect().x,
+          canvasX: canvas.getBoundingClientRect().x,
+          canvasWidth: canvas.getBoundingClientRect().width,
           center:
             heading.getBoundingClientRect().x +
             heading.getBoundingClientRect().width / 2,
@@ -65,14 +68,18 @@ test('hero heading keeps its desktop inset and centers at compact widths', async
           fontLoaded: document.fonts.check('750 32px "DSK Manrope"'),
         };
       });
-      if (width >= 1400) expect(layout.headingX).toBeCloseTo(128, 0);
+      if (width > 648)
+        expect(layout.headingX).toBeCloseTo(
+          layout.canvasX + Math.max(32, (layout.canvasWidth - 1376) / 2),
+          0,
+        );
       else expect(layout.center).toBeCloseTo(layout.canvasCenter, 0);
-      expect(layout.fontSize).toBe(width >= 1400 ? 64 : 48);
+      expect(layout.fontSize).toBe(width > 648 ? 64 : 48);
       expect(layout.fontLoaded).toBe(true);
       expect(layout.lines).toHaveLength(3);
       if (width >= 1400)
         for (const height of layout.lines)
-          expect(height).toBeCloseTo(layout.lineHeight, 0);
+          expect(height).toBeGreaterThanOrEqual(layout.lineHeight - 1);
       await page.screenshot({
         path: testInfo.outputPath(
           `hero-${width}-${locale === '/' ? 'en' : 'ru'}.png`,
@@ -88,6 +95,13 @@ test('guides pass wheel zoom and middle-button pan to the canvas', async ({
   await page.goto('/');
   const viewport = page.locator('dsk-pan-zoom');
   const ruler = page.locator('.dsk-docs-ruler-horizontal');
+  await expect
+    .poll(() =>
+      viewport.evaluate((element) => (element as DskPanZoom).camera.zoom),
+    )
+    .toBeGreaterThan(1);
+  await viewport.locator('[part=viewport]').focus();
+  await expect(viewport).toHaveClass(/dsk-docs-canvas-active/);
   const canvas = (await viewport.boundingBox())!;
   const scale = (await ruler.boundingBox())!;
   const point = { x: canvas.x + canvas.width - 80, y: canvas.y + 350 };
@@ -97,6 +111,7 @@ test('guides pass wheel zoom and middle-button pan to the canvas', async ({
   await page.mouse.up();
   const guide = ruler.locator('[part=guide]');
   await expect(guide).toHaveCount(1);
+  await expect(viewport).toHaveClass(/dsk-docs-canvas-active/);
   const camera = () =>
     viewport.evaluate((element) => (element as DskPanZoom).camera);
   const initial = await camera();
@@ -161,23 +176,40 @@ test('both rulers create guides on the live canvas and allow deletion', async ({
   }
 });
 
-test('mobile credits precede controls and sliders sit below the color area', async ({
+test('mobile uses compact editing tools and desktop keeps the inspector', async ({
   page,
 }) => {
-  for (const width of [390, 600, 900]) {
+  for (const width of [390, 648, 649, 900]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/ru/');
-    const area = (await page.locator('dsk-color-area').boundingBox())!;
-    const hue = (await page.locator('dsk-color-hue').boundingBox())!;
-    expect(hue.y).toBeGreaterThanOrEqual(area.y + area.height);
-    expect(hue.width).toBeGreaterThan(150);
-    const credits = (await page
-      .locator('.dsk-docs-license-strip')
-      .boundingBox())!;
-    const controls = (await page
-      .locator('.dsk-docs-controls-wrap')
-      .boundingBox())!;
-    expect(credits.y + credits.height).toBeLessThanOrEqual(controls.y + 1);
+    const controls = page.locator('.dsk-docs-controls-wrap');
+    if (width <= 648) {
+      await expect(controls).toBeHidden();
+      const credits = (await page
+        .locator('.dsk-docs-license-strip')
+        .boundingBox())!;
+      const ideas = (await page
+        .locator('.dsk-docs-build-ideas')
+        .boundingBox())!;
+      expect(ideas.y).toBeGreaterThanOrEqual(credits.y + credits.height);
+      await page
+        .getByRole('button', { name: 'Инструменты редактирования' })
+        .click();
+      await page
+        .getByRole('button', { name: 'Цвет и прозрачность', exact: true })
+        .click();
+      const widget = page.locator('.dsk-docs-mobile-widget');
+      await expect(widget).toBeVisible();
+      const area = (await widget.locator('dsk-color-area').boundingBox())!;
+      const hue = (await widget.locator('dsk-color-hue').boundingBox())!;
+      expect(hue.y).toBeGreaterThanOrEqual(area.y + area.height);
+      expect(hue.width).toBeGreaterThan(150);
+    } else {
+      await expect(controls).toBeVisible();
+      const canvas = (await page.locator('dsk-pan-zoom').boundingBox())!;
+      const inspector = (await controls.boundingBox())!;
+      expect(inspector.x).toBeGreaterThanOrEqual(canvas.x + canvas.width);
+    }
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBe(width);

@@ -3,7 +3,9 @@ export type RulerOrientation =
 export type RulerRange = readonly [number, number];
 export interface RulerGuideDetail {
   guides: readonly number[];
+  /** Changed guide value; 0 when restoring an entire history snapshot. */
   value: number;
+  /** Changed guide index; -1 when restoring an entire history snapshot. */
   index: number;
 }
 

@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../../helpers/history.ts';
 import {
   type ColorNumber,
   finiteNumber,
@@ -11,6 +12,7 @@ interface SliderDrag {
 
 /** Internal interaction and rendering shared only by the color sliders. */
 export abstract class DskColorSliderBase extends HTMLElement {
+  private readonly _history = new DskControlHistory(() => this.channelValue);
   static readonly observedAttributes = [
     'step',
     'width',
@@ -152,6 +154,7 @@ export abstract class DskColorSliderBase extends HTMLElement {
     current: string | null,
   ): void {
     if (previous === current || this._updating) return;
+    if (name === this.channelAttribute) this._history.reset();
     if (name === 'width' || name === 'height') {
       this._renderSize();
       return;
@@ -272,6 +275,7 @@ export abstract class DskColorSliderBase extends HTMLElement {
   };
 
   private _setUserValue(value: number): boolean {
+    this._history.begin();
     const previous = this.channelValue;
     this._updating = true;
     this.setAttribute(
@@ -283,6 +287,7 @@ export abstract class DskColorSliderBase extends HTMLElement {
     return previous !== this.channelValue;
   }
   private _emit(type: 'input' | 'change'): void {
+    if (type === 'change') this._history.commit();
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
   private _selectPointer(event: PointerEvent): void {
@@ -339,6 +344,18 @@ export abstract class DskColorSliderBase extends HTMLElement {
     });
   };
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
+    if (
+      this._history.handle(
+        event,
+        this._editable && !this._drag && this._nativeStart === undefined,
+        (value) => {
+          this._setUserValue(value);
+          this._emit('input');
+          this._emit('change');
+        },
+      )
+    )
+      return;
     if (event.key === 'Escape') {
       if (this._drag) {
         event.preventDefault();

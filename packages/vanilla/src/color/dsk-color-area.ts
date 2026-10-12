@@ -1,3 +1,4 @@
+import { DskControlHistory } from '../helpers/history.ts';
 import {
   type ColorNumber,
   hsvToHex,
@@ -17,6 +18,9 @@ interface Drag extends Selection {
 
 /** A standalone, square HSV saturation/brightness selection surface. */
 export class DskColorArea extends HTMLElement {
+  private readonly _history = new DskControlHistory(
+    () => `${this.saturation},${this.brightness}`,
+  );
   static readonly observedAttributes = [
     'hue',
     'saturation',
@@ -223,6 +227,7 @@ export class DskColorArea extends HTMLElement {
     newValue: string | null,
   ): void {
     if (oldValue === newValue || this._updating) return;
+    if (['saturation', 'brightness'].includes(name)) this._history.reset();
     if (name === 'width' || name === 'height') {
       this._renderRequestedSize();
       this._scheduleSize();
@@ -399,6 +404,7 @@ export class DskColorArea extends HTMLElement {
   }
 
   private _setSelection(saturation: number, brightness: number): boolean {
+    this._history.begin();
     const before = this._selection();
     this._updating = true;
     this.setAttribute('saturation', String(percentage(saturation)));
@@ -409,6 +415,7 @@ export class DskColorArea extends HTMLElement {
   }
 
   private _emit(type: 'input' | 'change'): void {
+    if (type === 'change') this._history.commit();
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
 
@@ -479,6 +486,19 @@ export class DskColorArea extends HTMLElement {
   };
 
   private readonly _onKeyDown = (event: KeyboardEvent): void => {
+    if (
+      this._history.handle(
+        event,
+        this._editable && !this._drag && this._rangeStart === undefined,
+        (value) => {
+          const [saturation, brightness] = value.split(',').map(Number);
+          this._setSelection(saturation!, brightness!);
+          this._emit('input');
+          this._emit('change');
+        },
+      )
+    )
+      return;
     if (event.key === 'Escape') {
       if (this._drag) {
         event.preventDefault();

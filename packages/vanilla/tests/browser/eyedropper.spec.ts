@@ -652,3 +652,20 @@ test('playground settings, native selection, event log and reset stay synchroniz
     });
   }
 });
+
+test('accepted picks can be undone and redone from the focused picker', async ({
+  page,
+}) => {
+  const initial = await page.evaluate(() => window.testEyedropper.color);
+  await page.locator('#eyedropper-under-test').click();
+  await page.evaluate(() =>
+    window.eyedropperHarness.calls.at(-1)!.resolve({ sRGBHex: '#123456' }),
+  );
+  const picker = page.locator('#eyedropper-under-test');
+  await expect(picker).toHaveAttribute('color', '#123456');
+  await picker.evaluate((element) => element.focus());
+  await page.keyboard.press('Control+z');
+  expect(await page.evaluate(() => window.testEyedropper.color)).toBe(initial);
+  await page.keyboard.press('Control+Shift+z');
+  await expect(picker).toHaveAttribute('color', '#123456');
+});

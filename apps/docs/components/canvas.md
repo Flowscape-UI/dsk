@@ -648,3 +648,7 @@ declare module 'react' {
   }
 }
 ```
+
+## Edit history
+
+Focus the viewport or ruler for Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z. Camera drags are grouped; wheel events within 180 ms form one edit. Rulers restore guide creation, movement and deletion. Restoring guides emits guidechange with the complete guides array, index -1 and value 0 to identify snapshot restoration. Camera history emits viewportchange. Canvas markers do not own editable state or history.

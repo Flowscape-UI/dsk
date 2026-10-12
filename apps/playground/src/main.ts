@@ -1269,6 +1269,7 @@ const angleAttributes = [
   'min',
   'max',
   'step',
+  'snap-angle',
   'segments',
   'size',
   'color',

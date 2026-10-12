@@ -28,6 +28,8 @@ Public library variables and classes use the `dsk-` prefix. The shared styleshee
 
 Components should support keyboard interaction, visible focus, accessible names, disabled states, and resource cleanup. The eyedropper detects browser support and exposes its availability to applications.
 
+Component-local undo/redo shares the internal `DskHistory<T>` store in `src/helpers/history.ts`. It keeps at most 100 immutable snapshots, discards redo after a new committed edit, and does not own DOM events. `DskControlHistory<T>` bridges snapshot capture and keyboard shortcuts. Components decide transaction boundaries and restore through their own event contracts. Linked inputs and layer trees capture composite snapshots. Uploads and presentation-only wrappers have no history. This is not application-wide document history.
+
 ## Input base and value representations
 
 `DskInputBase` owns the shared shadow layout, drag handle, native text field, pointer capture and lock, keyboard controls, selection, history, looping, tags, events, forms, and cleanup. It exposes standard `input` and `change` events, reflected configuration properties, a string `value`, and numeric `valueAsNumber`. The abstract base is exported for extensions but is not itself registered as a custom element.

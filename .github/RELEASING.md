@@ -1,4 +1,4 @@
-# Releasing DSK 1.0.0
+# Releasing DSK
 
 This is the owner-operated release guide for [Flowscape-UI/dsk](https://github.com/Flowscape-UI/dsk). Preparing these files does not publish a package, create a GitHub release, or deploy a site.
 
@@ -31,13 +31,13 @@ A pending version reserves its version number: the release workflow cannot publi
 
 See [staged publishing](https://docs.npmjs.com/staged-publishing/) and [npm stage](https://docs.npmjs.com/cli/v11/commands/npm-stage/).
 
-## Publish 1.0.0
+## Publish 1.1.0
 
-1. Verify `packages/vanilla/package.json` says `1.0.0` and the matching changelog entry says `Ready for release`. The library has no private flag; root and applications stay private.
-2. Run `pnpm check`, `pnpm test:browser`, and `pnpm test:package`. Review documentation separately: `pnpm check` does not run its browser suite. CONTRIBUTING.md records previously unresolved documentation scenarios; reconcile them before declaring all documentation tests green.
-3. In GitHub Releases, draft a release titled **DSK 1.0.0**, create tag **v1.0.0** at the reviewed commit, and copy the release notes below. Keep it a draft until CI passes, the Trusted Publisher is configured, and no pending stage reserves `1.0.0`.
+1. Verify `packages/vanilla/package.json` says `1.1.0` and the matching changelog entry says `Ready for release`. The library has no private flag; root and applications stay private.
+2. Run `pnpm check`, `pnpm test:browser`, and `pnpm test:package`. Review documentation separately: `pnpm check` does not run its browser suite. Run the relevant documentation scenarios and report their results separately.
+3. In GitHub Releases, draft a release titled **DSK 1.1.0**, create tag **v1.1.0** at the reviewed commit, and copy the release notes below. Keep it a draft until CI passes, the Trusted Publisher is configured, and no pending stage reserves `1.1.0`.
 4. Click **Publish release**, with prerelease unchecked. This explicitly triggers `publish-npm.yml`, which validates metadata, checks and builds the project, packs using pnpm, verifies the archive, and publishes that same archive to npm.
-5. Confirm `npm view @flowscape-ui/dsk@1.0.0 version` returns `1.0.0`. Then mark the changelog entry `Released` and add the actual **Released at** timestamp. Do not invent a release timestamp before publication succeeds.
+5. Confirm `npm view @flowscape-ui/dsk@1.1.0 version` returns `1.1.0`. Then mark the changelog entry `Released` and add the actual **Released at** timestamp. Do not invent a release timestamp before publication succeeds.
 
 Do not run `npm publish` on the workspace directory: pnpm packing replaces source-only exports with distribution paths. If a run fails after npm already accepted the version, inspect the registry before retrying; npm versions cannot be overwritten.
 
@@ -57,14 +57,15 @@ The workflow already grants `id-token: write` and uses a compatible npm runtime.
 
 ## Release notes to paste
 
-DSK 1.0.0 is the first stable release of Design System Kit: framework-independent Web Components for creative tools and editors.
+DSK 1.1.0 adds consistent keyboard history to editor controls and configurable angle snapping.
 
-- 19 custom elements for numeric, HEX, color and file inputs, groups, color controls and eyedroppers, angles, curves, layer trees, pan/zoom, rulers, and canvas markers.
-- Typed events and APIs, keyboard interaction, CSS custom properties, and shadow parts.
-- ESM and standalone browser builds, TypeScript declarations, and shared styles.
-- English and Russian documentation with interactive demos and downloadable integrations for tldraw, Excalidraw, React Flow, Three.js, Konva.js, and Fabric.js.
-- MIT license.
+- Undo/redo with Ctrl+Z / Ctrl+Shift+Z (Cmd on macOS) for angles, color controls, curves, ruler guides, pan/zoom cameras, linked fields, and layer edits.
+- Shift-drag angle snapping in 5-degree increments by default, configurable with `snap-angle` or `snapAngle`.
+- Shared bounded history implementation, with grouped pointer gestures and programmatic updates kept separate from user edits.
+- Linked field undo restores each field's original value; uploaded files are excluded from history.
+- Updated English and Russian API documentation and playground controls.
+- Fixed homepage ruler touch gestures and focus transfers preserving canvas activation.
 
-Install: `npm i @flowscape-ui/dsk`
+Install after publication: `npm i @flowscape-ui/dsk@1.1.0`
 
 Documentation: https://flowscape-ui.github.io/dsk/

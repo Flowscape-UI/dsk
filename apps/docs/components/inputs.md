@@ -1608,3 +1608,7 @@ The files below power the complete inspector on this page, including pan/zoom, u
 <<< @/snippets/input-lab.css
 
 </details>
+
+## Edit history
+
+Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z use the shared bounded history store. Linked groups restore all field values together, including different starting values. Unlinked fields keep independent history. Upload controls intentionally have no file history.
