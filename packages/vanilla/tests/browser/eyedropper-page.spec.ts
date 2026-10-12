@@ -340,11 +340,12 @@ test('page capture embeds imported fonts and refreshes changed stylesheets on la
       },
       { pass, size, color, fontOrigin },
     );
-    expect(
-      await page
-        .locator('#font-sample')
-        .evaluate((node) => node.getBoundingClientRect().width),
-    ).toBe(size * 5);
+    const width = await page
+      .locator('#font-sample')
+      .evaluate((node) => node.getBoundingClientRect().width);
+    // Linux font metrics can round max-content up by one Blink layout unit.
+    // Keep this below a physical pixel; glyph coverage is checked separately.
+    expect(Math.abs(width - size * 5)).toBeLessThanOrEqual(1 / 64);
     await capture(page);
     const coverage = await page.evaluate(
       ({ size, color }) => {
@@ -566,7 +567,12 @@ for (const ratio of [1.25, 1.5, 2]) {
         await document.fonts.load('12px ResolutionAhem', 'XX XX');
         await document.fonts.ready;
       }, origin);
-      await expect(page.locator('#resolution-text')).toHaveCSS('width', '60px');
+      const width = await page
+        .locator('#resolution-text')
+        .evaluate((node) => node.getBoundingClientRect().width);
+      // Allow one layout unit of font-metric rounding across platforms.
+      // The capture must still preserve physical-pixel edges and glyph positions.
+      expect(Math.abs(width - 60)).toBeLessThanOrEqual(1 / 64);
       const screenshot = await page.screenshot({ scale: 'device' });
       const baseline = await resolutionPixels(
         page,

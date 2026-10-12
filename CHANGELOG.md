@@ -59,6 +59,7 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 
 ### Fixed
 
+- Allowed one layout unit of platform font-metric rounding in page-eyedropper fixture widths while retaining pixel-edge and glyph-coverage checks.
 - Removed the npm token fallback from the release workflow and documented first-package creation through local staged publishing before configuring OIDC.
 - Selected full Chromium for library browser checks on Linux and macOS so CI exercises browser-level Pointer Lock and profile zoom rather than headless shell.
 - Excluded the local playground from Pages and corrected installation CDN examples for version 1.0.0.
