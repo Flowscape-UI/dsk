@@ -2,9 +2,10 @@
 
 Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its publication status. A date in an unreleased entry heading does not indicate an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
 
-## 1.1.0 - 2026-10-12
+## 1.1.0 - 2026-10-13
 
-- **Status:** Ready for release.
+- **Status:** Released.
+- **Released at:** `2026-10-13T00:07:27+03:00` (Europe/Chisinau).
 
 ### Added
 
