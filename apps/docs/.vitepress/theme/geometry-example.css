@@ -1,0 +1,103 @@
+.dsk-geometry-example {
+  --dsk-angle-color: var(--vp-c-brand-2);
+  --dsk-angle-active-color: var(--vp-c-brand-2);
+  --dsk-angle-track-color: var(--vp-c-divider);
+  --dsk-angle-label-color: var(--vp-c-text-2);
+  --dsk-angle-text-color: var(--vp-c-text-1);
+  --dsk-curve-color: var(--vp-c-brand-2);
+  --dsk-curve-background: var(--vp-c-bg-alt);
+  --dsk-curve-text-color: var(--vp-c-text-1);
+  --dsk-curve-muted-color: var(--vp-c-text-2);
+  --dsk-curve-border-color: var(--vp-c-divider);
+  --dsk-curve-grid-color: var(--vp-c-divider);
+}
+.dsk-geometry-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  place-items: center;
+  margin-bottom: 20px;
+}
+.dsk-geometry-controls dsk-curve {
+  width: 100%;
+  min-width: 0;
+}
+.dsk-geometry-example dsk-curve::part(container) {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+.dsk-geometry-example dsk-curve::part(preset) {
+  border-radius: 0;
+}
+.dsk-geometry-example dsk-pan-zoom {
+  display: block;
+  height: 100%;
+  min-height: 300px;
+}
+.dsk-geometry-stage {
+  display: grid;
+  place-items: center;
+  height: 170px;
+  min-width: 0;
+}
+.dsk-geometry-example dsk-pan-zoom .dsk-geometry-stage {
+  width: 260px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+}
+.dsk-geometry-shape {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  place-items: center;
+  background: var(--vp-c-brand-2);
+  color: white;
+  font-size: 26px;
+  font-weight: 750;
+}
+.dsk-geometry-reference {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
+}
+.dsk-geometry-motion {
+  padding: 20px;
+  overflow: hidden;
+}
+.dsk-geometry-motion p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+.dsk-geometry-actions {
+  display: flex;
+  gap: 12px;
+}
+.dsk-geometry-value {
+  display: block;
+  margin-top: 20px;
+  font: 12px/1.6 var(--vp-font-family-mono);
+  overflow-wrap: anywhere;
+  max-height: 100px;
+  overflow: auto;
+}
+.dsk-geometry-example-styled {
+  --dsk-angle-sector-opacity: 0.25;
+  --dsk-curve-grid-color: transparent;
+}
+.dsk-geometry-example-styled dsk-angle::part(needle) {
+  stroke-width: 4;
+}
+.dsk-geometry-example-styled dsk-curve::part(curve) {
+  stroke-width: 4;
+}
+@media (min-width: 649px) and (max-width: 1100px) {
+  .dsk-geometry-example .dsk-example-panel-split {
+    grid-template-columns: 1fr;
+  }
+  .dsk-geometry-example .dsk-example-panel-preview {
+    border-left: 0;
+    border-top: 1px solid var(--vp-c-divider);
+  }
+}

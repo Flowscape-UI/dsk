@@ -1,0 +1,85 @@
+{
+  "name": "@flowscape-ui/dsk",
+  "version": "1.0.0",
+  "description": "Framework-free TypeScript UI primitives for Flowscape editors and whiteboards",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "./src/index.ts",
+    "./src/*/index.ts",
+    "./dist/index.js",
+    "./dist/dsk.global.js"
+  ],
+  "files": [
+    "dist",
+    "assets"
+  ],
+  "exports": {
+    ".": {
+      "development": {
+        "types": "./src/index.ts",
+        "default": "./src/index.ts"
+      },
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": {
+      "development": {
+        "types": "./src/styles.d.css.ts",
+        "default": "./src/styles.css"
+      },
+      "types": "./dist/styles.d.css.ts",
+      "default": "./dist/styles.css"
+    },
+    "./logo.svg": "./assets/dsk-logo.svg",
+    "./global": "./dist/dsk.global.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "node --test tests/unit/input/numbers.test.ts tests/unit/input/expression.test.ts tests/unit/input/hex.test.ts tests/unit/input/hex-expression.test.ts tests/unit/input/hex-stepping.test.ts tests/unit/color/color-model.test.ts tests/unit/angle/angle-model.test.ts tests/unit/curve/curve-model.test.ts tests/unit/ruler/ruler-model.test.ts tests/unit/ruler/coordinates.test.ts",
+    "prepack": "pnpm build",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.tests.json",
+    "test:browser": "playwright test",
+    "test:types": "tsc -p tests/types/tsconfig.json",
+    "test:package": "playwright test --config playwright.package.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tsdown/css": "0.23.1",
+    "tsdown": "0.23.1",
+    "typescript": "6.0.3"
+  },
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "dom-to-image-more": "3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flowscape-UI/dsk.git",
+    "directory": "packages/vanilla"
+  },
+  "unpkg": "./dist/dsk.global.js",
+  "jsdelivr": "./dist/dsk.global.js",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./styles.css": {
+        "types": "./dist/styles.d.css.ts",
+        "default": "./dist/styles.css"
+      },
+      "./logo.svg": "./assets/dsk-logo.svg",
+      "./global": "./dist/dsk.global.js",
+      "./package.json": "./package.json"
+    }
+  },
+  "homepage": "https://flowscape-ui.github.io/dsk/",
+  "bugs": {
+    "url": "https://github.com/Flowscape-UI/dsk/issues"
+  }
+}

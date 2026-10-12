@@ -1,0 +1,11 @@
+.dsk-excalidraw-example .excalidraw {
+  --color-primary: #ff7bb7;
+  --color-primary-darker: #ff0073;
+  --color-primary-light: #502139;
+  --island-bg-color: #1d1d21;
+}
+
+/* The engine fills the same viewport used by the DSK rulers and marker. */
+.dsk-excalidraw-example .dsk-engine-surface {
+  isolation: isolate;
+}

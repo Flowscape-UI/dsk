@@ -1,0 +1,97 @@
+.dsk-layer-example {
+  --dsk-tree-radius: 0px;
+  --dsk-tree-color: var(--vp-c-text-1);
+  --dsk-tree-hover-background: #251923;
+  --dsk-tree-focus-color: var(--vp-c-brand-2);
+  --dsk-tree-drop-color: var(--vp-c-brand-2);
+  --dsk-tree-drop-dot-background: var(--vp-c-bg);
+  --dsk-tree-editor-background: var(--vp-c-bg);
+  --dsk-tree-search-border: #39393f;
+  --dsk-tree-search-background: var(--vp-c-bg);
+  --dsk-tree-search-padding: 0 0 16px;
+  --dsk-tree-muted-color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+.dsk-layer-example .dsk-example-panel-controls {
+  padding: 20px 12px;
+}
+.dsk-layer-example dsk-layer-tree {
+  margin-bottom: 20px;
+}
+.dsk-layer-example output {
+  display: block;
+  margin-top: 16px;
+  font: 12px/1.6 var(--vp-font-family-mono);
+  overflow-wrap: anywhere;
+}
+.dsk-layer-example dsk-pan-zoom {
+  display: block;
+  height: 280px;
+}
+.dsk-layer-example p {
+  margin: 0;
+  padding: 16px;
+  border-top: 1px solid var(--vp-c-divider);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+.dsk-layer-scene {
+  width: 220px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  position: relative;
+}
+.dsk-layer-scene .layer-shape {
+  position: absolute;
+  width: 140px;
+  height: 130px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  color: white;
+  font-size: 18px;
+  font-weight: 650;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.dsk-layer-scene [data-layer='pink'] {
+  top: 15px;
+  left: 0;
+  background: #ff0073;
+}
+.dsk-layer-scene [data-layer='violet'] {
+  bottom: 0;
+  right: 0;
+  background: #7755ff;
+}
+.dsk-layer-scene .is-selected {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+.dsk-layer-example-custom {
+  --dsk-tree-indent: 24px;
+  --dsk-tree-row-height: 40px;
+  --dsk-tree-icon-color: var(--vp-c-brand-2);
+}
+.dsk-layer-example-custom dsk-list-value::part(row) {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.dsk-layer-example-custom dsk-list-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dsk-layer-example-custom small {
+  color: var(--vp-c-text-2);
+  font-size: 11px;
+}
+@media (min-width: 649px) and (max-width: 1100px) {
+  .dsk-layer-example .dsk-example-panel-split {
+    grid-template-columns: 1fr;
+  }
+  .dsk-layer-example .dsk-example-panel-preview {
+    border-left: 0;
+    border-top: 1px solid var(--vp-c-divider);
+  }
+}

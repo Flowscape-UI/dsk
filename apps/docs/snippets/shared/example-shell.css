@@ -1,0 +1,110 @@
+.dsk-engine-example {
+  border: 1px solid var(--vp-c-divider, #39393f);
+  background: #111;
+  color: #fff;
+  --dsk-input-background: #171717;
+  --dsk-input-color: #fff;
+  --dsk-input-border: 1px solid #39393f;
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 36px;
+  --dsk-input-focus-color: #ff0073;
+  --dsk-ruler-background: #171717;
+  --dsk-ruler-color: #bbbbc4;
+  --dsk-marker-background: #ff0073;
+  --dsk-marker-radius: 0px;
+}
+.dsk-engine-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+}
+.dsk-engine-toolbar button {
+  padding: 6px 10px;
+  border: 1px solid #39393f;
+  background: #171717;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.dsk-engine-toolbar button:hover {
+  background: #29232a;
+}
+.dsk-engine-toolbar button:focus-visible {
+  outline: 2px solid #ff0073;
+  outline-offset: 2px;
+}
+.dsk-engine-inspector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 12px 12px;
+}
+.dsk-engine-inspector label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  min-width: 0;
+}
+.dsk-engine-inspector dsk-input {
+  width: 100%;
+  min-width: 0;
+}
+.dsk-engine-selection {
+  display: block;
+  padding: 0 12px 12px;
+  font: 12px/1.5 monospace;
+  overflow-wrap: anywhere;
+}
+.dsk-engine-layout {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  grid-template-rows: 24px 420px;
+}
+.dsk-engine-x {
+  grid-column: 2;
+  grid-row: 1;
+}
+.dsk-engine-y {
+  grid-column: 1;
+  grid-row: 2;
+}
+.dsk-engine-corner {
+  background: #171717;
+}
+.dsk-engine-viewport {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+.dsk-engine-surface,
+.dsk-engine-overlay {
+  position: absolute;
+  inset: 0;
+}
+.dsk-engine-overlay {
+  pointer-events: none;
+  z-index: 300;
+}
+.dsk-engine-overlay dsk-canvas-marker {
+  transform: translate(-100%, 12px);
+}
+.dsk-engine-surface > canvas {
+  display: block;
+}
+.dsk-engine-surface:focus-visible {
+  outline: 2px solid #ff0073;
+  outline-offset: -2px;
+}
+@media (max-width: 648px) {
+  .dsk-engine-inspector {
+    grid-template-columns: 1fr;
+  }
+  .dsk-engine-inspector label {
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+  }
+}

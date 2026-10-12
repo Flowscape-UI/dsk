@@ -1,0 +1,98 @@
+.dsk-tldraw-example {
+  border: 1px solid var(--vp-c-divider, #39393f);
+  --dsk-input-background: #171717;
+  --dsk-input-color: #ffffff;
+  --dsk-input-border: 1px solid #39393f;
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 36px;
+  --dsk-input-focus-color: #ff0073;
+  --dsk-ruler-background: #171717;
+  --dsk-ruler-color: #bbbbc4;
+  --dsk-marker-background: #ff0073;
+  --dsk-marker-radius: 0px;
+}
+.dsk-tldraw-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+}
+.dsk-tldraw-toolbar button {
+  padding: 6px 10px;
+  border: 1px solid #39393f;
+  background: #171717;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.dsk-tldraw-toolbar button:focus-visible {
+  outline: 2px solid #ff0073;
+  outline-offset: 2px;
+}
+.dsk-tldraw-inspector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 12px 12px;
+}
+.dsk-tldraw-inspector label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  min-width: 0;
+}
+.dsk-tldraw-inspector dsk-input {
+  width: 100%;
+  min-width: 0;
+}
+.dsk-tldraw-selection {
+  display: block;
+  padding: 0 12px 12px;
+  font: 12px/1.5 monospace;
+  overflow-wrap: anywhere;
+}
+.dsk-tldraw-layout {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  grid-template-rows: 24px 420px;
+}
+.dsk-tldraw-x {
+  grid-column: 2;
+  grid-row: 1;
+}
+.dsk-tldraw-y {
+  grid-column: 1;
+  grid-row: 2;
+}
+.dsk-tldraw-corner {
+  background: #171717;
+}
+.dsk-tldraw-viewport {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+.dsk-tldraw-react,
+.dsk-tldraw-overlay {
+  position: absolute;
+  inset: 0;
+}
+.dsk-tldraw-overlay {
+  pointer-events: none;
+  z-index: 300;
+}
+.dsk-tldraw-overlay dsk-canvas-marker {
+  transform: translate(-100%, 12px);
+}
+@media (max-width: 648px) {
+  .dsk-tldraw-inspector {
+    grid-template-columns: 1fr;
+  }
+  .dsk-tldraw-inspector label {
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+  }
+}

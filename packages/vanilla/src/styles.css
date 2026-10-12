@@ -1,0 +1,12 @@
+.dsk-theme {
+  --dsk-color-background: #15171b;
+  --dsk-color-surface: #202329;
+  --dsk-color-text: #f0f1f3;
+  --dsk-color-muted: #aeb5c2;
+  --dsk-color-accent: #b2f57b;
+  --dsk-color-border: #373d47;
+  --dsk-radius: 12px;
+  --dsk-font-family: system-ui, sans-serif;
+  color: var(--dsk-color-text);
+  font-family: var(--dsk-font-family);
+}

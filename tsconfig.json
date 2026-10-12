@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "customConditions": ["development"],
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "eslint.config.ts",
+    "packages/*/scripts/**/*.ts",
+    "scripts/**/*.ts"
+  ]
+}

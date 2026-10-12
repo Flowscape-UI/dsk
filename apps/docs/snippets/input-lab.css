@@ -1,0 +1,163 @@
+.dsk-input-lab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 0;
+  background: var(--vp-c-bg, #111111);
+  color: #eee;
+  font:
+    14px/1.5 var(--vp-font-family-base, system-ui),
+    sans-serif;
+  --dsk-input-width: 100%;
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 36px;
+  --dsk-input-background: var(--dsk-example-surface, #1a181a);
+  --dsk-input-color: #eee;
+  --dsk-input-border: 1px solid var(--dsk-example-divider, #303033);
+  --dsk-input-focus-color: #ff007a;
+  --dsk-input-group-wrap: wrap;
+  --dsk-pan-zoom-grid-color: var(--dsk-example-divider, #303033);
+}
+.dsk-input-lab-controls {
+  min-width: 0;
+  padding: 20px;
+}
+.dsk-input-lab * {
+  box-sizing: border-box;
+}
+.dsk-input-lab fieldset {
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 10px;
+  border: 1px solid var(--dsk-example-divider, #303033);
+  border-radius: 0;
+}
+.dsk-input-lab legend {
+  padding: 0 6px;
+  color: var(--dsk-example-accent, #ff0073);
+  font:
+    12px ui-monospace,
+    monospace;
+}
+.dsk-input-lab label {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+.dsk-input-lab .dsk-input-lab-check {
+  display: flex;
+}
+.dsk-input-lab label > :is(dsk-input, dsk-input-hex, dsk-input-color) {
+  flex: 1;
+  min-width: 0;
+}
+.dsk-input-lab dsk-input-group > label {
+  width: 100%;
+}
+.dsk-input-lab small {
+  display: block;
+  color: var(--dsk-example-muted, #bcb9bf);
+  font-size: 12px;
+}
+.dsk-input-lab button,
+.dsk-input-lab select {
+  color: #fff;
+  background: #111111;
+  border: 1px solid var(--dsk-example-divider, #303033);
+  border-radius: 0;
+  padding: 5px 10px;
+  cursor: pointer;
+  font: inherit;
+}
+.dsk-input-lab button:focus-visible,
+.dsk-input-lab select:focus-visible {
+  outline: 2px solid var(--dsk-example-accent, #ff0073);
+  outline-offset: 2px;
+}
+.dsk-input-lab-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.dsk-input-lab-preview {
+  min-width: 0;
+  padding: 20px;
+  border-left: 1px solid var(--dsk-example-divider, #303033);
+  align-self: start;
+  position: sticky;
+  top: 80px;
+}
+.dsk-input-lab dsk-pan-zoom {
+  height: 320px;
+  border: 1px solid var(--dsk-example-divider, #303033);
+  border-radius: 0;
+  overflow: hidden;
+}
+.dsk-input-lab-object {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: 0 20px 45px -20px #ff007a80;
+}
+.dsk-input-lab-object img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dsk-input-lab-object img[hidden] {
+  display: none;
+}
+.dsk-input-lab-object span {
+  position: relative;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  font-size: 24px;
+  font-weight: 750;
+  text-shadow: 0 1px 4px #0008;
+}
+.dsk-input-lab-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 0;
+  font-size: 12px;
+}
+.dsk-input-lab-status {
+  display: block;
+  min-height: 24px;
+  color: var(--dsk-example-muted, #bcb9bf);
+}
+.dsk-input-lab .dsk-input-lab-state {
+  margin: 8px 0 0;
+  padding: 12px;
+  overflow: auto;
+  border-radius: 0;
+  background: var(--dsk-example-surface, #151515);
+  font:
+    12px/1.6 ui-monospace,
+    monospace;
+}
+@media (max-width: 648px) {
+  .dsk-input-lab {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+  .dsk-input-lab-preview {
+    position: static;
+    grid-row: 1;
+    border-left: 0;
+    border-bottom: 1px solid var(--dsk-example-divider, #303033);
+  }
+  .dsk-input-lab dsk-pan-zoom {
+    height: 260px;
+  }
+}

@@ -1,0 +1,94 @@
+.dsk-canvas-example {
+  --dsk-ruler-background: var(--vp-c-bg-alt);
+  --dsk-ruler-color: var(--vp-c-text-2);
+  --dsk-ruler-tick-color: var(--vp-c-text-3);
+  --dsk-marker-background: var(--vp-c-brand-2);
+  --dsk-marker-radius: 0px;
+  --dsk-marker-shadow: none;
+}
+.dsk-canvas-toolbar,
+.dsk-canvas-tracking {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.dsk-canvas-tracking label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.dsk-canvas-camera {
+  font: 12px var(--vp-font-family-mono);
+}
+.dsk-canvas-scene {
+  position: relative;
+  min-width: 0;
+}
+.dsk-canvas-scene dsk-pan-zoom {
+  height: 320px;
+}
+.dsk-canvas-with-rulers {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  grid-template-rows: 24px 320px;
+}
+.dsk-canvas-x {
+  grid-column: 2;
+  grid-row: 1;
+}
+.dsk-canvas-y {
+  grid-column: 1;
+  grid-row: 2;
+}
+.dsk-canvas-corner {
+  background: var(--vp-c-bg-alt);
+}
+.dsk-canvas-with-rulers dsk-pan-zoom {
+  grid-column: 2;
+  grid-row: 2;
+}
+.dsk-canvas-object {
+  position: absolute;
+  left: -60px;
+  top: -60px;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  background: var(--vp-c-brand-2);
+  color: white;
+  font-size: 30px;
+  font-weight: 750;
+}
+.dsk-canvas-example p {
+  padding: 12px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+}
+.dsk-canvas-events {
+  display: block;
+  padding: 0 12px 12px;
+  font: 12px var(--vp-font-family-mono);
+  overflow-wrap: anywhere;
+}
+.dsk-canvas-events:empty {
+  display: none;
+}
+.dsk-canvas-example-styled {
+  --dsk-marker-background: #171717;
+  --dsk-marker-color: #ff70ae;
+  --dsk-marker-padding: 10px 12px;
+  --dsk-ruler-guide-color: #ff70ae;
+  --dsk-ruler-accent: #ffffff;
+  --dsk-ruler-highlight: #ff007330;
+}
+.dsk-canvas-example-styled dsk-canvas-marker::part(container) {
+  border: 1px solid #ff70ae;
+}

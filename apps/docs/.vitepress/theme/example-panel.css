@@ -1,0 +1,88 @@
+.dsk-example-panel {
+  margin: 24px 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-base);
+  --dsk-example-surface: var(--vp-c-bg-alt);
+  --dsk-example-divider: var(--vp-c-divider);
+  --dsk-example-text: var(--vp-c-text-1);
+  --dsk-example-muted: var(--vp-c-text-2);
+  --dsk-example-accent: var(--vp-c-brand-2);
+  --dsk-input-background: var(--vp-c-bg-soft);
+  --dsk-input-color: var(--vp-c-text-1);
+  --dsk-input-border: 1px solid var(--vp-c-divider);
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 36px;
+  --dsk-input-focus-color: var(--vp-c-brand-2);
+  --dsk-pan-zoom-grid-color: var(--vp-c-divider);
+}
+.dsk-example-panel *,
+.dsk-example-panel *::before,
+.dsk-example-panel *::after {
+  box-sizing: border-box;
+}
+.dsk-example-panel-content,
+.dsk-example-panel-content > div,
+.dsk-example-panel-preview,
+.dsk-example-panel-controls {
+  min-width: 0;
+}
+.dsk-example-panel-title {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.dsk-example-panel-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.dsk-example-panel-controls {
+  padding: 24px;
+  background: var(--vp-c-bg-alt);
+}
+.dsk-example-panel-preview {
+  border-left: 1px solid var(--vp-c-divider);
+}
+.dsk-example-panel :is(button, select) {
+  min-height: 32px;
+  max-width: 100%;
+  padding: 5px 10px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  color-scheme: dark;
+}
+.dsk-example-panel :is(button, select):hover {
+  border-color: var(--vp-c-text-3);
+}
+.dsk-example-panel :is(button, select, input):focus-visible {
+  outline: 2px solid var(--vp-c-brand-2);
+  outline-offset: 3px;
+}
+.dsk-example-panel input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--vp-c-brand-2);
+  cursor: pointer;
+}
+@media (max-width: 648px) {
+  .dsk-example-panel-split {
+    grid-template-columns: 1fr;
+  }
+  .dsk-example-panel-controls {
+    padding: 20px;
+  }
+  .dsk-example-panel-preview {
+    border-left: 0;
+    border-top: 1px solid var(--vp-c-divider);
+  }
+}

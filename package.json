@@ -1,0 +1,44 @@
+{
+  "name": "flowscape-ui",
+  "private": true,
+  "license": "MIT",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=24.11.0",
+    "pnpm": ">=10 <11"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:playground": "turbo run dev --filter=@dsk/playground",
+    "dev:docs": "turbo run dev --filter=@dsk/docs -- --host",
+    "build": "turbo run build",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm --filter @flowscape-ui/dsk test",
+    "test:browser": "pnpm --filter @flowscape-ui/dsk test:browser",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm test:types",
+    "test:types": "pnpm --filter @flowscape-ui/dsk test:types",
+    "typecheck": "tsc --noEmit && pnpm -r --if-present typecheck",
+    "test:docs": "pnpm --filter @dsk/docs test:e2e",
+    "pages:build": "node scripts/build-pages.ts",
+    "test:package": "pnpm --filter @flowscape-ui/dsk test:package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.1",
+    "eslint": "^10.12.0",
+    "jiti": "2.7.0",
+    "prettier": "3.9.9",
+    "turbo": "^2.11.7",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "^8.3.2"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flowscape-UI/dsk.git"
+  }
+}

@@ -1,0 +1,5 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+patchedDependencies:
+  vitepress@1.6.4: patches/vitepress@1.6.4.patch

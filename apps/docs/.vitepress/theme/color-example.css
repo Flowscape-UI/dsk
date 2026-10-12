@@ -1,0 +1,96 @@
+.dsk-color-example {
+  --dsk-color-area-radius: 0px;
+  --dsk-color-area-focus-color: var(--vp-c-brand-2);
+  --dsk-color-slider-radius: 0px;
+  --dsk-color-slider-focus-color: var(--vp-c-brand-2);
+  --dsk-color-eyedropper-background: var(--vp-c-bg-soft);
+  --dsk-color-eyedropper-color: var(--vp-c-text-1);
+  --dsk-color-eyedropper-border-color: var(--vp-c-divider);
+  --dsk-color-eyedropper-hover-background: var(--vp-c-bg-elv);
+  --dsk-color-eyedropper-active-color: var(--vp-c-brand-2);
+  --dsk-color-eyedropper-focus-color: var(--vp-c-brand-2);
+  --dsk-color-eyedropper-radius: 0px;
+}
+.dsk-color-example .dsk-example-panel-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dsk-color-example-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.dsk-color-example-value {
+  display: block;
+  border-top: 1px solid var(--vp-c-divider);
+  margin-top: 24px;
+  padding-top: 16px;
+  font: 13px/1.6 var(--vp-font-family-mono);
+  color: var(--vp-c-text-2);
+}
+.dsk-color-example .dsk-color-example-hint,
+.dsk-color-example-status {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+.dsk-color-example-status:empty {
+  display: none;
+}
+.dsk-color-example dsk-pan-zoom {
+  display: block;
+  height: 100%;
+  min-height: 300px;
+}
+.dsk-color-example-object {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: #ff0073;
+  font-size: 24px;
+  font-weight: 750;
+  text-shadow: 0 1px 3px #0009;
+}
+.dsk-color-example-samples {
+  display: block;
+  max-width: 100%;
+}
+.dsk-color-example-custom {
+  --dsk-color-area-marker-size: 20px;
+  --dsk-color-slider-height: 24px;
+  --dsk-color-slider-marker-size: 20px;
+  --dsk-color-eyedropper-size: 40px;
+  --dsk-color-eyedropper-magnifier-radius: 0px;
+  --dsk-color-eyedropper-magnifier-size: 144px;
+}
+.dsk-color-example-custom dsk-color-area::part(surface) {
+  outline: 1px solid #606066;
+  outline-offset: 4px;
+}
+@media (max-width: 648px) {
+  .dsk-color-example dsk-pan-zoom {
+    height: 240px;
+    min-height: 240px;
+  }
+}
+
+.dsk-color-example-mode {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+.dsk-color-example-mode select {
+  width: 100%;
+}

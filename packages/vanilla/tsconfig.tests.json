@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "vite/client"],
+    "customConditions": ["development"]
+  },
+  "include": [
+    "playwright.config.ts",
+    "tests/unit/**/*.ts",
+    "tests/browser/**/*.ts",
+    "tsdown.config.ts",
+    "playwright.package.config.ts",
+    "tests/distribution/**/*.ts"
+  ]
+}

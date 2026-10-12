@@ -1,0 +1,61 @@
+.dsk-reactflow-example .react-flow {
+  --xy-background-color: #151517;
+  --xy-node-color: #fff;
+  --xy-edge-stroke: #ff7bb7;
+  --xy-handle-background-color: #ff7bb7;
+  --xy-handle-border-color: #151517;
+}
+
+.dsk-reactflow-example .dsk-flow-shape {
+  position: relative;
+  width: 180px;
+  height: 120px;
+}
+
+.dsk-reactflow-example .dsk-flow-body {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid #ff7bb7;
+  background: #69213f;
+  color: #fff;
+  transform-origin: center;
+}
+
+.dsk-reactflow-example .dsk-flow-body.is-selected {
+  outline: 1px solid #fff;
+  outline-offset: 5px;
+}
+
+.dsk-reactflow-example .dsk-flow-ellipse {
+  border-color: #c4a6ff;
+  border-radius: 50%;
+  background: #453267;
+}
+
+.dsk-reactflow-example .dsk-flow-brand {
+  font: 800 30px/1.1 sans-serif;
+}
+
+.dsk-reactflow-example .dsk-flow-label {
+  font: 12px/1.4 sans-serif;
+}
+
+.dsk-reactflow-example .react-flow__handle {
+  width: 8px;
+  height: 8px;
+}
+
+.dsk-reactflow-example .react-flow__attribution {
+  background: #18181c;
+}
+
+.dsk-reactflow-example .react-flow__attribution a {
+  color: #c8c8d0;
+  font-size: 10px;
+  text-decoration: none;
+}

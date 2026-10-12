@@ -1,0 +1,8 @@
+src/
+tsdown.config.ts
+node_modules/
+.turbo/
+*.tgz
+.github/
+.env*
+coverage/

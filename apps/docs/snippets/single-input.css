@@ -1,0 +1,118 @@
+.dsk-single-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin: 0;
+  color: var(--dsk-example-text, #f5f5f5);
+  --dsk-input-width: 100%;
+  --dsk-input-background: var(--dsk-example-surface, #1a181a);
+  --dsk-input-color: var(--dsk-example-text, #f5f5f5);
+  --dsk-input-border: 1px solid var(--dsk-example-divider, #303033);
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 36px;
+  --dsk-input-focus-color: var(--dsk-example-accent, #ff0073);
+  --dsk-input-group-wrap: wrap;
+  --dsk-pan-zoom-grid-color: var(--dsk-example-divider, #303033);
+}
+.dsk-single-input-controls {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+  background: var(--dsk-example-surface, #151515);
+}
+.dsk-single-input label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  min-height: 32px;
+  justify-content: space-between;
+  color: var(--dsk-example-muted, #bcb9bf);
+  font-size: 13px;
+}
+.dsk-single-input label:has(input[type='checkbox']) {
+  flex-direction: row-reverse;
+}
+.dsk-single-input output {
+  display: block;
+  font:
+    12px/1.6 ui-monospace,
+    monospace;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--dsk-example-divider, #303033);
+  color: var(--dsk-example-muted, #bcb9bf);
+  overflow-wrap: anywhere;
+}
+.dsk-single-input dsk-pan-zoom {
+  height: 100%;
+  min-height: 280px;
+  border-left: 1px solid var(--dsk-example-divider, #303033);
+  overflow: hidden;
+  border-radius: 0;
+}
+.dsk-single-input-object {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 120px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  background: #ff007a;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.dsk-single-input-object img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dsk-single-input-object img[hidden] {
+  display: none;
+}
+.dsk-single-input-object span {
+  position: relative;
+  color: white;
+  font:
+    700 20px system-ui,
+    sans-serif;
+  max-width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 4px #0008;
+}
+.dsk-single-input-custom {
+  --dsk-input-background: #1a181a;
+  --dsk-input-color: #f5f5f5;
+  --dsk-input-border: 1px solid #606066;
+  --dsk-input-border-radius: 0px;
+  --dsk-input-height: 38px;
+  --dsk-input-focus-color: #ff0073;
+  --dsk-input-handle-width: 38px;
+  --dsk-input-group-gap: 12px;
+}
+.dsk-single-input-custom
+  :is(dsk-input, dsk-input-hex, dsk-input-color)::part(input) {
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+}
+.dsk-single-input-custom dsk-input-upload::part(filename) {
+  text-align: left;
+  font-weight: 700;
+}
+@media (max-width: 648px) {
+  .dsk-single-input {
+    grid-template-columns: 1fr;
+  }
+  .dsk-single-input dsk-pan-zoom {
+    height: 230px;
+    min-height: 230px;
+    border-left: 0;
+    border-top: 1px solid var(--dsk-example-divider, #303033);
+  }
+}

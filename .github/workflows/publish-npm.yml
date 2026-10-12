@@ -1,0 +1,46 @@
+name: Publish npm package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-npm-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Verify release tag, publication approval, and changelog
+        run: node packages/vanilla/scripts/verify-release.ts
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm --filter @flowscape-ui/dsk exec playwright install --with-deps chromium
+      - run: pnpm test:browser
+      - run: pnpm test:package
+      - name: Pack with distribution exports
+        working-directory: packages/vanilla
+        run: pnpm pack --out dsk-release.tgz
+      - name: Validate package archive
+        run: node packages/vanilla/scripts/verify-package.ts packages/vanilla/dsk-release.tgz
+      - name: Publish with npm trusted publishing
+        working-directory: packages/vanilla
+        run: npm publish ./dsk-release.tgz --access public --provenance
+        env:
+          # Optional bootstrap credential for the first package publication.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

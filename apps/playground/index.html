@@ -1,0 +1,1860 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Components — Design System Kit</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-start">
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark theme"
+          title="Switch to dark theme"
+        ></button>
+        <a class="brand" href="%BASE_URL%"
+          ><img class="brand-mark" alt="" width="34" height="34" /> Design
+          System Kit</a
+        >
+      </div>
+      <span class="build-label">VANILLA / COMPONENT LAB</span>
+    </header>
+    <main>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">COMPONENTS / 01</p>
+          <h1>Input<span class="version">Preview</span></h1>
+          <p class="description">
+            A small field for precise control. Type a value or drag the handle.
+          </p>
+        </div>
+        <button id="reset" type="button" class="secondary">
+          Reset example <span aria-hidden="true">↺</span>
+        </button>
+      </div>
+      <div class="workspace">
+        <section class="preview-panel" aria-labelledby="preview-title">
+          <div class="panel-bar">
+            <h2 id="preview-title">Preview</h2>
+            <span class="status"><span></span> Live</span>
+          </div>
+          <div class="preview-canvas">
+            <div class="specimen">
+              <label id="demo-label">Basic input number select</label>
+              <dsk-input
+                id="demo"
+                class="dsk-input-size"
+                value="40"
+                min="0"
+                max="100"
+                step="1"
+                aria-label="Preview value"
+              ></dsk-input>
+              <p class="interaction-hint">
+                ↔ Drag to adjust · Cursor wraps at edges
+              </p>
+            </div>
+          </div>
+          <div class="readout">
+            <span>Current value <strong id="current-value">40</strong></span
+            ><span>Change events <strong id="change-count">0</strong></span>
+          </div>
+          <div class="example-section">
+            <h2>Try a starting point</h2>
+            <div class="presets" role="group" aria-label="Example presets">
+              <button type="button" data-preset="basic" aria-pressed="true">
+                Basic
+              </button>
+              <button type="button" data-preset="decimal" aria-pressed="false">
+                Decimals
+              </button>
+              <button
+                type="button"
+                data-preset="unbounded"
+                aria-pressed="false"
+              >
+                Unbounded
+              </button>
+              <button type="button" data-preset="empty" aria-pressed="false">
+                Placeholder
+              </button>
+            </div>
+          </div>
+        </section>
+        <aside class="settings-panel" aria-labelledby="settings-title">
+          <div class="panel-bar">
+            <h2 id="settings-title">Properties</h2>
+            <span>EDIT LIVE</span>
+          </div>
+          <form id="settings" autocomplete="off">
+            <label class="field"
+              >Value<input
+                name="value"
+                type="text"
+                inputmode="decimal"
+                value="40"
+            /></label>
+            <div class="field-row">
+              <label class="field"
+                >Min<input
+                  name="min"
+                  type="number"
+                  step="any"
+                  value="0"
+                  placeholder="No limit"
+              /></label>
+              <label class="field"
+                >Max<input
+                  name="max"
+                  type="number"
+                  step="any"
+                  value="100"
+                  placeholder="No limit"
+              /></label>
+            </div>
+            <div class="field-row">
+              <label class="field"
+                >Step<input
+                  name="step"
+                  type="number"
+                  min="0.000001"
+                  step="any"
+                  value="1"
+                  placeholder="1"
+              /></label>
+              <label class="field"
+                >Progression<select name="progression">
+                  <option value="linear">Linear</option>
+                  <option value="exponential">Exponential</option>
+                  <option value="logarithmic">Logarithmic</option>
+                </select></label
+              >
+            </div>
+            <p class="field-note" id="curve-note">
+              Constant sensitivity. Every 4 px changes the value by one step.
+            </p>
+            <div class="field-row">
+              <label class="field"
+                >Horizontal key step<input
+                  name="key-horizontal-step"
+                  type="number"
+                  min="0"
+                  step="any"
+                  placeholder="Use step"
+              /></label>
+              <label class="field"
+                >Vertical key step<input
+                  name="key-vertical-step"
+                  type="number"
+                  min="0"
+                  step="any"
+                  placeholder="Use step"
+              /></label>
+            </div>
+            <p class="field-note">
+              Focus the input to use ← → and ↓ ↑. Escape cancels the current
+              edit and removes focus. Empty key steps use Step. Try (20 + 5) *
+              2, then Enter. Use Ctrl/Cmd+Z to undo and Ctrl/Cmd+Shift+Z to
+              redo.
+            </p>
+            <label class="field"
+              >Positioning<select name="positioning">
+                <option value="left">Left</option>
+                <option value="center" selected>Center (default)</option>
+                <option value="right">Right</option>
+              </select></label
+            >
+            <label class="field"
+              >Tag<input name="tag" type="text" placeholder="e.g. %, #, px"
+            /></label>
+            <div class="field-grid">
+              <label class="field"
+                >Tag position<select name="tag-position">
+                  <option value="left">Left</option>
+                  <option value="right" selected>Right (default)</option>
+                </select></label
+              >
+              <label class="field"
+                >Tag gap<input
+                  name="tag-gap"
+                  type="text"
+                  value="4px"
+                  placeholder="e.g. 8px or 0.5em"
+              /></label>
+            </div>
+            <label class="field"
+              >Placeholder<input
+                name="placeholder"
+                type="text"
+                placeholder="e.g. Enter a number"
+            /></label>
+            <label class="field"
+              >Icon source <span class="optional">optional</span
+              ><input
+                name="src"
+                type="text"
+                placeholder="Image URL or /icon.svg"
+            /></label>
+            <div class="toggles">
+              <label
+                ><input name="select-on-focus" type="checkbox" /> Select on
+                focus</label
+              >
+              <label
+                ><input name="loopafter" type="checkbox" /> Loop both
+                directions</label
+              >
+              <label
+                ><input name="loopafter-min" type="checkbox" /> Loop after
+                min</label
+              >
+              <label
+                ><input name="loopafter-max" type="checkbox" /> Loop after
+                max</label
+              >
+              <label><input name="disabled" type="checkbox" /> Disabled</label>
+              <label><input name="readonly" type="checkbox" /> Read only</label>
+            </div>
+          </form>
+        </aside>
+      </div>
+      <div class="details-grid">
+        <section class="code-panel" aria-labelledby="code-title">
+          <div class="panel-bar">
+            <h2 id="code-title">HTML</h2>
+            <span>CUSTOM ELEMENT</span>
+          </div>
+          <pre><code id="code"></code></pre>
+          <p class="footnote">
+            Import <code>@flowscape-ui/dsk</code> once to register the element.
+            Custom elements need a closing tag in HTML.
+          </p>
+        </section>
+        <section class="events-panel" aria-labelledby="events-title">
+          <div class="panel-bar">
+            <h2 id="events-title">Event log</h2>
+            <button id="clear-events" type="button" class="text-button">
+              Clear
+            </button>
+          </div>
+          <ol id="events" aria-label="Recent input and change events">
+            <li class="empty-log">Interact with the input to see events.</li>
+          </ol>
+          <p class="footnote">
+            <code>input</code> while editing · <code>change</code> on commit
+          </p>
+        </section>
+      </div>
+      <section class="hex-lab" aria-labelledby="hex-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">COMPONENTS / 02</p>
+            <h2 id="hex-title" class="component-title">
+              HEX input<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              One channel, RGB, or RGBA. Adjust channels with the same familiar
+              controls.
+            </p>
+          </div>
+          <button id="hex-reset" type="button" class="secondary">
+            Reset HEX <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="hex-preview-title">
+            <div class="panel-bar">
+              <h2 id="hex-preview-title">HEX preview</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas">
+              <div class="specimen">
+                <label id="hex-demo-label">HEX channel value</label>
+                <dsk-input-hex
+                  id="hex-demo"
+                  hex="6"
+                  value="FE0000"
+                  aria-label="HEX preview value"
+                ></dsk-input-hex>
+                <p class="interaction-hint">
+                  ↔ Drag the hash · Type a HEX value or expression
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span
+                >Current value
+                <strong id="hex-current-value">FE0000</strong></span
+              ><span
+                >Change events <strong id="hex-change-count">0</strong></span
+              >
+            </div>
+            <div class="example-section">
+              <h2>Try sequential channels</h2>
+              <p class="hex-example">FE0000 → FF0000 → FF0100</p>
+              <p class="description">
+                Red changes first, then green, blue, and alpha. Focus the field
+                and press ↑ twice.
+              </p>
+            </div>
+          </section>
+          <aside class="settings-panel" aria-labelledby="hex-settings-title">
+            <div class="panel-bar">
+              <h2 id="hex-settings-title">HEX properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="hex-settings" autocomplete="off">
+              <label class="field"
+                >Format<select name="hex-format">
+                  <option value="1">1 · Single channel (0–F)</option>
+                  <option value="2">2 · Single channel (00–FF)</option>
+                  <option value="3">3 · RGB (one digit per channel)</option>
+                  <option value="6" selected>
+                    6 · RGB (two digits per channel)
+                  </option>
+                  <option value="8">8 · RGBA (two digits per channel)</option>
+                </select></label
+              >
+              <label class="field"
+                >HEX value<input
+                  name="hex-value"
+                  type="text"
+                  value="FE0000"
+                  placeholder="e.g. FE0000"
+              /></label>
+              <div class="field-row">
+                <label class="field"
+                  >HEX min<input
+                    name="hex-min"
+                    type="text"
+                    placeholder="Full range"
+                /></label>
+                <label class="field"
+                  >HEX max<input
+                    name="hex-max"
+                    type="text"
+                    placeholder="Full range"
+                /></label>
+              </div>
+              <label class="field"
+                >Step<input
+                  name="hex-step"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="1"
+              /></label>
+              <p class="field-note">
+                Steps are decimal whole numbers. In the preview, try 0xFF0000 +
+                1, then Enter. Bounds follow red → green → blue → alpha order.
+              </p>
+              <label class="field"
+                >Icon source <span class="optional">optional</span
+                ><input
+                  name="hex-src"
+                  type="text"
+                  placeholder="Image URL or /icon.svg"
+              /></label>
+              <div class="toggles">
+                <label
+                  ><input name="hex-loopafter" type="checkbox" /> Loop at
+                  bounds</label
+                >
+                <label
+                  ><input name="hex-select-on-focus" type="checkbox" /> Select
+                  on focus</label
+                >
+              </div>
+              <p class="field-note hex-format-note" id="hex-format-note">
+                RGB uses two HEX digits per channel. Format changes preserve
+                channels; values that cannot narrow exactly become empty.
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="hex-code-title">
+            <div class="panel-bar">
+              <h2 id="hex-code-title">HEX HTML</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="hex-code"></code></pre>
+            <p class="footnote">
+              The hash handle is an icon. Add
+              <code>tag="#" tag-position="left"</code> for a visible prefix next
+              to the value.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="hex-events-title">
+            <div class="panel-bar">
+              <h2 id="hex-events-title">HEX event log</h2>
+              <button id="hex-clear-events" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol id="hex-events" aria-label="Recent HEX input and change events">
+              <li class="empty-log">
+                Interact with the HEX input to see events.
+              </li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while editing · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="color-lab" aria-labelledby="color-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">COMPONENTS / 03</p>
+            <h2 id="color-title" class="component-title">
+              Color input<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              RGB and RGBA values with a live color handle. See transparency
+              over a checkerboard.
+            </p>
+          </div>
+          <button id="color-reset" type="button" class="secondary">
+            Reset color <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="color-preview-title">
+            <div class="panel-bar">
+              <h2 id="color-preview-title">Color preview</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas">
+              <div class="specimen">
+                <label id="color-demo-label">Color value</label>
+                <dsk-input-color
+                  id="color-demo"
+                  format="8"
+                  value="557BE880"
+                  aria-label="Color preview value"
+                ></dsk-input-color>
+                <p class="interaction-hint">
+                  ↔ Drag the swatch · Type an RGB or RGBA value
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span
+                >Current value
+                <strong id="color-current-value">557BE880</strong></span
+              ><span
+                >Change events <strong id="color-change-count">0</strong></span
+              >
+            </div>
+            <div class="example-section">
+              <h2>Explore alpha</h2>
+              <div
+                class="presets"
+                role="group"
+                aria-label="Color alpha examples"
+              >
+                <button type="button" data-color-value="557BE8FF">
+                  Opaque
+                </button>
+                <button type="button" data-color-value="557BE880">
+                  50% alpha
+                </button>
+                <button type="button" data-color-value="557BE800">
+                  Transparent
+                </button>
+              </div>
+              <p class="color-example-note">
+                The last two digits control alpha. Empty values and unfinished
+                expressions show the checkerboard.
+              </p>
+            </div>
+          </section>
+          <aside class="settings-panel" aria-labelledby="color-settings-title">
+            <div class="panel-bar">
+              <h2 id="color-settings-title">Color properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="color-settings" autocomplete="off">
+              <label class="field"
+                >Format<select name="color-format">
+                  <option value="6">6 · RGB</option>
+                  <option value="8" selected>8 · RGBA with alpha</option>
+                </select></label
+              >
+              <label class="field"
+                >Alpha editor<select name="color-alpha-mode">
+                  <option value="hex" selected>HEX · RRGGBBAA</option>
+                  <option value="percent">Percent · RGB + opacity</option>
+                </select></label
+              >
+              <p class="field-note">
+                With RGBA enabled, percent mode adds a separate 0–100% field.
+                Drag its % handle to adjust opacity.
+              </p>
+              <label class="field"
+                >Color value<input
+                  name="color-value"
+                  type="text"
+                  value="557BE880"
+                  placeholder="e.g. 557BE880"
+              /></label>
+              <div class="field-row">
+                <label class="field"
+                  >HEX min<input
+                    name="color-min"
+                    type="text"
+                    placeholder="Full range"
+                /></label>
+                <label class="field"
+                  >HEX max<input
+                    name="color-max"
+                    type="text"
+                    placeholder="Full range"
+                /></label>
+              </div>
+              <label class="field"
+                >Step<input
+                  name="color-step"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="1"
+              /></label>
+              <p class="field-note">
+                Steps are decimal whole numbers. Channels adjust in red → green
+                → blue → alpha order.
+              </p>
+              <label class="field"
+                >Icon source <span class="optional">optional</span
+                ><input
+                  name="color-src"
+                  type="text"
+                  placeholder="Image URL overrides the color swatch"
+              /></label>
+              <div class="toggles">
+                <label
+                  ><input name="color-loopafter" type="checkbox" /> Loop at
+                  bounds</label
+                >
+                <label
+                  ><input name="color-select-on-focus" type="checkbox" /> Select
+                  on focus</label
+                >
+              </div>
+              <p class="field-note color-format-note" id="color-format-note">
+                RGBA includes alpha. Switching to RGB removes alpha; switching
+                back adds opaque alpha (FF).
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="color-code-title">
+            <div class="panel-bar">
+              <h2 id="color-code-title">Color HTML</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="color-code"></code></pre>
+            <p class="footnote">
+              Use <code>format="6"</code> for RGB or <code>format="8"</code> for
+              RGBA. Clear the icon source to restore the live swatch.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="color-events-title">
+            <div class="panel-bar">
+              <h2 id="color-events-title">Color event log</h2>
+              <button id="color-clear-events" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol
+              id="color-events"
+              aria-label="Recent color input and change events"
+            >
+              <li class="empty-log">
+                Interact with the color input to see events.
+              </li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while editing · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="area-lab" aria-labelledby="area-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">COLOR / 01</p>
+            <h2 id="area-title" class="component-title">
+              Color area<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              Choose saturation and brightness on a square HSV palette.
+            </p>
+          </div>
+          <button id="area-reset" type="button" class="secondary">
+            Reset area <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="area-preview-title">
+            <div class="panel-bar">
+              <h2 id="area-preview-title">Color area preview</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas area-preview-canvas">
+              <div class="specimen area-specimen">
+                <label id="area-demo-label">Fill color</label>
+                <dsk-color-area
+                  id="area-demo"
+                  hue="60"
+                  saturation="15"
+                  brightness="78"
+                  aria-label="Fill color"
+                ></dsk-color-area>
+                <p class="interaction-hint">
+                  Click or drag to select · Arrow keys to adjust · Shift for
+                  larger steps
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span class="area-color-readout">
+                <span
+                  id="area-swatch"
+                  class="area-swatch"
+                  aria-hidden="true"
+                ></span>
+                .color <strong id="area-current-color"></strong>
+              </span>
+              <span
+                >Change events <strong id="area-change-count">0</strong></span
+              >
+            </div>
+            <p class="footnote">
+              Left → right: saturation. Bottom → top: brightness. Tab between
+              the two color channels; Home and End reach their limits.
+            </p>
+          </section>
+          <aside class="settings-panel" aria-labelledby="area-settings-title">
+            <div class="panel-bar">
+              <h2 id="area-settings-title">Color area properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="area-settings" autocomplete="off">
+              <label class="field"
+                >Hue (degrees)
+                <input name="area-hue" type="number" step="any" value="60" />
+              </label>
+              <div class="field-row">
+                <label class="field"
+                  >Saturation (%)
+                  <input
+                    name="area-saturation"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="any"
+                    value="15"
+                  />
+                </label>
+                <label class="field"
+                  >Brightness (%)
+                  <input
+                    name="area-brightness"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="any"
+                    value="78"
+                  />
+                </label>
+              </div>
+              <p class="field-note">
+                Hue wraps around 360°. Saturation and brightness stay between 0
+                and 100.
+              </p>
+              <div class="field-row">
+                <label class="field"
+                  >Width (px)
+                  <input
+                    name="area-width"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="208"
+                  />
+                </label>
+                <label class="field"
+                  >Height (px)
+                  <input
+                    name="area-height"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="208"
+                  />
+                </label>
+              </div>
+              <p class="field-note">
+                The larger dimension sets both sides. One dimension alone sets
+                the square's size; the default is 208 × 208.
+              </p>
+              <label class="field"
+                >Keyboard step (%)
+                <input
+                  name="area-step"
+                  type="number"
+                  min="0.01"
+                  step="any"
+                  placeholder="1"
+                />
+              </label>
+              <div class="toggles">
+                <label
+                  ><input name="area-disabled" type="checkbox" />
+                  Disabled</label
+                >
+                <label
+                  ><input name="area-readonly" type="checkbox" />
+                  Readonly</label
+                >
+              </div>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="area-code-title">
+            <div class="panel-bar">
+              <h2 id="area-code-title">Color area HTML</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="area-code"></code></pre>
+            <p class="footnote">
+              Read <code>element.color</code> for the selected opaque HEX color.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="area-events-title">
+            <div class="panel-bar">
+              <h2 id="area-events-title">Color area event log</h2>
+              <button id="area-clear-events" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol
+              id="area-events"
+              aria-label="Recent color area input and change events"
+            >
+              <li class="empty-log">Select a color to see events.</li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while selecting · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="slider-lab" aria-labelledby="slider-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">COLOR / 02–03</p>
+            <h2 id="slider-title" class="component-title">
+              Hue &amp; alpha<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              Independent color sliders, connected to a color area in this
+              example.
+            </p>
+          </div>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="slider-preview-title">
+            <div class="panel-bar">
+              <h2 id="slider-preview-title">Color controls</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas slider-preview-canvas">
+              <div class="slider-stack">
+                <dsk-color-area
+                  id="linked-area"
+                  hue="60"
+                  saturation="60"
+                  brightness="90"
+                  aria-label="Combined color selection"
+                ></dsk-color-area>
+                <div class="slider-caption">Hue</div>
+                <dsk-color-hue
+                  id="hue-demo"
+                  hue="60"
+                  aria-label="Selected hue"
+                ></dsk-color-hue>
+                <div class="slider-caption">Opacity</div>
+                <dsk-color-alpha
+                  id="alpha-demo"
+                  color="#E6E65C"
+                  alpha="75"
+                  aria-label="Selected opacity"
+                ></dsk-color-alpha>
+                <p class="interaction-hint">
+                  Drag · Arrow keys · Shift for larger steps · Escape to cancel
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span class="area-color-readout"
+                ><span
+                  id="slider-swatch"
+                  class="slider-swatch"
+                  aria-hidden="true"
+                ></span
+                >RGBA <strong id="slider-rgba"></strong></span
+              ><span>Change events <strong id="slider-count">0</strong></span>
+            </div>
+            <p class="footnote">
+              The area controls saturation and brightness. Hue changes the area;
+              alpha changes opacity only.
+            </p>
+          </section>
+          <aside class="settings-panel" aria-labelledby="slider-settings-title">
+            <div class="panel-bar">
+              <h2 id="slider-settings-title">Slider properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="slider-settings" autocomplete="off">
+              <label class="field"
+                >Hue (degrees)<input
+                  id="slider-hue"
+                  type="number"
+                  min="0"
+                  max="360"
+                  step="any"
+                  value="60"
+              /></label>
+              <label class="field"
+                >Alpha (%)<input
+                  id="slider-alpha"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="any"
+                  value="75"
+              /></label>
+              <div class="field-row">
+                <label class="field"
+                  >Hue step<input
+                    id="slider-hue-step"
+                    type="number"
+                    min="0.01"
+                    step="any"
+                    value="1"
+                /></label>
+                <label class="field"
+                  >Alpha step<input
+                    id="slider-alpha-step"
+                    type="number"
+                    min="0.01"
+                    step="any"
+                    value="1"
+                /></label>
+              </div>
+              <label class="field"
+                >Width (px)<input
+                  id="slider-width"
+                  type="number"
+                  min="20"
+                  value="208"
+              /></label>
+              <div class="toggles">
+                <label
+                  ><input id="slider-disabled" type="checkbox" /> Disable
+                  sliders</label
+                >
+                <label
+                  ><input id="slider-readonly" type="checkbox" /> Readonly
+                  sliders</label
+                >
+              </div>
+              <p class="field-note slider-note">
+                Hue spans 0–360°. Alpha spans 0–100%. The alpha track uses the
+                area's current HEX color, without changing its opacity when that
+                color changes.
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="slider-code-title">
+            <div class="panel-bar">
+              <h2 id="slider-code-title">Slider HTML</h2>
+              <span>CUSTOM ELEMENTS</span>
+            </div>
+            <pre><code id="slider-code"></code></pre>
+            <p class="footnote">
+              Read <code>hue.hue</code>, <code>alpha.alpha</code>, and
+              <code>alpha.rgba</code>. Programmatic updates are silent.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="slider-events-title">
+            <div class="panel-bar">
+              <h2 id="slider-events-title">Slider events</h2>
+              <button id="slider-clear" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol id="slider-events" aria-label="Recent hue and alpha events">
+              <li class="empty-log">Move either slider to see events.</li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while selecting · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="eyedropper-lab" aria-labelledby="eyedropper-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">COLOR / 04</p>
+            <h2 id="eyedropper-title" class="component-title">
+              Eyedropper<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              Choose live canvas pixels, a page snapshot, the browser's screen
+              picker, or your own renderer.
+            </p>
+          </div>
+          <button id="eyedropper-reset" type="button" class="secondary">
+            Reset eyedropper <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section
+            class="preview-panel"
+            aria-labelledby="eyedropper-preview-title"
+          >
+            <div class="panel-bar">
+              <h2 id="eyedropper-preview-title">Eyedropper preview</h2>
+              <span>CANVAS / PAGE / SCREEN</span>
+            </div>
+            <div class="preview-canvas eyedropper-preview-canvas">
+              <div class="eyedropper-specimen">
+                <div class="eyedropper-toolbar">
+                  <dsk-color-eyedropper
+                    id="eyedropper-demo"
+                    source="#eyedropper-canvas"
+                    aria-label="Pick a color"
+                  ></dsk-color-eyedropper>
+                  <span>Pick a color</span>
+                </div>
+                <div class="eyedropper-canvas-layers">
+                  <canvas
+                    id="eyedropper-canvas"
+                    tabindex="0"
+                    aria-label="Color canvas. Scroll to zoom. Hold Space and drag, or use the middle mouse button, to pan."
+                  ></canvas>
+                  <canvas
+                    id="eyedropper-foreground"
+                    hidden
+                    aria-hidden="true"
+                  ></canvas>
+                </div>
+                <div class="eyedropper-view-toolbar">
+                  <span id="eyedropper-zoom">100%</span>
+                  <button
+                    id="eyedropper-view-reset"
+                    type="button"
+                    class="text-button"
+                  >
+                    Reset view
+                  </button>
+                </div>
+                <p id="eyedropper-hint" class="interaction-hint">
+                  Activate, then click a canvas pixel. Scroll to zoom.<br />
+                  Space + drag or middle-drag to pan. Escape cancels.
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span class="area-color-readout">
+                <span
+                  id="eyedropper-swatch"
+                  class="area-swatch eyedropper-swatch"
+                  aria-hidden="true"
+                ></span>
+                Selected color <strong id="eyedropper-color">Empty</strong>
+              </span>
+              <span
+                >Change events <strong id="eyedropper-count">0</strong></span
+              >
+            </div>
+            <p id="eyedropper-availability" class="footnote" role="status"></p>
+          </section>
+          <aside
+            class="settings-panel"
+            aria-labelledby="eyedropper-settings-title"
+          >
+            <div class="panel-bar">
+              <h2 id="eyedropper-settings-title">Eyedropper properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="eyedropper-settings" autocomplete="off">
+              <label class="field">
+                Picker mode
+                <select id="eyedropper-mode" name="eyedropper-mode"></select>
+              </label>
+              <fieldset id="eyedropper-page-options" hidden>
+                <legend>Page capture</legend>
+                <div class="toggles">
+                  <label
+                    ><input
+                      name="eyedropper-page-fonts"
+                      type="checkbox"
+                      checked
+                    />
+                    Embed fonts</label
+                  >
+                  <label
+                    ><input
+                      name="eyedropper-page-images"
+                      type="checkbox"
+                      checked
+                    />
+                    Embed images</label
+                  >
+                  <label
+                    ><input
+                      name="eyedropper-page-pseudos"
+                      type="checkbox"
+                      checked
+                    />
+                    Capture pseudo styles</label
+                  >
+                </div>
+                <p class="field-note">
+                  Defaults preserve computed styles, including placeholders.
+                  Disable only what your page does not need.
+                </p>
+              </fieldset>
+              <label class="field">
+                Eyedropper color
+                <input
+                  name="eyedropper-color"
+                  type="text"
+                  placeholder="#RRGGBB"
+                />
+              </label>
+              <label class="field">
+                Eyedropper size (px)
+                <input
+                  name="eyedropper-size"
+                  type="number"
+                  min="1"
+                  step="any"
+                  placeholder="32"
+                />
+              </label>
+              <div class="toggles">
+                <label
+                  ><input name="eyedropper-disabled" type="checkbox" />
+                  Eyedropper disabled</label
+                >
+              </div>
+              <div class="field-row">
+                <label class="field">
+                  Magnifier size (px)
+                  <input
+                    name="eyedropper-magnifier-size"
+                    type="number"
+                    min="40"
+                    max="300"
+                    value="120"
+                  />
+                </label>
+                <label class="field">
+                  Magnifier pixels
+                  <input
+                    name="eyedropper-magnifier-pixels"
+                    type="number"
+                    min="3"
+                    max="31"
+                    step="2"
+                    value="9"
+                  />
+                </label>
+              </div>
+              <label class="field">
+                Magnifier shape
+                <select id="eyedropper-shape" name="eyedropper-shape">
+                  <option value="circle">Circle</option>
+                  <option value="square">Rounded square</option>
+                </select>
+              </label>
+              <p class="field-note eyedropper-note">
+                Initial load and reset choose native when supported, otherwise
+                page. Canvas stays live. Page captures a fresh, approximate
+                view. Native can reach other windows when supported. Editor /
+                composite registers an app-owned sampler for two canvas layers.
+                Magnifier settings apply to every mode except native.
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="eyedropper-code-title">
+            <div class="panel-bar">
+              <h2 id="eyedropper-code-title">Eyedropper code</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="eyedropper-code"></code></pre>
+            <p class="footnote">
+              Read <code>element.color</code> or <code>element.value</code> from
+              <code>onchange</code>. Every successful selection emits
+              <code>input</code>, then <code>change</code>.
+            </p>
+          </section>
+          <section
+            class="events-panel"
+            aria-labelledby="eyedropper-events-title"
+          >
+            <div class="panel-bar">
+              <h2 id="eyedropper-events-title">Eyedropper events</h2>
+              <button id="eyedropper-clear" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol id="eyedropper-events" aria-label="Recent eyedropper events">
+              <li class="empty-log">Pick a color to see events.</li>
+            </ol>
+            <p class="footnote">
+              <code>pickstart</code> opens selection · <code>cancel</code> keeps
+              the previous color · <code>pickerror</code> reports failure
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="angle-lab" aria-labelledby="angle-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">ANGLE / 01</p>
+            <h2 id="angle-title" class="component-title">
+              Angle<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              A compass-style control with a soft sector, a direction needle,
+              and a clear center value. Choose degrees, radians, multiples of π,
+              turns, or gradians.
+            </p>
+          </div>
+          <button id="angle-reset" type="button" class="secondary">
+            Reset angle <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="angle-preview-title">
+            <div class="panel-bar">
+              <h2 id="angle-preview-title">Angle preview</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas angle-preview-canvas">
+              <div class="angle-specimen">
+                <dsk-angle
+                  id="angle-demo"
+                  value="90"
+                  aria-label="Rotation angle"
+                ></dsk-angle>
+                <p class="interaction-hint">
+                  Drag around the ring · Arrow keys to adjust<br />
+                  Shift for larger steps · Escape to cancel
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span
+                >Selected angle
+                <strong id="angle-current-value">90°</strong></span
+              >
+              <span>Change events <strong id="angle-count">0</strong></span>
+            </div>
+            <div class="example-section">
+              <h2>Try an angle</h2>
+              <div class="presets" role="group" aria-label="Angle presets">
+                <button type="button" data-angle-preset="quarter">
+                  Quarter turn
+                </button>
+                <button type="button" data-angle-preset="restricted">
+                  Restricted arc
+                </button>
+                <button type="button" data-angle-preset="radians">
+                  Radians
+                </button>
+                <button type="button" data-angle-preset="pi">
+                  Multiples of π
+                </button>
+              </div>
+              <p class="color-example-note">
+                Zero is at the top. Values increase clockwise; the soft sector
+                starts at the minimum angle. The scale and center value follow
+                the selected unit. Rotation is continuous until you set a
+                minimum or maximum.
+              </p>
+            </div>
+          </section>
+          <aside class="settings-panel" aria-labelledby="angle-settings-title">
+            <div class="panel-bar">
+              <h2 id="angle-settings-title">Angle properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="angle-settings" autocomplete="off">
+              <label class="field"
+                >Angle unit
+                <select name="angle-unit">
+                  <option value="deg">Degrees · deg</option>
+                  <option value="rad">Radians · rad</option>
+                  <option value="pi">Multiples of π · pi</option>
+                  <option value="turn">Turns · turn</option>
+                  <option value="grad">Gradians · grad</option>
+                </select>
+              </label>
+              <label class="field"
+                >Angle value
+                <input name="angle-value" type="number" step="any" value="90" />
+              </label>
+              <div class="field-row">
+                <label class="field"
+                  >Angle min
+                  <input
+                    name="angle-min"
+                    type="number"
+                    step="any"
+                    placeholder="Optional · 0"
+                  />
+                </label>
+                <label class="field"
+                  >Angle max
+                  <input
+                    name="angle-max"
+                    type="number"
+                    step="any"
+                    placeholder="Optional · 360"
+                  />
+                </label>
+              </div>
+              <p class="field-note" id="angle-range-note">
+                Continuous rotation. Leave both bounds empty to keep rotating
+                through a full turn, or set either bound to stop at endpoints.
+              </p>
+              <div class="field-row">
+                <label class="field"
+                  >Angle step
+                  <input
+                    name="angle-step"
+                    type="number"
+                    min="0"
+                    step="any"
+                    placeholder="1"
+                  />
+                </label>
+                <label class="field"
+                  >Angle ticks (segments)
+                  <input
+                    name="angle-segments"
+                    type="number"
+                    min="4"
+                    max="180"
+                    step="1"
+                    placeholder="24"
+                  />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field"
+                  >Angle size (px)
+                  <input
+                    name="angle-size"
+                    type="number"
+                    min="1"
+                    step="any"
+                    placeholder="208"
+                  />
+                </label>
+                <label class="field"
+                  >Angle color
+                  <input name="angle-color" type="text" placeholder="#557be8" />
+                </label>
+              </div>
+              <div class="toggles">
+                <label
+                  ><input name="angle-disabled" type="checkbox" /> Disable
+                  angle</label
+                >
+                <label
+                  ><input name="angle-readonly" type="checkbox" /> Readonly
+                  angle</label
+                >
+              </div>
+              <p class="field-note angle-note" id="angle-unit-note">
+                Values, bounds, and step use degrees. Changing the unit converts
+                them while keeping the same physical angle.
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="angle-code-title">
+            <div class="panel-bar">
+              <h2 id="angle-code-title">Angle HTML</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="angle-code"></code></pre>
+            <p class="footnote">
+              Read <code>element.value</code> in the selected unit or
+              <code>element.degrees</code> for degrees. The center label is
+              available through <code>element.formattedValue</code>.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="angle-events-title">
+            <div class="panel-bar">
+              <h2 id="angle-events-title">Angle events</h2>
+              <button id="angle-clear" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol
+              id="angle-events"
+              aria-label="Recent angle input and change events"
+            >
+              <li class="empty-log">Rotate the marker to see events.</li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while rotating · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <section class="curve-lab" aria-labelledby="curve-title">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">CURVE / 01</p>
+            <h2 id="curve-title" class="component-title">
+              Curve<span class="version">Preview</span>
+            </h2>
+            <p class="description">
+              Shape a motion curve by adding points directly on the line. Start
+              with a preset, move points, and preview the resulting easing.
+            </p>
+          </div>
+          <button id="curve-reset" type="button" class="secondary">
+            Reset curve <span aria-hidden="true">↺</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <section class="preview-panel" aria-labelledby="curve-preview-title">
+            <div class="panel-bar">
+              <h2 id="curve-preview-title">Curve preview</h2>
+              <span class="status"><span></span> Live</span>
+            </div>
+            <div class="preview-canvas curve-preview-canvas">
+              <div class="curve-specimen">
+                <dsk-curve
+                  id="curve-demo"
+                  value="ease-in-out"
+                  aria-label="Motion easing"
+                ></dsk-curve>
+                <p class="interaction-hint">
+                  Click the line to add · Drag points to adjust<br />
+                  Delete to remove a node · Escape to cancel
+                </p>
+              </div>
+            </div>
+            <div class="readout">
+              <span
+                >Selected preset
+                <strong id="curve-current-preset">ease-in-out</strong></span
+              >
+              <span>Change events <strong id="curve-count">0</strong></span>
+            </div>
+            <p class="footnote">
+              Time runs left to right; progress runs bottom to top. Points stay
+              within 0–1 and nodes keep their time order. Start and end points
+              are movable too. Play preview animates the dot without changing
+              the selected curve.
+            </p>
+          </section>
+          <aside class="settings-panel" aria-labelledby="curve-settings-title">
+            <div class="panel-bar">
+              <h2 id="curve-settings-title">Curve properties</h2>
+              <span>EDIT LIVE</span>
+            </div>
+            <form id="curve-settings" autocomplete="off">
+              <label class="field">
+                Curve value
+                <input
+                  name="curve-value"
+                  type="text"
+                  value="ease-in-out"
+                  placeholder="cubic-bezier(0.42, 0, 0.58, 1)"
+                />
+              </label>
+              <p class="field-note">
+                Accepts a preset name, four coordinates, a CSS cubic-bezier()
+                value, or a saved curve(...) value with additional nodes.
+              </p>
+              <div class="field-row">
+                <label class="field">
+                  Curve step
+                  <input
+                    name="curve-step"
+                    type="number"
+                    min="0"
+                    step="any"
+                    placeholder="0.01"
+                  />
+                </label>
+                <label class="field">
+                  Curve duration (ms)
+                  <input
+                    name="curve-duration"
+                    type="number"
+                    min="1"
+                    step="any"
+                    placeholder="1200"
+                  />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field">
+                  Curve width (px)
+                  <input
+                    name="curve-width"
+                    type="number"
+                    min="1"
+                    step="any"
+                    placeholder="370"
+                  />
+                </label>
+                <label class="field">
+                  Curve color
+                  <input name="curve-color" type="text" placeholder="#557be8" />
+                </label>
+              </div>
+              <div class="toggles">
+                <label
+                  ><input name="curve-grid" type="checkbox" checked /> Curve
+                  grid</label
+                >
+                <label
+                  ><input name="curve-disabled" type="checkbox" /> Curve
+                  disabled</label
+                >
+                <label
+                  ><input name="curve-readonly" type="checkbox" /> Curve
+                  readonly</label
+                >
+              </div>
+              <p class="field-note curve-note">
+                The graph always stays square. Coordinate fields support precise
+                edits of the selected point; all handles can be reached with
+                Tab.
+              </p>
+            </form>
+          </aside>
+        </div>
+        <div class="details-grid">
+          <section class="code-panel" aria-labelledby="curve-code-title">
+            <div class="panel-bar">
+              <h2 id="curve-code-title">Curve HTML</h2>
+              <span>CUSTOM ELEMENT</span>
+            </div>
+            <pre><code id="curve-code"></code></pre>
+            <p class="footnote">
+              Save <code>element.value</code> to restore the full curve. Read
+              <code>element.cssValue</code> for CSS easing and
+              <code>element.segments</code> for all segment coordinates.
+              <code>element.preset</code> identifies a matching preset.
+            </p>
+          </section>
+          <section class="events-panel" aria-labelledby="curve-events-title">
+            <div class="panel-bar">
+              <h2 id="curve-events-title">Curve events</h2>
+              <button id="curve-clear" type="button" class="text-button">
+                Clear
+              </button>
+            </div>
+            <ol
+              id="curve-events"
+              aria-label="Recent curve input and change events"
+            >
+              <li class="empty-log">Add or move a point to see events.</li>
+            </ol>
+            <p class="footnote">
+              <code>input</code> while editing · <code>change</code> on commit
+            </p>
+          </section>
+        </div>
+      </section>
+      <footer>
+        <span>FLOWSCAPE / DESIGN SYSTEM KIT</span
+        ><span
+          >Keyboard: ← → / ↓ ↑ to step · Enter to commit · Esc to
+          deactivate</span
+        >
+      </footer>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">INPUT / GROUP</p>
+          <h1>Input group<span class="version">Preview</span></h1>
+          <p class="description">
+            Link values across different controls and localize each field's
+            mixed state.
+          </p>
+        </div>
+        <button id="input-group-reset" type="button" class="secondary">
+          Reset group
+        </button>
+      </div>
+      <div class="workspace">
+        <section class="preview-panel" aria-labelledby="input-group-title">
+          <div class="panel-bar">
+            <h2 id="input-group-title">DSK, HTML and custom inputs</h2>
+            <span>EDIT ANY FIELD</span>
+          </div>
+          <div class="preview-canvas">
+            <dsk-input-group
+              id="input-group-demo"
+              aria-label="Object dimensions"
+              style="--dsk-input-group-wrap: wrap; --dsk-input-group-gap: 16px"
+            >
+              <label class="field"
+                >Width · DSK<dsk-input
+                  id="input-group-width"
+                  value="120"
+                  aria-label="Grouped width"
+                  style="--dsk-input-width: 150px"
+                ></dsk-input
+              ></label>
+              <label class="field"
+                >Height · HTML<input
+                  id="input-group-height"
+                  type="number"
+                  value="80"
+                  aria-label="Grouped height"
+                  style="width: 150px"
+              /></label>
+              <label class="field"
+                >Depth · Custom<demo-value-input
+                  id="input-group-depth"
+                  value="40"
+                  aria-label="Grouped depth"
+                ></demo-value-input
+              ></label>
+            </dsk-input-group>
+          </div>
+          <div class="readout">
+            <span>Values <strong id="input-group-values"></strong></span>
+          </div>
+          <div class="example-section">
+            <pre><code id="input-group-code"></code></pre>
+          </div>
+        </section>
+        <aside
+          class="settings-panel"
+          aria-labelledby="input-group-settings-title"
+        >
+          <div class="panel-bar">
+            <h2 id="input-group-settings-title">Group properties</h2>
+            <span>EDIT LIVE</span>
+          </div>
+          <div style="padding: 20px">
+            <label class="field"
+              ><span
+                ><input id="input-group-linked" type="checkbox" /> Link
+                values</span
+              ></label
+            >
+            <label class="field"
+              >Mixed label<input
+                id="input-group-label"
+                type="text"
+                value="Mixed"
+            /></label>
+            <p class="field-note">
+              Linking starts with the next edit. Automatic mixed values hide
+              different values behind placeholders; focus a field to reveal its
+              value.
+            </p>
+            <label class="field"
+              ><span
+                ><input id="input-group-automatic" type="checkbox" /> Automatic
+                mixed values</span
+              ></label
+            >
+          </div>
+        </aside>
+      </div>
+      <section class="page-heading">
+        <h1>Layer tree<span class="version">Preview</span></h1>
+        <p>
+          Drag near row edges to reorder, or onto the center to move inside a
+          group. Double-click a row or press F2 to rename it. Search reveals
+          matching layers and their parent branches.
+        </p>
+      </section>
+      <div class="workspace">
+        <section class="preview-panel" style="padding: 24px">
+          <dsk-layer-tree
+            id="layer-tree-demo"
+            aria-label="Document layers"
+            style="
+              --dsk-tree-indent: 24px;
+              --dsk-tree-hover-background: color-mix(
+                in srgb,
+                currentColor 7%,
+                transparent
+              );
+            "
+          >
+            <dsk-tree-search placeholder="Search layers"></dsk-tree-search>
+            <dsk-list-header style="padding: 8px 10px; font-weight: 600"
+              >Document layers</dsk-list-header
+            >
+            <dsk-list-value label="Landing page" open>
+              <span slot="icon" aria-hidden="true">▧</span>
+              <dsk-list-header
+                ><strong>Landing page</strong>
+                <span style="opacity: 0.5">Frame</span></dsk-list-header
+              >
+              <dsk-list-value label="Navigation" open>
+                <dsk-list-value label="Logo"></dsk-list-value>
+                <dsk-list-value label="Links"></dsk-list-value>
+              </dsk-list-value>
+              <dsk-list-value label="Hero">
+                <span slot="expand-icon">+</span
+                ><span slot="collapse-icon">−</span>
+                <dsk-list-value label="Headline"></dsk-list-value>
+                <dsk-list-value label="Cover image"></dsk-list-value>
+                <dsk-list-footer>End of Hero</dsk-list-footer>
+              </dsk-list-value>
+              <dsk-list-value label="Archived group" disabled>
+                <dsk-list-value label="Archived artwork"></dsk-list-value>
+                <dsk-list-value label="Archived caption"></dsk-list-value>
+              </dsk-list-value>
+              <dsk-list-footer>Frame contents</dsk-list-footer>
+            </dsk-list-value>
+            <dsk-list-value label="Background"></dsk-list-value>
+            <dsk-list-footer
+              >Use CSS variables, ::part(), and icon slots to
+              customize.</dsk-list-footer
+            >
+          </dsk-layer-tree>
+        </section>
+        <aside
+          class="settings-panel"
+          style="padding: 24px; overflow-wrap: anywhere"
+        >
+          <h2>Declarative branches</h2>
+          <p>
+            Use <code>open</code> to expand a branch by default. Nest list
+            values to create levels. The Hero branch demonstrates custom + / −
+            icons.
+          </p>
+          <pre><code>&lt;dsk-layer-tree aria-label="Layers"&gt;
+  &lt;dsk-list-value open&gt;
+    &lt;dsk-list-header&gt;Frame&lt;/dsk-list-header&gt;
+    &lt;dsk-list-value label="Text"&gt;&lt;/dsk-list-value&gt;
+    &lt;dsk-list-footer&gt;End of frame&lt;/dsk-list-footer&gt;
+  &lt;/dsk-list-value&gt;
+&lt;/dsk-layer-tree&gt;</code></pre>
+        </aside>
+      </div>
+      <section class="page-heading">
+        <h1>Ruler<span class="version">Preview</span></h1>
+        <p>
+          Drag from either scale into the canvas to add a guide. Wheel,
+          middle-button and touch navigation pass through guides to your canvas
+          handlers. Drag existing guides, or focus them and use arrows / Delete.
+        </p>
+      </section>
+      <div class="workspace">
+        <section class="preview-panel" style="padding: 16px">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 24px minmax(0, 1fr);
+              grid-template-rows: 24px 300px;
+            "
+          >
+            <div style="background: #292929"></div>
+            <dsk-ruler
+              id="ruler-x"
+              aria-label="Horizontal ruler"
+              offset="-50"
+              highlights="[[25,125],[180,220]]"
+              guides="[150]"
+              snap="1"
+              target="#ruler-canvas"
+            ></dsk-ruler>
+            <dsk-ruler
+              id="ruler-y"
+              aria-label="Vertical ruler"
+              orientation="vertical"
+              offset="-50"
+              highlights="[[25,75]]"
+              guides="[100]"
+              snap="1"
+              target="#ruler-canvas"
+            ></dsk-ruler>
+            <div
+              id="ruler-canvas"
+              style="
+                position: relative;
+                overflow: hidden;
+                background-color: #f7f8fb;
+                background-image:
+                  linear-gradient(#dfe3ec 1px, transparent 1px),
+                  linear-gradient(90deg, #dfe3ec 1px, transparent 1px);
+              "
+            >
+              <div
+                id="ruler-object"
+                style="
+                  position: absolute;
+                  box-sizing: border-box;
+                  border: 1px solid #557be8;
+                  background: #557be833;
+                  display: grid;
+                  place-items: center;
+                  color: #243a70;
+                "
+              >
+                Object
+              </div>
+              <dsk-canvas-marker
+                id="canvas-marker-world"
+                x="25"
+                y="90"
+                label="World comment"
+              ></dsk-canvas-marker>
+              <dsk-canvas-marker
+                id="canvas-marker-hud"
+                x="12"
+                y="12"
+                follow-pan="false"
+                follow-zoom="false"
+                style="--dsk-marker-background: #303846"
+                >Screen overlay</dsk-canvas-marker
+              >
+            </div>
+          </div>
+        </section>
+        <aside class="settings-panel" style="padding: 20px">
+          <label class="field"
+            >Zoom<input
+              id="ruler-zoom"
+              type="range"
+              min="0.25"
+              max="3"
+              step="0.25"
+              value="1"
+          /></label>
+          <label class="field"
+            >Coordinate at start<input
+              id="ruler-offset"
+              type="number"
+              value="-50"
+              step="25"
+          /></label>
+          <label class="field"
+            ><span
+              ><input id="ruler-flip" type="checkbox" /> Reverse tick edge</span
+            ></label
+          >
+          <p id="ruler-events">Drag a guide to update its coordinate.</p>
+          <label class="field"
+            ><span
+              ><input id="marker-pan" type="checkbox" checked /> Marker follows
+              pan</span
+            ></label
+          >
+          <label class="field"
+            ><span
+              ><input id="marker-zoom" type="checkbox" checked /> Marker follows
+              zoom</span
+            ></label
+          >
+          <label class="field"
+            ><span
+              ><input id="marker-size" type="checkbox" /> Scale marker
+              size</span
+            ></label
+          >
+          <p>
+            Blue ranges follow object coordinates. The grid, object, rulers, and
+            guides share the same offset and zoom.
+          </p>
+        </aside>
+      </div>
+      <section class="component-section" aria-label="Pan and zoom viewport">
+        <h2>HTML pan &amp; zoom</h2>
+        <p>
+          Drag or scroll to pan. Pinch or Ctrl + scroll to zoom. Focus the
+          viewport and use arrows, + / −, or 0 to reset.
+        </p>
+        <dsk-pan-zoom
+          aria-label="Interactive HTML viewport"
+          style="
+            height: 300px;
+            border: 1px solid #a6afbf;
+            border-radius: 12px;
+            overflow: hidden;
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              transform: translate(-50%, -50%);
+              padding: 40px;
+              border-radius: 20px;
+              background: #557be8;
+              color: white;
+            "
+          >
+            Your HTML here
+          </div>
+        </dsk-pan-zoom>
+      </section>
+      <section class="preview-panel" aria-labelledby="upload-title">
+        <div class="panel-bar">
+          <h2 id="upload-title">File upload</h2>
+          <span>DSK-INPUT-UPLOAD</span>
+        </div>
+        <div class="preview-canvas">
+          <div class="specimen">
+            <label>Images and documents</label>
+            <dsk-input-upload
+              id="upload-demo"
+              accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.txt,.zip"
+              aria-label="Upload preview file"
+            ></dsk-input-upload>
+            <p class="interaction-hint">
+              Choose or drop a file · Images show a thumbnail
+            </p>
+            <label>Images only</label>
+            <dsk-input-upload
+              accept="image/*"
+              placeholder="Choose an image"
+              aria-label="Upload image"
+            ></dsk-input-upload>
+            <label>Disabled</label>
+            <dsk-input-upload
+              disabled
+              aria-label="Disabled upload"
+            ></dsk-input-upload>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

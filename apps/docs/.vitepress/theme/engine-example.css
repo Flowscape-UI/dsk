@@ -1,0 +1,54 @@
+.dsk-engine-loader {
+  position: relative;
+  min-height: 580px;
+  margin: 24px 0;
+}
+.dsk-engine-loading,
+.dsk-engine-error {
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid var(--vp-c-divider);
+  background: #111;
+  color: #c9c9d1;
+  padding: 24px;
+  font-size: 14px;
+  text-align: center;
+}
+.dsk-engine-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 400;
+}
+.dsk-engine-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #39393f;
+  border-top-color: #ff0073;
+  border-radius: 50%;
+  animation: dsk-engine-spin 900ms linear infinite;
+}
+.dsk-engine-error button {
+  cursor: pointer;
+  border: 1px solid #ff0073;
+  color: #fff;
+  background: #ff00731a;
+  padding: 8px 16px;
+}
+.dsk-engine-error button:focus-visible {
+  outline: 2px solid #ff0073;
+  outline-offset: 3px;
+}
+@keyframes dsk-engine-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dsk-engine-spinner {
+    animation: none;
+  }
+}

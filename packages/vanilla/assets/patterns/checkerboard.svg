@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" shape-rendering="crispEdges">
+  <defs>
+    <pattern id="dsk-checkerboard" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#fff" />
+      <path d="M0 0h4v4H0zM4 4h4v4H4z" fill="#000" />
+    </pattern>
+  </defs>
+  <rect width="16" height="16" fill="url(#dsk-checkerboard)" />
+</svg>
