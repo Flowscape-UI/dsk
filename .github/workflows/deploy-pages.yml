@@ -24,7 +24,14 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Build documentation for /dsk/
-        run: pnpm pages:build
+        env:
+          VITE_TLDRAW_LICENSE_KEY: ${{ secrets.VITE_TLDRAW_LICENSE_KEY }}
+        run: |
+          if [ -z "$VITE_TLDRAW_LICENSE_KEY" ]; then
+            echo "::error::Set the VITE_TLDRAW_LICENSE_KEY repository Actions secret before deploying documentation."
+            exit 1
+          fi
+          pnpm pages:build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/dist

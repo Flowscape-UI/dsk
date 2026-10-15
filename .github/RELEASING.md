@@ -9,6 +9,8 @@ This is the owner-operated release guide for [Flowscape-UI/dsk](https://github.c
 3. Run **Deploy Pages** from Actions, or push to `main`. It deploys only the documentation to `https://flowscape-ui.github.io/dsk/`. Playground is local only. No npm credential is needed for Pages.
 4. Wait for CI and Pages to succeed before announcing the release.
 
+The documentation build requires the repository Actions secret `VITE_TLDRAW_LICENSE_KEY`. Set it under Settings > Secrets and variables > Actions with a tldraw public SDK license key valid for `flowscape-ui.github.io`. The Pages workflow passes it only to the documentation build step and stops if it is empty. Vite embeds it into the browser bundle, where the example passes it to `Tldraw.licenseKey`; this is a public client license, not a server credential. Local development and ordinary CI do not require the production key. Downloadable example projects retain their own empty `.env.example` for the user's key.
+
 ## npm setup and first publication
 
 Your npm account must own or have publishing rights in the `@flowscape-ui` scope. The GitHub organization does not automatically create an npm organization. Create or join `flowscape-ui` on npm and enable account 2FA.

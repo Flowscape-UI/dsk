@@ -2,6 +2,22 @@
 
 Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its publication status. A date in an unreleased entry heading does not indicate an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
 
+## Unreleased - based on 1.1.0
+
+- **Status:** Unreleased. No new package version has been assigned.
+
+### Added
+
+- A required tldraw license-key check for documentation deployments.
+
+### Changed
+
+- Document the GitHub Actions secret used for the hosted tldraw example.
+
+### Fixed
+
+- Pass `VITE_TLDRAW_LICENSE_KEY` from GitHub Actions secrets into the Pages build.
+
 ## 1.1.0 - 2026-10-13
 
 - **Status:** Released.
