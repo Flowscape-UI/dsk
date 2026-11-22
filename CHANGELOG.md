@@ -4,7 +4,8 @@ Notable changes to Design System Kit are grouped by the library version from `pa
 
 ## 1.2.0 - 2026-11-22
 
-- **Status:** Ready for release.
+- **Status:** Released.
+- **Released at:** `2026-11-22T12:21:08.982Z` (UTC).
 
 ### Added
 
