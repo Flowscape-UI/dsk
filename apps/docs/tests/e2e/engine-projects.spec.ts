@@ -74,12 +74,18 @@ test('the automatic loader stays visible until the engine chunk arrives', async 
   const gate = new Promise<void>((resolve) => {
     release = resolve;
   });
-  await page.route('**/assets/mount-example-*.js', async (route) => {
-    await gate;
-    await route.continue();
-  });
+  let intercepted = false;
+  await page.route(
+    /\/assets\/(?:chunks\/)?mount-example[.-][^/]+\.js(?:\?.*)?$/,
+    async (route) => {
+      intercepted = true;
+      await gate;
+      await route.continue();
+    },
+  );
   try {
     await page.goto('/examples/konva', { waitUntil: 'domcontentloaded' });
+    await expect.poll(() => intercepted).toBe(true);
     const loader = page.locator('.dsk-engine-loader');
     await expect(loader.locator('[role="status"]')).toBeVisible();
     await expect(loader).toHaveAttribute('aria-busy', 'true');
