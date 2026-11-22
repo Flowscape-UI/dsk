@@ -2,21 +2,30 @@
 
 Notable changes to Design System Kit are grouped by the library version from `packages/vanilla/package.json`, newest first. Each entry includes its publication status. A date in an unreleased entry heading does not indicate an npm publication. See the [repository](https://github.com/Flowscape-UI/dsk) for source code.
 
-## Unreleased - based on 1.1.0
+## 1.2.0 - 2026-11-22
 
-- **Status:** Unreleased. No new package version has been assigned.
+- **Status:** Ready for release.
 
 ### Added
 
-- A required tldraw license-key check for documentation deployments.
+- `dsk-panel`: resizable HTML panels with four selectable edges, size limits, signed offset/inset handle placement, keyboard controls, and undo/redo.
+- `dsk-transform-box` with optional header/content elements and independently styled rotation and eight-direction resize handles. Supports keyboard transforms, Shift angle snapping, edge crossing, cancellation, and local history.
+- `dsk-timeline`: reorderable tracks, optional clips, direct and clip-local keyframes, playback and looping, selection and grouped editing, deletion, locked/muted tracks, numeric interpolation, custom Bezier easing, playback ranges, snapping, and undo/redo.
+- `dsk-dock`, `dsk-dock-zone`, and `dsk-dock-item`: user-defined docking destinations, pointer and keyboard movement, cancellation, styling states, and silent programmatic moves.
+- Interactive playgrounds and bilingual component references, with framework examples, styling contracts, and keyboard documentation for all four families.
 
 ### Changed
 
-- Document the GitHub Actions secret used for the hosted tldraw example.
+- Dock examples support empty destinations that appear as overlays only during dragging without reserving layout space.
+- Timeline examples animate position, rotation, and opacity together and expose track creation, selection, interpolation, and appearance controls.
+- Documentation browser tests run in CI alongside component and distribution tests.
+- Documentation deployment validates and passes the GitHub Actions tldraw license-key secret to the site build.
 
 ### Fixed
 
-- Pass `VITE_TLDRAW_LICENSE_KEY` from GitHub Actions secrets into the Pages build.
+- Native text selection remains available inside draggable transform boxes and headers.
+- Dock commits moves before hiding empty drag-only destinations.
+- Timeline selection visibly identifies the track, clip, or key targeted by editing commands.
 
 ## 1.1.0 - 2026-10-13
 

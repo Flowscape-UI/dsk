@@ -6,6 +6,8 @@ import { TldrawExample } from './tldraw-example.ts';
 import { EngineExample } from './engine-example.ts';
 import { ExampleProjectViewer } from './example-project.ts';
 import { ExamplePanel } from './example-panel.ts';
+import { PanelExample } from './panel-example.ts';
+import { EditorExample } from './editor-example.ts';
 import { InputLab, SingleInputExample } from './input-lab.ts';
 import DefaultTheme from 'vitepress/theme';
 import type { Theme } from 'vitepress';
@@ -32,6 +34,8 @@ export default {
   async enhanceApp({ app }) {
     app.component('EditorPreview', EditorPreview);
     app.component('ExamplePanel', ExamplePanel);
+    app.component('PanelExample', PanelExample);
+    app.component('EditorExample', EditorExample);
     app.component('ColorExample', ColorExample);
     app.component('GeometryExample', GeometryExample);
     app.component('LayerExample', LayerExample);

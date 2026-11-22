@@ -1,3 +1,4 @@
+import './timeline-demo.ts';
 import logo from '@flowscape-ui/dsk/logo.svg?url';
 import {
   DskAngle,
@@ -16,6 +17,8 @@ import './style.css';
 import './theme.ts';
 import './input-group-demo.ts';
 import './ruler-demo.ts';
+import './panel-demo.ts';
+import './transform-demo.ts';
 
 const brandLogo = document.querySelector<HTMLImageElement>('.brand-mark');
 if (brandLogo) brandLogo.src = logo;
@@ -1566,3 +1569,4 @@ requireElement('#curve-clear', HTMLButtonElement).addEventListener(
 );
 syncCurveSettings();
 renderCurve();
+import './dock-demo.ts';

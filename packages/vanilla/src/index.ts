@@ -6,5 +6,10 @@ export * from './angle/index.ts';
 export * from './curve/index.ts';
 export * from './layer-tree/index.ts';
 export * from './canvas-widgets/index.ts';
+export * from './panel/index.ts';
 
 export const kit = Object.freeze({ name: 'Design System Kit' });
+
+export * from './transform-box/index.ts';
+export * from './timeline/index.ts';
+export * from './dock/index.ts';

@@ -1,0 +1,36 @@
+.dsk-panel-example-stage {
+  width: 100%;
+  padding: 16px;
+  overflow: auto;
+}
+.dsk-panel-example {
+  width: 240px;
+  height: 180px;
+  min-width: 140px;
+  max-width: 100%;
+  min-height: 120px;
+  max-height: 320px;
+  padding: 16px;
+  border: 1px solid var(--dsk-example-divider);
+  background: var(--dsk-example-surface);
+  color: var(--dsk-example-text);
+}
+.dsk-panel-example input {
+  max-width: 100%;
+}
+.dsk-panel-example::part(handle) {
+  background: var(--dsk-example-accent);
+}
+.dsk-panel-example-styled {
+  --dsk-panel-handle-size: 10px;
+  --dsk-panel-handle-cursor: grab;
+}
+.dsk-panel-example-styled::part(handle) {
+  background: #557be8;
+}
+.dsk-panel-example-styled::part(handle):hover {
+  background: #86a1ff;
+}
+.dsk-panel-example-styled::part(handle):active {
+  cursor: grabbing;
+}

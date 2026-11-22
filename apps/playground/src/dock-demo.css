@@ -1,0 +1,227 @@
+#dock-demo {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(200px, 2fr) minmax(
+      160px,
+      1fr
+    );
+  gap: 12px;
+  padding: 12px;
+  background: #111113;
+  color: #f5f5f7;
+  --dsk-dock-preview-border: #ff007a;
+}
+#dock-demo dsk-dock-zone {
+  border: 1px solid #45454e;
+  background: #19191e;
+  padding: 10px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#dock-demo .dock-zone-label {
+  color: #babac5;
+  font-size: 12px;
+}
+#dock-demo dsk-dock-zone[data-dock-active] {
+  border-style: dashed;
+}
+#dock-demo dsk-dock-zone[data-drag-over] {
+  border-color: #ff007a;
+  background: #321728;
+}
+#dock-demo dsk-dock-item {
+  background: #24242a;
+  border: 1px solid #4b4b56;
+  min-width: 0;
+}
+#dock-demo dsk-dock-item[data-dragging] {
+  opacity: 0.5;
+}
+#dock-demo [data-dsk-dock-handle] {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid #45454e;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: grab;
+}
+#dock-demo [data-dsk-dock-handle]:focus-visible {
+  outline: 2px solid #ff007a;
+  outline-offset: -2px;
+}
+#dock-demo .dock-item-body {
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+}
+#dock-demo input {
+  max-width: 100%;
+  min-width: 0;
+}
+#dock-demo .dock-scene {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(#45454e 1px, transparent 1px) 0 0 / 18px 18px;
+}
+#dock-demo .dock-scene > span {
+  padding: 30px;
+  background: #ff007a;
+  font-weight: 600;
+}
+#dock-bottom,
+#dock-extra-zones {
+  grid-column: 1 / -1;
+}
+#dock-demo #dock-bottom {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+#dock-bottom > dsk-dock-item {
+  flex: 1;
+  min-width: 180px;
+}
+#dock-extra-zones {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+#dock-demo.dock-alternative dsk-dock-zone {
+  border-radius: 18px;
+  border: 2px dotted #8e81cc;
+  background: #201e30;
+}
+#dock-demo.dock-alternative dsk-dock-zone[data-drag-over] {
+  background: #3f365f;
+  border-style: solid;
+}
+#dock-demo.dock-alternative #dock-bottom {
+  margin-inline: 12%;
+}
+#dock-events {
+  display: block;
+  margin-top: 12px;
+}
+/* Keep destination geometry stable so revealing hints never moves the panels. */
+#dock-demo.dock-reveal-zones:not([data-dragging]) dsk-dock-zone {
+  border-color: transparent;
+  background: transparent;
+}
+#dock-demo.dock-reveal-zones:not([data-dragging]) .dock-zone-label {
+  visibility: hidden;
+}
+@media (max-width: 650px) {
+  #dock-demo {
+    grid-template-columns: 1fr;
+  }
+  #dock-demo .dock-scene {
+    min-height: 120px;
+  }
+}
+/* Empty destinations are overlays, not grid items. Occupied zones size to content. */
+#dock-demo.dock-overlay-zones {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: var(--dock-left-size, 0px) minmax(0, 1fr) var(
+      --dock-right-size,
+      0px
+    );
+  gap: 0;
+}
+#dock-demo.dock-overlay-zones:has(#dock-left > dsk-dock-item) {
+  --dock-left-size: minmax(160px, 1fr);
+}
+#dock-demo.dock-overlay-zones:has(#dock-right > dsk-dock-item) {
+  --dock-right-size: minmax(160px, 1fr);
+}
+#dock-demo.dock-overlay-zones .dock-scene {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+#dock-demo.dock-overlay-zones #dock-left {
+  grid-column: 1;
+  grid-row: 1;
+}
+#dock-demo.dock-overlay-zones #dock-right {
+  grid-column: 3;
+  grid-row: 1;
+}
+#dock-demo.dock-overlay-zones dsk-dock-zone:has(> dsk-dock-item) {
+  position: relative;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  align-self: start;
+}
+#dock-demo.dock-overlay-zones .dock-zone-label {
+  display: none;
+}
+#dock-demo.dock-overlay-zones dsk-dock-zone:not(:has(> dsk-dock-item)) {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  min-height: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 18px #0006;
+}
+#dock-demo.dock-overlay-zones[data-dragging]
+  dsk-dock-zone:not(:has(> dsk-dock-item)) {
+  display: flex;
+}
+#dock-demo.dock-overlay-zones[data-dragging]
+  dsk-dock-zone:not(:has(> dsk-dock-item))
+  .dock-zone-label {
+  display: block;
+}
+#dock-demo.dock-overlay-zones #dock-left:not(:has(> dsk-dock-item)) {
+  left: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 24%;
+}
+#dock-demo.dock-overlay-zones #dock-right:not(:has(> dsk-dock-item)) {
+  right: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 24%;
+}
+#dock-demo.dock-overlay-zones #dock-bottom:not(:has(> dsk-dock-item)) {
+  left: 28%;
+  right: 28%;
+  bottom: 12px;
+  height: 75px;
+}
+#dock-demo.dock-overlay-zones #dock-extra-zones {
+  display: contents;
+}
+#dock-demo.dock-overlay-zones .dock-extra:has(> dsk-dock-item) {
+  grid-column: 1 / -1;
+}
+#dock-demo.dock-overlay-zones .dock-extra:not(:has(> dsk-dock-item)) {
+  left: 28%;
+  right: 28%;
+  top: calc(12px + var(--dock-zone-index, 0) * 60px);
+  height: 50px;
+}
+@media (max-width: 650px) {
+  #dock-demo.dock-overlay-zones {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #dock-demo.dock-overlay-zones #dock-left:has(> dsk-dock-item),
+  #dock-demo.dock-overlay-zones #dock-right:has(> dsk-dock-item),
+  #dock-demo.dock-overlay-zones .dock-scene {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

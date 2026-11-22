@@ -33,7 +33,7 @@ You can adopt those pieces independently. Using a DSK input does not require rep
 
 ## What is in the kit?
 
-The current vanilla implementation includes **19 custom elements**, grouped by the job they do.
+The current vanilla implementation includes **20 custom elements**, grouped by the job they do.
 
 ### Inputs and file selection
 
@@ -100,6 +100,16 @@ HTML/CSS widgets that connect to a viewport without requiring a particular rende
 The package also exports coordinate helpers for connecting your own HTML widgets to a camera. You decide which widgets follow pan, zoom, or remain fixed in the viewport.
 
 [Explore canvas widgets →](/components/canvas)
+
+### Resizable panels
+
+[`dsk-panel`](../components/panel) hosts ordinary HTML with a styled resize edge, keyboard controls, size limits, and undo/redo.
+
+### Layout and animation
+
+- [`dsk-transform-box`](../components/transform-box) moves HTML content, with optional headers and custom rotation/resize handles.
+- [`dsk-timeline`](../components/timeline) edits tracks, clips, and keys, with playback and interpolation for your objects.
+- [`dsk-dock`](../components/dock) moves panels between custom destinations, including drag-only overlay zones.
 
 ## A first look at usage
 

@@ -1,0 +1,97 @@
+.timeline-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-block: 16px;
+}
+.timeline-demo-controls label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.timeline-demo-controls input[type='number'] {
+  width: 70px;
+}
+#timeline-preview {
+  height: 180px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle, #383840 1px, transparent 1px) 0 0/18px 18px,
+    #19191d;
+  overflow: hidden;
+}
+#timeline-preview-object {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: #ff007a;
+  color: white;
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+#timeline-status {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 240px;
+  overflow: auto;
+  margin-top: 16px;
+  font: 12px/1.5 monospace;
+}
+#timeline-demo {
+  --dsk-timeline-accent: #ff007a;
+}
+
+#timeline-demo[data-appearance='compact'] {
+  --dsk-timeline-row-height: 42px;
+  --dsk-timeline-label-width: 100px;
+  --dsk-timeline-clip-inset: 7px;
+  --dsk-timeline-font-size: 12px;
+  --dsk-timeline-radius: 0px;
+  --dsk-timeline-keyframe-size: 7px;
+}
+#timeline-demo[data-appearance='light'] {
+  --dsk-timeline-background: #f8fafc;
+  --dsk-timeline-text: #172033;
+  --dsk-timeline-muted: #49566e;
+  --dsk-timeline-border: #cbd5e1;
+  --dsk-timeline-header-background: #e9eef5;
+  --dsk-timeline-accent: #2856d8;
+  --dsk-timeline-accent-text: #fff;
+  --dsk-timeline-clip-background: #dce5fa;
+  --dsk-timeline-clip-border: #8298c9;
+  --dsk-timeline-clip-text: #172033;
+  --dsk-timeline-handle-background: #243e7133;
+  --dsk-timeline-keyframe-color: #725300;
+  --dsk-timeline-keyframe-angle: 0deg;
+  --dsk-timeline-playhead-width: 2px;
+}
+#timeline-demo[data-appearance='light']::part(motion-clip) {
+  background: #d7f0e5;
+  border-color: #52967b;
+}
+#timeline-demo[data-appearance='light']::part(keyframe-marker) {
+  border-radius: 50%;
+}
+#timeline-demo[data-appearance='light']::part(selected-clip) {
+  outline: 2px solid #2856d8;
+  outline-offset: 1px;
+}
+
+#timeline-values {
+  display: block;
+  padding: 10px 0;
+  font: 13px/1.5 monospace;
+}
+.timeline-demo-controls input {
+  max-width: 100%;
+}
+
+#timeline-curve {
+  width: 220px;
+  max-width: 100%;
+}

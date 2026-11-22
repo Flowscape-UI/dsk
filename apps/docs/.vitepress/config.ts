@@ -46,6 +46,19 @@ function sidebar(ru: boolean): DefaultTheme.SidebarItem[] {
           text: ru ? 'Виджеты холста' : 'Canvas widgets',
           link: `${base}/components/canvas`,
         },
+        {
+          text: ru ? 'Панель' : 'Panel',
+          link: `${base}/components/panel`,
+        },
+        {
+          text: ru ? 'Трансформация' : 'Transform box',
+          link: `${base}/components/transform-box`,
+        },
+        {
+          text: ru ? 'Временная шкала' : 'Timeline',
+          link: `${base}/components/timeline`,
+        },
+        { text: ru ? 'Док-панели' : 'Dock', link: `${base}/components/dock` },
       ],
     },
     {

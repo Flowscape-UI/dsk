@@ -10,3 +10,6 @@
   color: var(--dsk-color-text);
   font-family: var(--dsk-font-family);
 }
+dsk-dock [data-dsk-dock-handle] {
+  touch-action: none;
+}

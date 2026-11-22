@@ -1,0 +1,207 @@
+.dsk-editor-example {
+  padding: 18px;
+  min-width: 0;
+  width: 100%;
+}
+.dsk-editor-output {
+  display: block;
+  padding: 0 18px 12px;
+  overflow-wrap: anywhere;
+}
+.dsk-editor-transform-stage {
+  min-height: 310px;
+  overflow: auto;
+  padding: 12px;
+}
+.dsk-editor-example dsk-transform-box {
+  background: var(--dsk-example-surface);
+  border: 1px solid var(--dsk-example-divider);
+  color: var(--dsk-example-text);
+  --dsk-transform-color: var(--dsk-example-accent);
+}
+.dsk-editor-example dsk-transform-box > strong,
+.dsk-editor-example dsk-transform-box > p {
+  margin: 12px;
+}
+.dsk-editor-example dsk-transform-header {
+  padding: 10px;
+  background: var(--dsk-example-divider);
+  cursor: grab;
+}
+.dsk-editor-example dsk-transform-content {
+  padding: 12px;
+}
+.dsk-editor-example dsk-transform-content input {
+  max-width: 100%;
+}
+.dsk-editor-example dsk-transform-box-handle-rotate {
+  position: absolute;
+  top: -26px;
+  left: calc(50% - 10px);
+}
+.dsk-editor-example dsk-transform-box-handle-resize {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+}
+.dsk-editor-example dsk-transform-box-handle-rotate:focus-visible,
+.dsk-editor-example dsk-transform-box-handle-resize:focus-visible {
+  box-shadow: 0 0 0 3px var(--dsk-example-accent);
+}
+.dsk-editor-example-styled dsk-transform-header {
+  background: var(--dsk-example-accent);
+  color: white;
+}
+.dsk-editor-example-styled dsk-transform-box-handle-resize {
+  width: 18px;
+  height: 18px;
+  background: var(--dsk-example-accent);
+}
+.dsk-editor-motion-stage {
+  height: 180px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.dsk-editor-motion-object {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  background: var(--dsk-example-accent);
+  color: white;
+}
+.dsk-editor-example dsk-timeline {
+  --dsk-timeline-background: var(--dsk-example-surface);
+  --dsk-timeline-text: var(--dsk-example-text);
+  --dsk-timeline-accent: var(--dsk-example-accent);
+  --dsk-timeline-border: var(--dsk-example-divider);
+  --dsk-timeline-radius: 0px;
+  --dsk-timeline-label-width: 90px;
+}
+.dsk-editor-example-styled dsk-timeline {
+  --dsk-timeline-keyframe-angle: 0deg;
+  --dsk-timeline-row-height: 48px;
+  --dsk-timeline-clip-background: #28403d;
+}
+.dsk-editor-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.dsk-editor-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dsk-editor-controls input[type='number'] {
+  width: 80px;
+}
+.dsk-editor-bezier {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.dsk-editor-bezier[hidden] {
+  display: none;
+}
+.dsk-editor-dock {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  position: relative;
+}
+.dsk-editor-dock dsk-dock-zone {
+  min-height: 110px;
+  padding: 12px;
+  border: 1px dashed var(--dsk-example-divider);
+}
+.dsk-editor-zone-label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.dsk-editor-dock dsk-dock-zone:last-child {
+  grid-column: 1 / -1;
+}
+.dsk-editor-dock dsk-dock-zone[data-drag-over] {
+  border-color: var(--dsk-example-accent);
+  background: color-mix(
+    in srgb,
+    var(--dsk-example-accent) 12%,
+    var(--dsk-example-surface)
+  );
+}
+.dsk-editor-dock dsk-dock-item {
+  border: 1px solid var(--dsk-example-divider);
+  background: var(--dsk-example-surface);
+}
+.dsk-editor-dock [data-dsk-dock-handle] {
+  width: 100%;
+  cursor: grab;
+}
+.dsk-editor-dock dsk-dock-item label {
+  display: block;
+  padding: 10px;
+}
+.dsk-editor-dock dsk-dock-item input {
+  width: 100%;
+  min-width: 0;
+}
+.dsk-editor-dock-overlay {
+  display: block;
+  min-height: 210px;
+}
+.dsk-editor-dock-overlay dsk-dock-zone:has(> dsk-dock-item) {
+  border: 0;
+  padding: 0;
+  min-height: 0;
+  width: 180px;
+  max-width: 100%;
+}
+.dsk-editor-dock-overlay dsk-dock-zone:nth-child(2):has(> dsk-dock-item) {
+  margin-left: auto;
+}
+.dsk-editor-dock-overlay dsk-dock-zone:last-child:has(> dsk-dock-item) {
+  width: 100%;
+}
+.dsk-editor-dock-overlay .dsk-editor-zone-label {
+  display: none;
+}
+.dsk-editor-dock-overlay dsk-dock-zone:not(:has(> dsk-dock-item)) {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  width: 30%;
+  min-height: 65px;
+  top: 0;
+  background: var(--dsk-example-surface);
+}
+.dsk-editor-dock-overlay dsk-dock-zone:nth-child(2):not(:has(> dsk-dock-item)) {
+  right: 0;
+}
+.dsk-editor-dock-overlay dsk-dock-zone:last-child:not(:has(> dsk-dock-item)) {
+  top: auto;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+}
+.dsk-editor-dock-overlay[data-dragging]
+  dsk-dock-zone:not(:has(> dsk-dock-item)) {
+  display: block;
+}
+.dsk-editor-dock-overlay[data-dragging]
+  dsk-dock-zone:not(:has(> dsk-dock-item))
+  .dsk-editor-zone-label {
+  display: block;
+}
+@media (max-width: 500px) {
+  .dsk-editor-example {
+    padding: 10px;
+  }
+  .dsk-editor-dock {
+    grid-template-columns: 1fr;
+  }
+}

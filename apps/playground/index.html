@@ -1864,6 +1864,498 @@
           </div>
         </div>
       </section>
+      <section class="preview-panel" aria-labelledby="panel-demo-title">
+        <div class="panel-bar">
+          <h2 id="panel-demo-title">Resizable panel</h2>
+        </div>
+        <label
+          >Resize edge
+          <select id="panel-side">
+            <option>right</option>
+            <option>left</option>
+            <option>top</option>
+            <option>bottom</option>
+          </select></label
+        >
+        <label><input type="checkbox" id="panel-disabled" /> Disabled</label>
+        <label><input type="checkbox" id="panel-readonly" /> Readonly</label>
+        <div class="panel-demo-limits">
+          <label
+            >min-size (px)
+            <input
+              id="panel-min-size"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="No limit"
+            />
+          </label>
+          <label
+            >max-size (px)
+            <input
+              id="panel-max-size"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="No limit"
+            />
+          </label>
+        </div>
+        <p>
+          Empty fields remove the limits. Limits apply to width for left/right
+          edges and height for top/bottom edges on the next resize.
+        </p>
+        <div class="panel-demo-limits">
+          <label
+            >offset (px, outward)
+            <input id="panel-offset" type="number" step="1" placeholder="0" />
+          </label>
+          <label
+            >inset (px, inward)
+            <input id="panel-inset" type="number" step="1" placeholder="0" />
+          </label>
+        </div>
+        <p>
+          Only the handle moves. Combined outward shift: offset - inset. Clear
+          either field to reset it to zero.
+        </p>
+        <div class="panel-demo-stage">
+          <dsk-panel id="panel-demo" aria-label="Inspector">
+            <h3>Inspector</h3>
+            <p>Drag the blue edge, or focus it and use the arrow keys.</p>
+            <label
+              >Width
+              <dsk-input value="160" aria-label="Object width"></dsk-input
+            ></label>
+          </dsk-panel>
+        </div>
+        <output id="panel-output">280 × 220 px</output>
+      </section>
+      <section class="preview-panel" aria-labelledby="transform-title">
+        <div class="panel-bar"><h2 id="transform-title">Transform box</h2></div>
+        <div class="transform-demo-controls">
+          <label
+            ><input id="transform-movable" type="checkbox" checked />
+            Movable</label
+          >
+          <label
+            ><input id="transform-disabled" type="checkbox" /> Disabled</label
+          >
+          <label
+            ><input id="transform-readonly" type="checkbox" /> Readonly</label
+          >
+          <label
+            >Content
+            <select id="transform-content">
+              <option value="card">HTML card</option>
+              <option value="image">Image</option>
+              <option value="form">Interactive form</option>
+            </select></label
+          >
+          <label
+            >Rotation snap
+            <input id="transform-snap-angle" type="number" min="1" value="15"
+          /></label>
+          <button id="transform-add-rotate" type="button">
+            Add rotate handle
+          </button>
+          <button id="transform-reset" type="button">Reset</button>
+        </div>
+        <div class="transform-demo-controls">
+          <label>X <input id="transform-x" type="number" value="80" /></label>
+
+          <label>Y <input id="transform-y" type="number" value="80" /></label>
+          <label
+            >Width
+            <input id="transform-width" type="number" min="1" value="240"
+          /></label>
+          <label
+            >Height
+            <input id="transform-height" type="number" min="1" value="160"
+          /></label>
+          <label
+            >Angle <input id="transform-angle" type="number" value="0"
+          /></label>
+          <label
+            >Preview zoom
+            <select id="transform-zoom">
+              <option value="1">100%</option>
+              <option value="0.5">50%</option>
+              <option value="1.5">150%</option>
+            </select></label
+          >
+        </div>
+        <p>
+          Drag the header to move. Content stays interactive and never starts a
+          drag. Rotate using either custom handle; Shift snaps the angle. Resize
+          using the square handles on the edges and corners. Focus a resize
+          handle for arrow keys; Shift increases the step. Focus the header for
+          arrows, Escape, Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z.
+        </p>
+        <h3>With header</h3>
+        <div class="transform-demo-stage">
+          <div id="transform-world">
+            <dsk-transform-box
+              id="transform-demo"
+              x="80"
+              y="80"
+              width="240"
+              height="160"
+              aria-label="Editable object"
+            >
+              <dsk-transform-box-handle-resize
+                direction="t"
+                aria-label="Resize t"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="l"
+                aria-label="Resize l"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="r"
+                aria-label="Resize r"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="b"
+                aria-label="Resize b"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="tl"
+                aria-label="Resize tl"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="tr"
+                aria-label="Resize tr"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="bl"
+                aria-label="Resize bl"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-resize
+                direction="br"
+                aria-label="Resize br"
+              ></dsk-transform-box-handle-resize>
+              <dsk-transform-box-handle-rotate
+                class="transform-rotate-top"
+                aria-label="Rotate from top"
+                >↻</dsk-transform-box-handle-rotate
+              >
+              <dsk-transform-box-handle-rotate
+                class="transform-rotate-side"
+                aria-label="Rotate from side"
+                >Rotate</dsk-transform-box-handle-rotate
+              >
+              <dsk-transform-header>Inspector</dsk-transform-header>
+              <dsk-transform-content>
+                <div class="transform-demo-card">
+                  <strong>Your HTML</strong>
+                  <p>
+                    Select text and interact with content. Drag the header to
+                    move.
+                  </p>
+                </div>
+              </dsk-transform-content>
+            </dsk-transform-box>
+          </div>
+        </div>
+        <output id="transform-output"></output>
+        <h3>Without header</h3>
+        <p>
+          Select the card's text or drag its background. Inputs and buttons
+          remain interactive.
+        </p>
+        <div class="transform-demo-stage">
+          <dsk-transform-box
+            id="transform-no-header"
+            x="80"
+            y="80"
+            width="260"
+            height="160"
+            aria-label="Object without header"
+          >
+            <div class="transform-demo-card">
+              <strong>Drag this card</strong>
+              <p>There is no dsk-transform-header here.</p>
+              <label
+                >Name <input aria-label="Card name" value="Editable"
+              /></label>
+            </div>
+          </dsk-transform-box>
+        </div>
+        <output id="transform-no-header-output"></output>
+        <button type="button" id="transform-no-header-reset">
+          Reset card position
+        </button>
+        <pre><code>&lt;dsk-transform-box x="80" y="80" width="240" height="160" movable="true"&gt;
+  &lt;dsk-transform-box-handle-rotate style="position: absolute; top: -28px; left: 50%"&gt;↻&lt;/dsk-transform-box-handle-rotate&gt;
+  &lt;dsk-transform-header&gt;Inspector&lt;/dsk-transform-header&gt;
+  &lt;dsk-transform-content&gt;Your HTML&lt;/dsk-transform-content&gt;
+&lt;/dsk-transform-box&gt;</code></pre>
+      </section>
+      <section aria-labelledby="timeline-title">
+        <h2 id="timeline-title">Timeline</h2>
+        <p>
+          Drag track labels vertically to reorder. Drag clips to move them or
+          their edges to trim. Play drives the preview. Audio is a visual
+          placeholder without sound.
+        </p>
+        <div class="timeline-demo-controls">
+          <label
+            >Appearance
+            <select id="timeline-appearance">
+              <option value="default">Default</option>
+              <option value="compact">Compact</option>
+              <option value="light">Light / custom parts</option>
+            </select>
+          </label>
+          <label
+            >Zoom
+            <select id="timeline-zoom">
+              <option value="0.5">50%</option>
+              <option value="1" selected>100%</option>
+              <option value="2">200%</option>
+            </select></label
+          >
+          <label
+            >Step
+            <input
+              id="timeline-step"
+              type="number"
+              value="0.25"
+              min="0.001"
+              step="0.05"
+          /></label>
+          <label
+            ><input id="timeline-snap" type="checkbox" checked />Snap</label
+          >
+          <label><input id="timeline-loop" type="checkbox" />Loop</label>
+          <label
+            ><input id="timeline-disabled" type="checkbox" />Disabled</label
+          >
+          <label
+            ><input id="timeline-readOnly" type="checkbox" />Readonly</label
+          >
+          <button id="timeline-reset" type="button">Reset timeline</button>
+          <button id="timeline-delete-selection" type="button" disabled>
+            Delete selected
+          </button>
+        </div>
+        <div class="timeline-demo-controls">
+          <label
+            >Keyframe value
+            <input
+              id="timeline-keyframe-value"
+              type="number"
+              value="0.5"
+              step="0.1"
+          /></label>
+          <output id="timeline-keyframe-target" aria-live="polite"
+            >Select a track or clip</output
+          >
+          <button id="timeline-add-keyframe" type="button">
+            Add keyframe at cursor
+          </button>
+          <button id="timeline-update-keyframe" type="button">
+            Apply value to selected keyframe
+          </button>
+          <button id="timeline-delete-keyframe" type="button">
+            Delete selected keyframe
+          </button>
+        </div>
+        <p>
+          Select a clip, then add a keyframe at the cursor (Rotation is the
+          default). Keyframe time is relative to its clip. Drag diamonds or use
+          arrows; Delete removes the selected keyframe. Position uses pixels,
+          rotation uses degrees, and opacity uses 0 to 1. Trimming hides
+          out-of-range keyframes without deleting them.
+        </p>
+        <div class="timeline-demo-controls">
+          <label
+            >Track name
+            <input id="timeline-track-name" placeholder="My animation"
+          /></label>
+          <label
+            >Property
+            <select id="timeline-track-property">
+              <option value="position">Position X (px)</option>
+              <option value="rotation">Rotation (degrees)</option>
+              <option value="opacity">Opacity (0–1)</option>
+            </select></label
+          >
+          <label
+            ><input type="checkbox" id="timeline-with-clip" />Create with a
+            clip</label
+          >
+          <button id="timeline-add-track" type="button">
+            Add motion track
+          </button>
+        </div>
+        <button id="timeline-add-clip" type="button">
+          Add clip to selected track
+        </button>
+        <p>
+          Tracks can contain keyframes directly, optional clips, or both. Select
+          a track label to add direct keyframes. Direct keyframe times use the
+          timeline clock; clip keyframes use local clip time.
+        </p>
+        <p>
+          Position and rotation layers add together; opacity layers multiply.
+          New layers contribute only while their clips are active. Initial
+          tracks hold their first/last values. Adding a track replaces the
+          tracks array and resets edit history.
+        </p>
+        <div class="timeline-demo-controls">
+          <output id="timeline-selection-count">0 selected</output>
+          <label
+            ><input id="timeline-track-locked" type="checkbox" />Lock selected
+            track</label
+          >
+          <label
+            ><input id="timeline-track-muted" type="checkbox" />Mute selected
+            track</label
+          >
+          <label
+            >Range start
+            <input
+              id="timeline-range-start"
+              type="number"
+              min="0"
+              step="0.25"
+              value="0"
+          /></label>
+          <label
+            >Range end
+            <input
+              id="timeline-range-end"
+              type="number"
+              min="0"
+              step="0.25"
+              value="12"
+          /></label>
+          <label
+            ><input id="timeline-snap-elements" type="checkbox" checked />Snap
+            to elements</label
+          >
+          <label
+            >Snap distance (px)
+            <input id="timeline-snap-threshold" type="number" min="0" value="8"
+          /></label>
+        </div>
+        <p>
+          Shift-click toggles selection. Drag an empty lane to select a
+          rectangle; Shift adds to the selection. Drag a selected key or clip to
+          move the group. Alt-drag temporarily disables snapping. Locked tracks
+          still animate; muted tracks do not contribute.
+        </p>
+        <div class="timeline-demo-controls">
+          <label
+            >Selected key: outgoing interpolation
+            <select id="timeline-easing">
+              <option value="linear">Linear</option>
+              <option value="step">Step</option>
+              <option value="ease">Ease</option>
+              <option value="ease-in">Ease in</option>
+              <option value="ease-out">Ease out</option>
+              <option value="ease-in-out">Ease in out</option>
+              <option value="custom">Custom Bezier</option>
+            </select>
+          </label>
+          <dsk-curve
+            id="timeline-curve"
+            aria-label="Selected keyframe easing"
+            value="linear"
+          ></dsk-curve>
+        </div>
+        <div id="timeline-preview">
+          <div id="timeline-preview-object">dsk</div>
+        </div>
+        <dsk-timeline
+          id="timeline-demo"
+          duration="12"
+          aria-label="Animation timeline"
+        ></dsk-timeline>
+        <p>
+          Space: play/pause. Clip arrows: move. Alt + arrows: resize clip end.
+          Track Alt + up/down: reorder. Escape: cancel drag. Ctrl/Cmd + Z /
+          Shift + Z: undo/redo.
+        </p>
+        <output id="timeline-values" aria-live="off"></output>
+        <output id="timeline-status"></output>
+      </section>
+      <section class="card" id="dock-section">
+        <h2>Dock</h2>
+        <p>
+          Drag either panel by its header. Zones are ordinary styled containers.
+          Keyboard: focus a header, Space, arrows to choose a zone, Enter to
+          dock, Escape to cancel.
+        </p>
+        <div class="controls">
+          <label><input id="dock-disabled" type="checkbox" /> Disabled</label>
+          <label><input id="dock-readOnly" type="checkbox" /> Readonly</label>
+          <label
+            ><input id="dock-custom-style" type="checkbox" /> Custom zone
+            design</label
+          >
+          <button type="button" id="dock-add-zone">Add custom zone</button>
+          <button type="button" id="dock-reset">Reset layout</button>
+        </div>
+        <label
+          ><input id="dock-reveal-zones" type="checkbox" checked /> Show zones
+          only while dragging</label
+        >
+        <label
+          ><input id="dock-overlay-zones" type="checkbox" checked /> Empty zones
+          as overlays (no reserved space)</label
+        >
+        <dsk-dock
+          id="dock-demo"
+          class="dock-reveal-zones dock-overlay-zones"
+          aria-label="Dock playground"
+        >
+          <dsk-dock-zone id="dock-left" aria-label="Left zone">
+            <span class="dock-zone-label">Left zone</span>
+            <dsk-dock-item id="dock-layers" aria-label="Layers panel">
+              <button
+                type="button"
+                data-dsk-dock-handle
+                aria-label="Move Layers panel"
+              >
+                ⠿ Layers
+              </button>
+              <div class="dock-item-body">
+                <label><input type="checkbox" checked /> Background</label
+                ><label><input type="checkbox" checked /> Shape</label>
+              </div>
+            </dsk-dock-item>
+          </dsk-dock-zone>
+          <div class="dock-scene"><span>Your editor</span></div>
+          <dsk-dock-zone id="dock-right" aria-label="Right zone">
+            <span class="dock-zone-label">Right zone</span>
+            <dsk-dock-item id="dock-inspector" aria-label="Inspector panel">
+              <button
+                type="button"
+                data-dsk-dock-handle
+                aria-label="Move Inspector panel"
+              >
+                ⠿ Inspector
+              </button>
+              <div class="dock-item-body">
+                <label>Name <input id="dock-name" value="Rectangle" /></label
+                ><dsk-input value="128" aria-label="Width"></dsk-input>
+              </div>
+            </dsk-dock-item>
+          </dsk-dock-zone>
+          <dsk-dock-zone id="dock-bottom" aria-label="Bottom zone"
+            ><span class="dock-zone-label"
+              >Bottom zone / multiple panels</span
+            ></dsk-dock-zone
+          >
+          <div id="dock-extra-zones"></div>
+        </dsk-dock>
+        <output id="dock-events" aria-live="polite"
+          >Move a panel to any zone.</output
+        >
+      </section>
     </main>
     <script type="module" src="/src/main.ts"></script>
   </body>

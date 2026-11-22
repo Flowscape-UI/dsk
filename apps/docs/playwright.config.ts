@@ -8,7 +8,7 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:5184',
-    channel: process.platform === 'win32' ? 'msedge' : undefined,
+    channel: process.platform === 'win32' ? 'msedge' : 'chromium',
     launchOptions: process.env.DSK_TEST_EXECUTABLE
       ? { executablePath: process.env.DSK_TEST_EXECUTABLE }
       : undefined,

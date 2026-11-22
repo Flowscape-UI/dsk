@@ -15,6 +15,8 @@ for (const format of ['esm', 'iife']) {
           contentType: 'text/html',
           body: `<!doctype html><html><head><link rel="stylesheet" href="/styles.css"></head><body class="dsk-theme">
             <dsk-input value="10" aria-label="Width"></dsk-input>
+            <dsk-panel style="width:200px;height:100px" min-size="150" max-size="250">Inspector</dsk-panel>
+            <dsk-transform-box x="12" y="20"><span>Transform me</span></dsk-transform-box>
             <dsk-color-eyedropper mode="page"></dsk-color-eyedropper>
             <script ${format === 'esm' ? 'type="module"' : ''} src="/${format === 'esm' ? 'index.js' : 'dsk.global.js'}"></script>
           </body></html>`,
@@ -36,6 +38,9 @@ for (const format of ['esm', 'iife']) {
     const input = page.locator('dsk-input input');
     await expect(input).toHaveValue('10');
     const tags = [
+      'dsk-dock',
+      'dsk-dock-zone',
+      'dsk-dock-item',
       'dsk-input',
       'dsk-input-group',
       'dsk-input-hex',
@@ -55,6 +60,13 @@ for (const format of ['esm', 'iife']) {
       'dsk-pan-zoom',
       'dsk-ruler',
       'dsk-canvas-marker',
+      'dsk-panel',
+      'dsk-transform-box',
+      'dsk-transform-header',
+      'dsk-transform-content',
+      'dsk-transform-box-handle-rotate',
+      'dsk-transform-box-handle-resize',
+      'dsk-timeline',
     ];
     expect(
       await page.evaluate(
@@ -62,6 +74,16 @@ for (const format of ['esm', 'iife']) {
         tags,
       ),
     ).toEqual([]);
+    const panel = page.locator('dsk-panel');
+    await panel.locator('[part=handle]').focus();
+    await page.keyboard.press('Shift+ArrowRight');
+    await expect(panel).toHaveCSS('width', '210px');
+    await page.keyboard.press('Control+z');
+    await expect(panel).toHaveCSS('width', '200px');
+    const transform = page.locator('dsk-transform-box');
+    await transform.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(transform).toHaveJSProperty('x', 13);
     await input.fill('32');
     await input.press('Enter');
     await expect(page.locator('dsk-input')).toHaveJSProperty('value', '32');

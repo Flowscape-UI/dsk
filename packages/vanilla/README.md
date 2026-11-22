@@ -126,15 +126,19 @@ Explore [styling and customization](https://flowscape-ui.github.io/dsk/guide/sty
 
 ## Inside the kit
 
-**19 custom elements**, organized around the work your users do.
+**20 custom elements**, organized around the work your users do.
 
-| Family                                                                    | Components                                                                                  | What you can build                                                                      |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [Inputs & groups](https://flowscape-ui.github.io/dsk/components/inputs)   | `dsk-input`, `dsk-input-hex`, `dsk-input-color`, `dsk-input-upload`, `dsk-input-group`      | Property inspectors, linked dimensions, color fields, and file selection with previews. |
-| [Color & eyedropper](https://flowscape-ui.github.io/dsk/components/color) | `dsk-color-area`, `dsk-color-hue`, `dsk-color-alpha`, `dsk-color-eyedropper`                | Your own color picker with opacity and screen, page, or custom sampling modes.          |
-| [Angles & curves](https://flowscape-ui.github.io/dsk/components/geometry) | `dsk-angle`, `dsk-curve`                                                                    | Rotation controls, editable easing, and motion previews.                                |
-| [Layer tree](https://flowscape-ui.github.io/dsk/components/layers)        | `dsk-layer-tree`, `dsk-list-value`, `dsk-list-header`, `dsk-list-footer`, `dsk-tree-search` | Searchable hierarchies with selection, renaming, and reordering.                        |
-| [Canvas widgets](https://flowscape-ui.github.io/dsk/components/canvas)    | `dsk-pan-zoom`, `dsk-ruler`, `dsk-canvas-marker`                                            | Navigable workspaces with rulers, guides, and coordinate-aware overlays.                |
+| Family                                                                       | Components                                                                                  | What you can build                                                                      |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [Inputs & groups](https://flowscape-ui.github.io/dsk/components/inputs)      | `dsk-input`, `dsk-input-hex`, `dsk-input-color`, `dsk-input-upload`, `dsk-input-group`      | Property inspectors, linked dimensions, color fields, and file selection with previews. |
+| [Color & eyedropper](https://flowscape-ui.github.io/dsk/components/color)    | `dsk-color-area`, `dsk-color-hue`, `dsk-color-alpha`, `dsk-color-eyedropper`                | Your own color picker with opacity and screen, page, or custom sampling modes.          |
+| [Angles & curves](https://flowscape-ui.github.io/dsk/components/geometry)    | `dsk-angle`, `dsk-curve`                                                                    | Rotation controls, editable easing, and motion previews.                                |
+| [Layer tree](https://flowscape-ui.github.io/dsk/components/layers)           | `dsk-layer-tree`, `dsk-list-value`, `dsk-list-header`, `dsk-list-footer`, `dsk-tree-search` | Searchable hierarchies with selection, renaming, and reordering.                        |
+| [Canvas widgets](https://flowscape-ui.github.io/dsk/components/canvas)       | `dsk-pan-zoom`, `dsk-ruler`, `dsk-canvas-marker`                                            | Navigable workspaces with rulers, guides, and coordinate-aware overlays.                |
+| [Panel](https://flowscape-ui.github.io/dsk/components/panel)                 | `dsk-panel`                                                                                 | Resizable inspectors with styled edges, keyboard controls, and size limits.             |
+| [Transform box](https://flowscape-ui.github.io/dsk/components/transform-box) | `dsk-transform-box`, header/content, and rotate/resize handles                              | Movable HTML with custom transform controls and history.                                |
+| [Timeline](https://flowscape-ui.github.io/dsk/components/timeline)           | `dsk-timeline`                                                                              | Tracks, clips, keyframes, playback, interpolation, and grouped editing.                 |
+| [Dock](https://flowscape-ui.github.io/dsk/components/dock)                   | `dsk-dock`, `dsk-dock-zone`, `dsk-dock-item`                                                | Move panels between custom destinations with pointer or keyboard.                       |
 
 ## Your engine. DSK controls.
 

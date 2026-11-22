@@ -1,4 +1,17 @@
 import {
+  DskDock,
+  DskDockZone,
+  DskDockItem,
+  type DockDetail,
+  type DskTransformBox,
+  type DskTransformBoxHandleRotate,
+  type DskTransformHeader,
+  type DskTransformContent,
+  type TransformBoxValue,
+  type TransformBoxDetail,
+  DskPanel,
+  type PanelDragEnd,
+  type PanelResizeDetail,
   DskInput,
   DskRuler,
   DskPanZoom,
@@ -670,4 +683,111 @@ export type PublicApiChecks = [
   Assert<Equal<InputPositioning, 'left' | 'center' | 'right'>>,
   Assert<Equal<Progression, 'linear' | 'exponential' | 'logarithmic'>>,
   Assert<Equal<typeof kit.name, 'Design System Kit'>>,
+  Assert<Equal<HTMLElementTagNameMap['dsk-panel'], DskPanel>>,
+  Assert<Equal<DskPanel['dragEnd'], PanelDragEnd>>,
+  Assert<Equal<DskPanel['minSize'], number>>,
+  Assert<Equal<DskPanel['offset'], number>>,
+  Assert<Equal<DskPanel['inset'], number>>,
+  Assert<Equal<DskPanel['maxSize'], number>>,
+  Assert<Equal<PanelResizeDetail['width'], number>>,
+  Assert<Equal<HTMLElementTagNameMap['dsk-transform-box'], DskTransformBox>>,
+  Assert<
+    Equal<HTMLElementTagNameMap['dsk-transform-header'], DskTransformHeader>
+  >,
+  Assert<
+    Equal<HTMLElementTagNameMap['dsk-transform-content'], DskTransformContent>
+  >,
+  Assert<Equal<DskTransformBox['value'], TransformBoxValue>>,
+  Assert<Equal<TransformBoxDetail['angle'], number>>,
+  Assert<
+    Equal<
+      HTMLElementTagNameMap['dsk-transform-box-handle-rotate'],
+      DskTransformBoxHandleRotate
+    >
+  >,
+  Assert<Equal<DskTransformBox['snapAngle'], number>>,
 ];
+
+const resizeHandle = document.createElement('dsk-transform-box-handle-resize');
+resizeHandle.direction = 'tl';
+resizeHandle.disabled = false;
+const resizeDirection: import('@flowscape-ui/dsk').TransformBoxResizeDirection =
+  resizeHandle.direction;
+void resizeDirection;
+
+const timeline: import('@flowscape-ui/dsk').DskTimeline =
+  document.createElement('dsk-timeline');
+timeline.tracks = [
+  {
+    id: 'motion',
+    label: 'Motion',
+    clips: [{ id: 'clip', label: 'Move', start: 0, duration: 2 }],
+  },
+];
+timeline.currentTime = 1;
+timeline.zoom = 2;
+timeline.snap = false;
+timeline.readOnly = false;
+timeline.play();
+timeline.pause();
+const timelineSelection: import('@flowscape-ui/dsk').TimelineSelection | null =
+  timeline.selection;
+void timelineSelection;
+
+const frame: import('@flowscape-ui/dsk').TimelineKeyframe = {
+  id: 'frame',
+  time: 1,
+  value: 0.5,
+};
+timeline.addKeyframe('motion', 'clip', frame);
+timeline.updateKeyframe('motion', 'clip', 'frame', { value: 1 });
+timeline.removeKeyframe('motion', 'clip', 'frame');
+
+const styledTrack: import('@flowscape-ui/dsk').TimelineTrack = {
+  id: 'styled',
+  label: 'Styled',
+  part: 'motion-track',
+  clips: [
+    {
+      id: 'clip',
+      label: 'Clip',
+      part: 'motion-clip',
+      start: 0,
+      duration: 2,
+      keyframes: [{ id: 'frame', time: 1, part: 'special-frame' }],
+    },
+  ],
+};
+timeline.tracks = [styledTrack];
+
+timeline.tracks = [
+  {
+    id: 'direct',
+    label: 'Direct',
+    keyframes: [
+      { id: 'first', time: 0, value: 0 },
+      { id: 'last', time: 2, value: 1 },
+    ],
+  },
+];
+timeline.addKeyframe('direct', null, { id: 'middle', time: 1, value: 0.5 });
+
+const deletedSelection: boolean = timeline.deleteSelection();
+void deletedSelection;
+
+timeline.select([{ trackId: 'direct', clipId: null, keyframeId: 'first' }]);
+const multiple: import('@flowscape-ui/dsk').TimelineSelection[] =
+  timeline.selections;
+timeline.setTrackState('direct', { locked: true, muted: false });
+timeline.rangeStart = 1;
+timeline.rangeEnd = 5;
+timeline.snapElements = true;
+timeline.snapThreshold = 8;
+void multiple;
+const dock = new DskDock();
+const dockZone: DskDockZone = document.createElement('dsk-dock-zone');
+const dockItem: DskDockItem = document.createElement('dsk-dock-item');
+const dockResult: boolean = dock.dock(dockItem, dockZone);
+const dockDetail: DockDetail = { item: dockItem, from: dockZone, to: null };
+dock.cancel();
+void [dockResult, dockDetail, dock.items, dock.zones];
