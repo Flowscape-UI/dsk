@@ -240,7 +240,20 @@ test('camera entrance settles and interaction cancels further animation', async 
         centers.push({ x: box.x + box.width / 2, y: box.y + box.height / 2 });
       }
       const first = centers[0]!;
-      const last = centers.at(-1)!;
+      // Sample stability after the entrance duration. On a slow runner, the
+      // last ten entrance frames can span most of the animation itself.
+      const settledCenters: { x: number; y: number }[] = [];
+      for (let index = 0; index < 10; index++) {
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => resolve()),
+        );
+        const box = shape.getBoundingClientRect();
+        settledCenters.push({
+          x: box.x + box.width / 2,
+          y: box.y + box.height / 2,
+        });
+      }
+      const last = settledCenters.at(-1)!;
       return {
         travel: Math.max(
           ...centers.map((center) =>
@@ -248,9 +261,9 @@ test('camera entrance settles and interaction cancels further animation', async 
           ),
         ),
         settled: Math.max(
-          ...centers
-            .slice(-10)
-            .map((center) => Math.hypot(center.x - last.x, center.y - last.y)),
+          ...settledCenters.map((center) =>
+            Math.hypot(center.x - last.x, center.y - last.y),
+          ),
         ),
       };
     });
